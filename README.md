@@ -24,7 +24,7 @@ Kratko opisati cilj Vašeg projekta. Vaša motivacija?  (Napomena: odgovor nije 
 #Instalcija
 # Članovi tima 
 > Popis članova tima/linkovi/ glavni doprinos
->
+> Lorena Ivanišević, Paula Jagić, Dino Plečko, Boris Šeremet, Klara Vrbanac, Šimun Vrsalović, Borna Zelić
 
 # Kontribucije
 >Pravila ovise o organizaciji tima i su često izdvojena u CONTRIBUTING.md

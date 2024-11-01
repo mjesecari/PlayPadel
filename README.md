@@ -16,7 +16,36 @@ Kratko opisati cilj Vašeg projekta. Vaša motivacija?  (Napomena: odgovor nije 
 > Dobro izrađen opis omogućuje vam da pokažete svoj rad drugim programerima, kao i potencijalnim poslodavcima. Ne samo da prvi dojam na stranici opisa često razlikuje dobar projekt od lošeg projekta već i predstavlja dobru praksu koju morate savladati.
 
 # Funkcijski zahtjevi
-> Navedite ključne zahtjeve Vašeg projekta.
+> Funkcionalni zahtjevi
+ Aplikacija
+	- aplikacija mora omogućiti korisniku prijavljivanje kao igrač, vlasnik terena ili administrator
+	- mogućnost plaćanja unutar aplikacije (koristeći PayPal ili kreditnom karticom) ili gotovinom iskljućivo pri korištenju terena
+ Administrator
+	- administrator upravlja cijenom članarine te može mijenjati podatke od ostalih korisnika
+ Vlasnici terena
+	- vlasnik terena mora moći dodati podatke o dvorani poput naziva, adrese, kontakt telefona, popis terena i turnira
+	- vlasnik terena mora moći organizirati turnir
+	- vlasnik terena mora odobriti svakog igrača na svom turniru
+ Igrači
+	- igrač mora moći rezervirati termine, pregledavati termine, odabrati način plaćanja termina, otkazati termin i pregledavati turnire
+	- za pregled i rezervaciju termina koristi se Google kalendar
+	- igrač mora moći otkazati termin najkasnije 24h prije samoga termina
+	- termin se mora moči pregledati temeljem kriterija cijene kotizacije, razine igrača i iznosu nagrade
+	- igrač se mora moći prijaviti na otvoren turnir
+	- ako je igrač sudjelovao na turniru može komentirati turnire i stavljati slike s tog turnira
+	- igrač se može pretplatiti na sadržaj o turnirima i time primati obavijesti kada je novi turnir objavljen
+ Tereni 
+	- svaki teren mora imati lokaciju, sliku, tip terena i termine
+ Termini
+	- termini moraju imati datum, vrijeme i cijenu
+ Turniri
+	- turnir mora imati podatke poput naziva, lokacije, datuma, cijenu kotizacije, nagrade i opis, te ako je završen rezultate turnira i fotografije
+	- podatke o turniru unosi organizator, tj. vlasnik terena
+ 
+
+Nefunkcionalni zahtjevi
+ - podatci o korisnicima su zaštićeni
+
 
 
 # Tehnologije

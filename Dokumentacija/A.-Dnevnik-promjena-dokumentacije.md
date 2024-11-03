@@ -1,7 +1,7 @@
 | Rev. | Opis promjene/dodatka | Autori  | Datum      |
 | ---- |:--------------------- |:------- |:---------- |
 |  0.1 | Napravljen predložak  | Lorena Ivanišević | 3.11.2024. |
-|  0.2 |                       |         |            |
+|  0.2  | Promijenjen Home, Footer, str. 8 i 9  | Lorena Ivanišević | 3.11.2024. |
 |      |                       |         |            |
 
 

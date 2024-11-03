@@ -1,6 +1,6 @@
 | Rev. | Opis promjene/dodatka | Autori  | Datum      |
 | ---- |:--------------------- |:------- |:---------- |
-|  0.1 | Napravljen predložak  |Ime člana| 30.10.2023 |
+|  0.1 | Napravljen predložak  | Lorena Ivanišević | 3.11.2024. |
 |  0.2 |                       |         |            |
 |      |                       |         |            |
 

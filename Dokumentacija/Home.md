@@ -6,13 +6,13 @@
 > Napomen: Važno je da svi formalni elementi predloška ostanu prisutni. Time osiguravamo dosljednost u prezentaciji i ocjenjivanju svih timova, a ujedno i lakše praćenje napretka.
 > 
 
-# Programsko inženjerstvo ak.god 2024./2025
+# Programsko inženjerstvo ak.god 2024./2025.
 ## Sveučilište u Zagrebu
 ## Fakultet elektrotehnike i računarstva
-# Naziv projekta
+# PlayPadel
 
-##### Tim: <TG07.1>
-##### Ime tima
+##### Tim: <TG13.1>
+##### Mjesečari
 
 ##### Nastavnik: Vlado Sruk
 

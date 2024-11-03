@@ -1,49 +1,47 @@
-# Programsko inženjerstvo
+# PlayPadel
 
-> Ime projekta u naslovu ima cilj opisati namjenu projekta te pomoći u podizanju početnog interesa za projekt prezentirajući osnovnu svrhu projekta.
-> Isključivo ovisi o Vama!
-> 
-> Naravno, nijedan predložak nije idealan za sve projekte jer su potrebe i ciljevi različiti. Ne bojte se naglasiti Vaš cilj u ovoj početnoj stranici projekta, podržat ćemo ga bez obzira usredotočili se Vi više na tenologiju ili marketing.
-> 
-> Zašto ovaj dokument? Samo manji dio timova je do sada propoznao potrebu (a i meni je lakše pratiti Vaš rad).  
+Padel je najbrže rastući sport u svijetu te je dostupno sve više dvorana u gradu za igranje. 
+PlayPadel je platforma koju igrači mogu koristiti kako bi lakše pronašli slobodni teren i termin za igru, a vlasnici terena mogu lakše organizirati turnire. 
+Platforma također služi za promociju padela kao sporta, te se igrači mogu prijaviti na turnire, pratiti rezultate prošlih turnira te objavljivati slike i komentare vezane za turnir.
 
 # Opis projekta
-Ovaj projekt je reultat timskog rada u sklopu projeknog zadatka kolegija [Programsko inženjerstvo](https://www.fer.unizg.hr/predmet/proinz) na Fakultetu elektrotehnike i računarstva Sveučilišta u Zagrebu. 
+Ovaj projekt je reuzltat timskog rada u sklopu projeknog zadatka kolegija [Programsko inženjerstvo](https://www.fer.unizg.hr/predmet/proinz) na Fakultetu elektrotehnike i računarstva Sveučilišta u Zagrebu. 
 
-Kratko opisati cilj Vašeg projekta. Vaša motivacija?  (Napomena: odgovor nije »Zato što je to bio zadatak i nismo imali ideje za drugo.«). Koji problem rješavate?
-> Obzirom da je ovo zadani projekt navedite i što želite/jeste novo  naučili.
+Cilj ovog projekta je izgraditi aplikaciju koja povezuje igrače i vlasnike terena padela. Na taj način ćemo olakšati komunikaciju i organizaciju svima zainteresiranima za padel.
 
-> Dobro izrađen opis omogućuje vam da pokažete svoj rad drugim programerima, kao i potencijalnim poslodavcima. Ne samo da prvi dojam na stranici opisa često razlikuje dobar projekt od lošeg projekta već i predstavlja dobru praksu koju morate savladati.
+Platforma također služi za promociju padela kao sporta. Mogućnost pratićenja prošlih, aktivnih i budućih turnira pozitivno utječe na izgradnju zajednice.
+
+Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i razviti dobre navike . Kroz projekt ćemo naučiti koristiti neke od popularnih razvojnih okruženja, Spring i React, te naučiti konvencije git-a i GitHuba. 
+
 
 # Funkcijski zahtjevi
-> Funkcionalni zahtjevi
- Aplikacija
-	- aplikacija mora omogućiti korisniku prijavljivanje kao igrač, vlasnik terena ili administrator
-	- mogućnost plaćanja unutar aplikacije (koristeći PayPal ili kreditnom karticom) ili gotovinom iskljućivo pri korištenju terena
- Administrator
-	- administrator upravlja cijenom članarine te može mijenjati podatke od ostalih korisnika
- Vlasnici terena
-	- vlasnik terena mora moći dodati podatke o dvorani poput naziva, adrese, kontakt telefona, popis terena i turnira
-	- vlasnik terena mora moći organizirati turnir
-	- vlasnik terena mora odobriti svakog igrača na svom turniru
- Igrači
-	- igrač mora moći rezervirati termine, pregledavati termine, odabrati način plaćanja termina, otkazati termin i pregledavati turnire
-	- za pregled i rezervaciju termina koristi se Google kalendar
-	- igrač mora moći otkazati termin najkasnije 24h prije samoga termina
-	- termin se mora moči pregledati temeljem kriterija cijene kotizacije, razine igrača i iznosu nagrade
-	- igrač se mora moći prijaviti na otvoren turnir
-	- ako je igrač sudjelovao na turniru može komentirati turnire i stavljati slike s tog turnira
-	- igrač se može pretplatiti na sadržaj o turnirima i time primati obavijesti kada je novi turnir objavljen
- Tereni 
-	- svaki teren mora imati lokaciju, sliku, tip terena i termine
- Termini
-	- termini moraju imati datum, vrijeme i cijenu
- Turniri
-	- turnir mora imati podatke poput naziva, lokacije, datuma, cijenu kotizacije, nagrade i opis, te ako je završen rezultate turnira i fotografije
-	- podatke o turniru unosi organizator, tj. vlasnik terena
+## Aplikacija
+ - aplikacija mora omogućiti korisniku prijavljivanje kao igrač, vlasnik terena ili administrator
+ - mogućnost plaćanja unutar aplikacije (koristeći PayPal ili kreditnom karticom) ili gotovinom isključivo pri korištenju terena
+## Administrator
+ - administrator upravlja cijenom članarine te može mijenjati podatke od ostalih korisnika
+## Vlasnici terena
+ - vlasnik terena mora moći dodati podatke o dvorani poput naziva, adrese, kontakt telefona, popis terena i turnira
+ - vlasnik terena mora moći organizirati turnir
+ - vlasnik terena mora odobriti svakog igrača na svom turniru
+## Igrači
+ - igrač mora moći rezervirati termine, pregledavati termine, odabrati način plaćanja termina, otkazati termin i pregledavati turnire
+ - za pregled i rezervaciju termina koristi se Google kalendar
+ - igrač mora moći otkazati termin najkasnije 24h prije samoga termina
+ - termin se mora moći pregledati temeljem kriterija cijene kotizacije, razine igrača i iznosu nagrade
+ - igrač se mora moći prijaviti na otvoren turnir
+ - ako je igrač sudjelovao na turniru može komentirati turnire i stavljati slike s tog turnira
+ - igrač se može pretplatiti na sadržaj o turnirima i time primati obavijesti kada je novi turnir objavljen
+## Tereni 
+ - svaki teren mora imati lokaciju, sliku, tip terena i termine
+## Termini
+ - termini moraju imati datum, vrijeme i cijenu
+## Turniri
+ - turnir mora imati podatke poput naziva, lokacije, datuma, cijenu kotizacije, nagrade i opis, te ako je završen rezultate turnira i fotografije
+ - podatke o turniru unosi organizator, tj. vlasnik terena
  
 
-Nefunkcionalni zahtjevi
+## Nefunkcijski zahtjevi
  - podatci o korisnicima su zaštićeni
 
 
@@ -52,7 +50,6 @@ Nefunkcionalni zahtjevi
 
 #Instalcija
 # Članovi tima 
-> Popis članova tima/linkovi/ glavni doprinos
 > Lorena Ivanišević, Paula Jagić, Dino Plečko, Boris Šeremet, Klara Vrbanac, Šimun Vrsalović, Borna Zelić
 
 # Kontribucije

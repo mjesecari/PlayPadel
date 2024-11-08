@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import './App.css'
+/* 
 import { Button } from './components/ui/button'
 import {
   Card,
@@ -9,11 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Open from './pages/Open';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
-
   return (
-    <>
+<>
       <Card>
 
         <CardHeader>
@@ -26,6 +28,50 @@ function App() {
         </CardContent>
         
       </Card>
+
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Open />} />
+        <Route path="/Open" element={<Open/>} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
+    </>
+  );
+}
+
+export default App;
+ */
+
+
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Open from './pages/Open';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import MainPage from './pages/MainPage';
+
+
+
+import './App.css'
+
+function App() {
+
+  return (
+    <>
+      
+       <BrowserRouter>
+      <Routes>
+        <Route index element={<Open />} />
+        <Route path="/Open" element={<Open/>} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/MainPage" element={<MainPage />} />
+      
+      </Routes>
+    </BrowserRouter>
+     
 
     </>
   )

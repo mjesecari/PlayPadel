@@ -5,6 +5,7 @@
 |  0.3    | Dovršena str. 1                      | Klara Vrbanac        | 8.11.2024.           |
 |  0.4   | upisivanje tablica u poglavlje 5.                     | Klara Vrbanac        | 8.11.2024.           |
 |  0.5   | dijagram baze podataka poglavlje 5.                    | Klara Vrbanac        | 8.11.2024.           |
+|  0.6   | sekvencijski dijagrami i tekst obrazaca upotrebe, str. 5| Boris Šeremet Lukšić| 8.11.2024.
 
 
 * ovo treba biti vidljivo u samoj dinamici promjena repozitorija

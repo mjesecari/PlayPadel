@@ -19,7 +19,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         this.setAlwaysUseDefaultTargetUrl(true);
-        this.setDefaultTargetUrl(frontendUrl);
+        this.setDefaultTargetUrl("http://localhost:3000");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

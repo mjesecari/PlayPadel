@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
-    @GetMapping ("/")
+    @GetMapping ("/bok")
     public String getGreeting() {
-        return "Hello World!";
+        return "Hello world";
     }
 }

@@ -24,8 +24,8 @@ export default function Signup() {
 
         <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Signup</CardTitle>
-          <CardDescription>Sign into your account.</CardDescription>
+          <CardTitle>Sign up</CardTitle>
+          <CardDescription>Create your account.</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
@@ -63,7 +63,7 @@ export default function Signup() {
           </Link>
 
           <Link to="/mainpage">
-          <Button>Signup</Button>
+          <Button>Sign up</Button>
           </Link>
         </CardFooter>
       </Card>

@@ -1,14 +1,9 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+import NavBar from '@/components/navbar';
 
-export default function Layout({ children }) {
+export default function Layout({navigation}) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
+    <div >
+    <NavBar navigation={navigation}/>
+    </div>
   )
 }

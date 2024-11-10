@@ -24,7 +24,7 @@ export default function Open() {
 
         <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Log in</CardTitle>
           <CardDescription>Log into your account.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -47,7 +47,7 @@ export default function Open() {
           <Button variant="outline">Back</Button>
           </Link>
           <Link to="/mainpage">
-          <Button>Login</Button>
+          <Button>Log in</Button>
           </Link>
         </CardFooter>
       </Card>

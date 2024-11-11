@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,16 +15,16 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
-import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import fer.progi.mjesecari.ppadel.domain.Korisnik;
+import fer.progi.mjesecari.ppadel.service.KorisnikService;
 
 import java.util.List;
 
@@ -32,12 +33,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.Set;
 
-import java.util.HashSet;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityBasic {
 
     @Value("${progi.frontend.url}")
@@ -46,7 +46,9 @@ public class WebSecurityBasic {
     private String frontendRegisterUrl;
 
     @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private KorisnikService userService;
+    // @Autowired
+    // private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     @Profile("oauth-security")
@@ -89,10 +91,20 @@ public class WebSecurityBasic {
 					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 
 					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
+                    String userEmail = (String)userAttributes.get("email");
+                    Korisnik korisnik = userService.findByEmail(userEmail).orElse(new Korisnik());
+                    if(korisnik.getId() == null){
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_oauth2"));
+                        return;
+                    }
+                    if (korisnik.isOwner())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
+                    else
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
+                    
 
 					// Map the attributes found in userAttributes
 					// to one or more GrantedAuthority's and add it to mappedAuthorities
-                    mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_oauth2"));
 
 				}
 			});

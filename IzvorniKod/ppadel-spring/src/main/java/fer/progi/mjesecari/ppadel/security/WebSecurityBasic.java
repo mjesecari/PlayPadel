@@ -15,8 +15,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -27,12 +33,21 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.Set;
+
+import java.util.HashSet;
+
 @Configuration
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = false)
 public class WebSecurityBasic {
 
-    @Value("${progi.fronted.url}")
+    @Value("${progi.frontend.url}")
     private String frontendUrl;
+    @Value("${progi.frontend.register.url}")
+    private String frontendRegisterUrl;
 
     @Bean
     @Profile("basic-security")
@@ -59,7 +74,7 @@ public class WebSecurityBasic {
                         userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
                     .successHandler(
                         (request, response, authentication) -> {
-                            response.sendRedirect(frontendUrl);
+                            response.sendRedirect(frontendRegisterUrl);
                         });
             })
             .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
@@ -76,13 +91,26 @@ public class WebSecurityBasic {
     //     http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
     //     return http.build();
     // }
-
     private GrantedAuthoritiesMapper authorityMapper() {
-        final SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
+        // TODO: check if user exists in db and return ROLE_oauth2 only if he does not
+        return (authorities) -> {
+			Set<GrantedAuthority> mappedAuthorities = new HashSet<GrantedAuthority>();
 
-        authorityMapper.setDefaultAuthority("ROLE_ADMIN");
+			authorities.forEach(authority -> {
+				if (OAuth2UserAuthority.class.isInstance(authority)) {
+					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 
-        return authorityMapper;
+					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
+
+					// Map the attributes found in userAttributes
+					// to one or more GrantedAuthority's and add it to mappedAuthorities
+                    mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_oauth2"));
+
+				}
+			});
+
+			return mappedAuthorities;
+		};
     }
 
 }

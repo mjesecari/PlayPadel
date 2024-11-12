@@ -8,6 +8,7 @@
 |  0.6   | Sekvencijski dijagrami i tekst obrazaca upotrebe, str. 4 | Boris Šeremet Lukšić | 8.11.2024.           |
 |  0.7   | Umetanje dijagrama i kategorizacija, str. 4 | Boris Šeremet Lukšić | 10.11.2024. |
 |  0.8   | Promijenjen README.md i LICENSE, dodan CONTRIBUTING.md | Lorena Ivanišević | 11.11.2024. |
+|  0.9   | Opis arhitekture sustava, podnaslov Baza Podataka, umetanje dijagrama razreda | Klara Vrbanac | 12.11.2024. |
 
 * ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 

@@ -1,31 +1,34 @@
-import { useState } from 'react'
-import './App.css'
-import { Button } from './components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Open from './pages/Open';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import MainPage from './pages/MainPage';
+
+import Layout from './components/layout';
+
+const navigation = [
+
+  { name: 'Tereni', href: '#', current: true },
+  { name: 'Turniri', href: '#', current: false },
+  { name: 'Kalendar', href: '#', current: false },
+]
 
 function App() {
 
   return (
     <>
-      <Card>
+      <Layout navigation={navigation} />
 
-        <CardHeader>
-          <CardTitle>PlayPadel</CardTitle>
-        </CardHeader>
-
-        <CardContent class="font-mono">
-          <Button class="m-5 text-zinc-50">Log in</Button>
-          <Button class="m-5 text-zinc-50">Sign up</Button>
-        </CardContent>
-        
-      </Card>
+       <BrowserRouter>
+      <Routes>
+        <Route index element={<Open />} />
+        <Route path="/Open" element={<Open/>} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/MainPage" element={<MainPage />} />
+      
+      </Routes>
+    </BrowserRouter>
 
     </>
   )

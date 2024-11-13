@@ -34,12 +34,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Add this
+      - id: docker-metadata
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
+          tags: ${{ steps.docker-metadata.outputs.tags }}
+          labels: ${{ steps.docker-metadata.outputs.labels }}
           context: ./IzvorniKod/ppdadel-spring
           push: true
-          tags: ghcr.io/${{ env.REPO_LC }}/IzvorniKod/ppdadel-spring:latest
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

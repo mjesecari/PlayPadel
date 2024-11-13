@@ -52,22 +52,25 @@ public class WebSecurityBasic {
 
     @Bean
     @Profile("oauth-security")
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain registerFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(CorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
-            auth.anyRequest().authenticated();
+                    auth.requestMatchers("/register").permitAll(); // dostupne svakome
+                    //auth.requestMatchers("/volunteer/**").hasRole("VOLUNTEER");
+                    auth.anyRequest().authenticated();
         }).oauth2Login(oauth2 -> {
             oauth2.userInfoEndpoint(
                             userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
                             .successHandler(
                                 (request, response, authentication) -> {
-                                    response.sendRedirect(frontendRegisterUrl);
+                                    response.sendRedirect(frontendUrl);
                                 });
+            oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
         }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
             .build();
-    }
+    }    
 
     @Bean
     CorsConfigurationSource CorsConfigurationSource() {
@@ -102,10 +105,7 @@ public class WebSecurityBasic {
                     else
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
                     
-
-					// Map the attributes found in userAttributes
-					// to one or more GrantedAuthority's and add it to mappedAuthorities
-
+                    return;
 				}
 			});
 

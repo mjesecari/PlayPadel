@@ -55,6 +55,9 @@ public class KorisnikServiceJpa implements KorisnikService {
         throw new RequestDeniedException(
           "User with email " + korisnik.getEmail() + " already exists"
         );
+      
+      
+      
       return userRepo.save(korisnik);
     }
   

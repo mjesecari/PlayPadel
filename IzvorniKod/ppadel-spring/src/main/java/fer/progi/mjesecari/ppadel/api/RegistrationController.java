@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,6 @@ import fer.progi.mjesecari.ppadel.service.KorisnikService;
 
 @Profile({"form-security", "oauth-security"})
 @RestController
-@PreAuthorize("hasRole('ROLE_oauth2')")
 @RequestMapping("/register")
 public class RegistrationController {
 
@@ -32,9 +33,20 @@ public class RegistrationController {
 
     private static class RoleDTO {
         private String role;
+        private String email;
         
-        public RoleDTO(@JsonProperty("role") String role){
+        
+        public RoleDTO(@JsonProperty("role") String role, @JsonProperty("email") String email){
             this.role = role;
+            this.email = email;
+        }
+        
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getRole() {
@@ -48,18 +60,19 @@ public class RegistrationController {
 
     // TODO: change to postmapping
     @PostMapping
-    public ResponseEntity<Korisnik> setRole(Principal principal, @RequestBody RoleDTO roleDTO){
-        Map<String,Object> claims = ((DefaultOidcUser)((OAuth2AuthenticationToken)principal).getPrincipal()).getClaims();
-        String userEmail = (String)claims.get("email");
+    public ResponseEntity<Korisnik> setRole(@RequestBody RoleDTO roleDTO){
+        // DefaultOidcUser oidcUser = (DefaultOidcUser)((OAuth2AuthenticationToken)principal).getPrincipal();
+        // Map<String,Object> claims = oidcUser.getClaims();
+        // String userEmail = (String)claims.get("email");
         
         Korisnik newKorisnik = new Korisnik();
-        newKorisnik.setEmail(userEmail);
+        newKorisnik.setEmail(roleDTO.getEmail());
         newKorisnik.setTip(roleDTO.getRole());
         Korisnik saved = userService.createKorisnik(newKorisnik);
 
-        return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);   
+        //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));
 
-
+        return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
     }
 }
 

@@ -23,11 +23,11 @@ export default function Open() {
 
         <CardContent className="font-mono">
         <Link to="/login">
-          <Button className="m-5 text-zinc-50">Log in</Button>
+          <Button className="m-5 text-zinc-50">Prijava</Button>
           </Link>
 
           <Link to="/signup">
-          <Button className="m-5 text-zinc-50">Sign up</Button>
+          <Button className="m-5 text-zinc-50">Registracija</Button>
           </Link>
         </CardContent>
         

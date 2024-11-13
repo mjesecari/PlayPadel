@@ -15,6 +15,12 @@ const navigation = [
 
 function App() {
 
+/*{
+  useEffect(() => {
+    fetch("/api/students")
+  })
+
+}*/
   return (
     <>
       <Layout navigation={navigation} />

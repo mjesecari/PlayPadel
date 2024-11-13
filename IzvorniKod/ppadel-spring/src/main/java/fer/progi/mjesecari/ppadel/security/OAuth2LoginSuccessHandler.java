@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    @Value("${progi.fronted.url}")
+    @Value("${progi.frontend.url}")
     private String frontendUrl;
 
     @Override

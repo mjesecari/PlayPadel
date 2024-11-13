@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export default function Open() {
+export default function Login() {
     return (
 
         <Card className="w-[350px]">
@@ -29,7 +29,7 @@ export default function Open() {
         </CardHeader>
         
         <CardFooter className="flex justify-between">
-        <Link to="/Open">
+        <Link to="/Home">
           <Button variant="outline">Natrag</Button>
           </Link>
           <Link >

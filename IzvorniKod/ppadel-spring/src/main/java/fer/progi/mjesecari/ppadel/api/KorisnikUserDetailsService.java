@@ -5,6 +5,7 @@ package fer.progi.mjesecari.ppadel.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,8 +40,11 @@ public class KorisnikUserDetailsService implements UserDetailsService {
     );
     if (korisnik.isOwner())
       return commaSeparatedStringToAuthorityList("ROLE_OWNER");
+    else if(korisnik.isAdmin())
+      return commaSeparatedStringToAuthorityList("ROLE_ADMIN");
     else
       return commaSeparatedStringToAuthorityList("ROLE_PLAYER");
+    
   }
 }
 

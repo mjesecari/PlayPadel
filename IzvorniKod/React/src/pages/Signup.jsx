@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, redirect } from 'react-router-dom';
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -18,15 +18,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
 export default function Signup() {
 
   const[selectedRole, setSelectedRole] = useState("");
   const[form, setForm] = useState ({email:"", role:""})
+  const navigate = useNavigate();
 
-  const emailRegex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+  const emailRegex = /^[\w\-\.]+@(gmail+\.)+[\w-]{2,}$/gm;
   // from https://regex101.com/r/lHs2R3/1
 
   const onChange = (event) => {
@@ -41,7 +42,8 @@ export default function Signup() {
 
   const onSubmit = () => {
     if (!emailRegex.test(form.email)) {
-      alert('Unesite ispravnu email adresu.');
+      // TODO change error display
+      alert('Unesite ispravnu gmail adresu.');
       return
     }
     if (form.role==""){
@@ -50,9 +52,8 @@ export default function Signup() {
     }
     
     const data = JSON.stringify(form)
-    // console.log(data)
+    console.log(data)
 
-    // TODO after we learn which endpoint should we access
     
     const options = {
       method:"POST",
@@ -61,7 +62,13 @@ export default function Signup() {
       },
       body:data,
     }
-    fetch("/api/register", options)
+    return fetch("/api/register", options).then(
+      (res)=> {
+        console.log(res)
+        // TODO if fetch returns error display error msg
+        navigate('/Login')
+      }
+    )
     
   }
 
@@ -74,15 +81,15 @@ export default function Signup() {
         </CardHeader>
 
 
-        {/* change to =onSubmit() when sending data myb*/}
+        {/* consider changing to =onSubmit() */}
         <form onSubmit={(e) => e.preventDefault()}>
 
         <CardContent>
             <div className="grid w-full items-center gap-4">
 
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Email</Label>
-                <Input id="name" placeholder="Email" name="email" onChange={onChange} value={form.email}/>
+                <Label htmlFor="name">Gmail</Label>
+                <Input id="name" placeholder="Gmail" name="email" onChange={onChange} value={form.email}/>
               </div>
               
               <Select onValueChange={handleSelectChange}>
@@ -103,7 +110,7 @@ export default function Signup() {
         <Link to="/Open">
           <Button variant="outline">Natrag</Button>
           </Link>
-           {/* change to type = "submit" when sending data myb*/}
+           {/* consider changing to type = "submit" */}
           <Button type="button" onClick={()=>onSubmit()}>Registriraj se</Button>
         </CardFooter>
         </form>

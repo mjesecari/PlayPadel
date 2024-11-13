@@ -1,9 +1,14 @@
 import NavBar from '@/components/navbar';
 
-export default function Layout({navigation}) {
+
+export default function Layout({userInfo}) {
+
+  if (userInfo){
+    console.log("dkjfnskjfn")
+  }
   return (
     <div >
-    <NavBar navigation={navigation}/>
+    <NavBar userInfo={userInfo}/>
     </div>
   )
 }

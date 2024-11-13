@@ -58,7 +58,7 @@ export default function Signup() {
     const options = {
       method:"POST",
       headers:{
-        "Content-Type": "application/json\n"
+        "Content-Type": "application/json"
       },
       body:data,
     }
@@ -107,7 +107,7 @@ export default function Signup() {
 
         </CardContent>
         <CardFooter className="flex justify-between">
-        <Link to="/Open">
+        <Link to="/Home">
           <Button variant="outline">Natrag</Button>
           </Link>
            {/* consider changing to type = "submit" */}

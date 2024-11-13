@@ -10,11 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import Layout from '@/components/layout';
 
-export default function Open() {
+export default function Home({userInfo}) {
+  
 
+  if (!userInfo)
   return (
     <>
+
       <Card>
 
         <CardHeader>
@@ -35,5 +39,27 @@ export default function Open() {
 
     </>
   )
+  else{
+    return (
+      <>
+      <Layout userInfo={userInfo}/>
+      
+      <Card>
+
+        <CardHeader>
+          <CardTitle>PlayPadel</CardTitle>
+        </CardHeader>
+
+        <CardContent className="font-mono">
+        
+          Logged in successfully :)
+        </CardContent>
+        
+      </Card>
+
+      </>
+
+    )
+  }
 }
 

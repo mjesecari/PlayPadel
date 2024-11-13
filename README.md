@@ -14,6 +14,7 @@ Platforma također služi za promociju padela kao sporta. Mogućnost pratićenja
 Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i razviti dobre navike. Kroz projekt ćemo naučiti koristiti neke od popularnih razvojnih okruženja, Spring i React, te naučiti konvencije gita i GitHuba. 
 
 
+
 # Funkcijski zahtjevi
 ## Aplikacija
  - aplikacija mora omogućiti korisniku prijavljivanje kao igrač, vlasnik terena ili administrator

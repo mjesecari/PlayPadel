@@ -1,31 +1,66 @@
-import { useState } from 'react'
-import './App.css'
-import { Button } from './components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import MainPage from './pages/MainPage';
+
+//import Layout from './components/layout';
+import { useEffect, useState } from 'react';
+
+const navigation = [
+
+  { name: 'Tereni', href: '#', current: true },
+  { name: 'Turniri', href: '#', current: false },
+  { name: 'Kalendar', href: '#', current: false },
+]
+//const navigate = useNavigate()
+
 
 function App() {
+  const [userInfo, setUserInfo] = useState(null)
 
+  const options = {
+    method: 'GET',  
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  };
+
+  useEffect(() => {
+    fetch("/api/user", options).then(
+      (res)=> {
+        if (res.status === 200){
+          return res.json()
+        }else{
+          throw new Error('User not authenticated');
+        }
+        
+      }
+    ).then((data) =>{
+      setUserInfo(data)
+
+    }).catch((error) => {
+      console.error('Error fetching user data:', error);
+    })
+
+  }, []
+)
   return (
     <>
-      <Card>
 
-        <CardHeader>
-          <CardTitle>PlayPadel</CardTitle>
-        </CardHeader>
 
-        <CardContent class="font-mono">
-          <Button class="m-5 text-zinc-50">Log in</Button>
-          <Button class="m-5 text-zinc-50">Sign up</Button>
-        </CardContent>
-        
-      </Card>
+      {/* <Layout navigation={navigation} /> */}
+
+      <BrowserRouter>
+      <Routes>
+        <Route index element={<Home userInfo={userInfo}/>}/>
+        <Route path="/Home" element={<Home userInfo={userInfo}/>} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/MainPage" element={<MainPage />} />
+      
+      </Routes>
+      </BrowserRouter>
 
     </>
   )

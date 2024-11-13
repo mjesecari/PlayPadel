@@ -1,88 +1,117 @@
 package fer.progi.mjesecari.ppadel.security;
 
 
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+import fer.progi.mjesecari.ppadel.domain.Korisnik;
+import fer.progi.mjesecari.ppadel.service.KorisnikService;
+
+import java.util.List;
+
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 
 @Configuration
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = false)
+@EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityBasic {
 
-    @Value("${progi.fronted.url}")
+    @Value("${progi.frontend.url}")
     private String frontendUrl;
+    @Value("${progi.frontend.register.url}")
+    private String frontendRegisterUrl;
 
-    @Bean
-    @Profile("basic-security")
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
-        http.formLogin(withDefaults());
-        http.httpBasic(withDefaults());
-        http.csrf(AbstractHttpConfigurer::disable);
-        return http.build();
-    }
+    @Autowired
+    private KorisnikService userService;
+    // @Autowired
+    // private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    // login: localhost:8080/oauth2/authorization/google
     @Bean
     @Profile("oauth-security")
-    public SecurityFilterChain oauthFilterChain(HttpSecurity http) throws Exception {
-        return http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> {
-                auth.anyRequest().authenticated();
-            })
-            .oauth2Login(oauth2 -> {
-                oauth2
-                    .userInfoEndpoint(
-                        userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
-                    .successHandler(
-                        (request, response, authentication) -> {
-                            response.sendRedirect(frontendUrl);
-                        });
-            })
+    SecurityFilterChain registerFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(CorsConfigurationSource()))
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/register").permitAll(); // dostupne svakome
+                    auth.requestMatchers("/h2-console/*").hasRole("ADMIN");
+                    auth.anyRequest().authenticated();
+        }).oauth2Login(oauth2 -> {
+            oauth2.userInfoEndpoint(
+                            userInfoEndpoint -> {
+                                userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper());
+                                // userInfoEndpoint.baseUri();   
+                            })
+                            .successHandler(
+                                (request, response, authentication) -> {
+                                    response.sendRedirect(frontendUrl);
+                                });
+            oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
+        }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
             .build();
+    }    
+
+    @Bean
+    CorsConfigurationSource CorsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of(frontendUrl));
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);
+        return urlBasedCorsConfigurationSource;
     }
 
-
-    // @Bean
-    // @Profile({ "basic-security", "form-security" })
-    // @Order(Ordered.HIGHEST_PRECEDENCE)
-    // public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
-    //     http.securityMatcher(PathRequest.toH2Console());
-    //     http.csrf(AbstractHttpConfigurer::disable);
-    //     http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-    //     return http.build();
-    // }
-
     private GrantedAuthoritiesMapper authorityMapper() {
-        final SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
+        return (authorities) -> {
+			Set<GrantedAuthority> mappedAuthorities = new HashSet<GrantedAuthority>();
 
-        authorityMapper.setDefaultAuthority("ROLE_ADMIN");
+			authorities.forEach(authority -> {
+				if (OAuth2UserAuthority.class.isInstance(authority)) {
+					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 
-        return authorityMapper;
+					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
+                    String userEmail = (String)userAttributes.get("email");
+                    Korisnik korisnik = userService.findByEmail(userEmail).orElse(new Korisnik());
+                    if(korisnik.getId() == null){
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_oauth2"));
+                        return;
+                    }
+                    if (korisnik.isOwner())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
+                    else if(korisnik.isAdmin())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    else
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
+                    
+                    return;
+				}
+			});
+
+			return mappedAuthorities;
+		};
     }
 
 }

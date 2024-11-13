@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,7 +14,6 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -28,7 +26,6 @@ import fer.progi.mjesecari.ppadel.service.KorisnikService;
 
 import java.util.List;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -57,7 +54,7 @@ public class WebSecurityBasic {
                 .cors(cors -> cors.configurationSource(CorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/register").permitAll(); // dostupne svakome
-                    //auth.requestMatchers("/volunteer/**").hasRole("VOLUNTEER");
+                    auth.requestMatchers("/h2-console/*").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
         }).oauth2Login(oauth2 -> {
             oauth2.userInfoEndpoint(
@@ -102,6 +99,8 @@ public class WebSecurityBasic {
                     }
                     if (korisnik.isOwner())
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
+                    else if(korisnik.isAdmin())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                     else
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
                     

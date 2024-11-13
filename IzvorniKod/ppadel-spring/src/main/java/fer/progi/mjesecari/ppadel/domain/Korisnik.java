@@ -44,6 +44,9 @@ public class Korisnik {
   public boolean isOwner(){
     return tip.equals("vlasnik");
   }
+  public boolean isAdmin(){
+    return tip.equals("admin");
+  }
 
   @Override
   public String toString() {

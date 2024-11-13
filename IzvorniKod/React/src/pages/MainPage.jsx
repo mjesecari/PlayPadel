@@ -21,8 +21,7 @@ export default function Open() {
           <CardTitle>PlayPadel</CardTitle>
         </CardHeader>
 
-        
-        
+      
       </Card>
 
     </>

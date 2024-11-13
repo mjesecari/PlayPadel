@@ -16,6 +16,11 @@ jobs:
       BACKEND_DEPLOY_HOOK: ${{ secrets.BACKEND_DEPLOY_HOOK }}
 
     steps:
+      - name: set lower case repository names
+        run: |
+          echo "REPO_LC=${REPO,,}" >> ${GITHUB_ENV}
+        env:
+          REPO: '${{ github.event.repository.name }}'
       - name: Clone the repository
         uses: actions/checkout@v4
 
@@ -47,7 +52,7 @@ jobs:
         with:
           context: ./IzvorniKod/ppdadel-spring
           push: true
-          tags: ghcr.io/${{ github.repository }}/IzvorniKod/ppdadel-spring:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/IzvorniKod/ppdadel-spring:latest
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

@@ -58,7 +58,10 @@ public class WebSecurityBasic {
                     auth.anyRequest().authenticated();
         }).oauth2Login(oauth2 -> {
             oauth2.userInfoEndpoint(
-                            userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
+                            userInfoEndpoint -> {
+                                userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper());
+                                // userInfoEndpoint.baseUri();   
+                            })
                             .successHandler(
                                 (request, response, authentication) -> {
                                     response.sendRedirect(frontendUrl);
@@ -82,7 +85,6 @@ public class WebSecurityBasic {
     }
 
     private GrantedAuthoritiesMapper authorityMapper() {
-        // TODO: check if user exists in db and return ROLE_oauth2 only if he does not
         return (authorities) -> {
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<GrantedAuthority>();
 

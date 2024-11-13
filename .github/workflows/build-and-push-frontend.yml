@@ -16,6 +16,11 @@ jobs:
       FRONTEND_DEPLOY_HOOK: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
 
     steps:
+      - name: set lower case repository names
+        run: |
+          echo "REPO_LC=${REPO,,}" >> ${GITHUB_ENV}
+        env:
+          REPO: '${{ github.event.repository.name }}'
       - name: Clone the repository
         uses: actions/checkout@v3
 
@@ -49,7 +54,7 @@ jobs:
         with:
           context: ./IzvorniKod/React
           push: true
-          tags: ghcr.io/${{ github.repository }}/IzvorniKod/React:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/IzvorniKod/React:latest
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}

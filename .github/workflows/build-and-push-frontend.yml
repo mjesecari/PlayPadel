@@ -39,7 +39,7 @@ jobs:
         with:
           context: ./IzvorniKod/React
           push: true
-          tags: ghcr.io/${{ env.REPO_LC }}/IzvorniKod/React:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/izvornikod/react:latest
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}

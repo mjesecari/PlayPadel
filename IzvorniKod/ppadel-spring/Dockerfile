@@ -17,7 +17,7 @@ WORKDIR /app
 # RUN apk install <nesto>
 
 # Kopiranje izvrsnog JAR-a iz build containera u izvrsni container
-COPY /app/target/*.jar /app.jar
+COPY --from=builder /app/target/*.jar /app.jar
 
 # Izlaganje porta
 EXPOSE 8080

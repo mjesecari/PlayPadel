@@ -61,7 +61,7 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./izvornikod/ppadel-spring
+          context: ./IzvorniKod/ppadel-spring
           push: true
           tags: ghcr.io/${{ env.REPO_LC }}/izvornikod/ppadel-spring:latest
 

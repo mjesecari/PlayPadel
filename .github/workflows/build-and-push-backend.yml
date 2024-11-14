@@ -41,6 +41,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
+          
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Build and push backend image
         uses: docker/build-push-action@v6

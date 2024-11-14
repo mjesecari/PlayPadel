@@ -12,6 +12,9 @@ jobs:
   build-and-push-frontend:
     name: Build and Push Frontend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       FRONTEND_DEPLOY_HOOK: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
 

@@ -48,10 +48,9 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./IzvorniKod/ppdadel-spring
+          context: ./IzvorniKod/ppadel-spring
           push: true
-          labels: ${{ steps.docker-metadata.outputs.labels }}
-          tags: ${{ steps.docker-metadata.outputs.tags }}
+          tags: ghcr.io/${{ REPO_LC }}/IzvorniKod/ppadel-spring:latest
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

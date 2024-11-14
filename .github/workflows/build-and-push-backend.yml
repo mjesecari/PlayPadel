@@ -13,6 +13,9 @@ jobs:
   build-and-push-backend:
     name: Build and Push Backend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       BACKEND_DEPLOY_HOOK: ${{ secrets.BACKEND_DEPLOY_HOOK }}
 

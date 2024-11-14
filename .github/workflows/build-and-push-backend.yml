@@ -50,7 +50,7 @@ jobs:
         with:
           context: ./IzvorniKod/ppadel-spring
           push: true
-          tags: ghcr.io/${{ github.repository }}/IzvorniKod/ppadel-spring:latest
+          tags: ghcr.io/${{ end.REPO_LC }}/IzvorniKod/ppadel-spring:latest
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

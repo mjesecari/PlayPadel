@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Open from './pages/Open';
+import { BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import MainPage from './pages/MainPage';
 
-import Layout from './components/layout';
+//import Layout from './components/layout';
+import { useEffect, useState } from 'react';
 
 const navigation = [
 
@@ -12,23 +13,54 @@ const navigation = [
   { name: 'Turniri', href: '#', current: false },
   { name: 'Kalendar', href: '#', current: false },
 ]
+//const navigate = useNavigate()
+
 
 function App() {
+  const [userInfo, setUserInfo] = useState(null)
 
+  const options = {
+    method: 'GET',  
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  };
+
+  useEffect(() => {
+    fetch("/api/user", options).then(
+      (res)=> {
+        if (res.status === 200){
+          return res.json()
+        }else{
+          throw new Error('User not authenticated');
+        }
+        
+      }
+    ).then((data) =>{
+      setUserInfo(data)
+
+    }).catch((error) => {
+      console.error('Error fetching user data:', error);
+    })
+
+  }, []
+)
   return (
     <>
-      <Layout navigation={navigation} />
 
-       <BrowserRouter>
+
+      {/* <Layout navigation={navigation} /> */}
+
+      <BrowserRouter>
       <Routes>
-        <Route index element={<Open />} />
-        <Route path="/Open" element={<Open/>} />
+        <Route index element={<Home userInfo={userInfo}/>}/>
+        <Route path="/Home" element={<Home userInfo={userInfo}/>} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/MainPage" element={<MainPage />} />
       
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
 
     </>
   )

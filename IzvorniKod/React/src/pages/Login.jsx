@@ -19,35 +19,21 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export default function Open() {
+export default function Login() {
     return (
 
         <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Log in</CardTitle>
-          <CardDescription>Log into your account.</CardDescription>
+          <CardTitle>Prijava</CardTitle>
+          <CardDescription>Prijavi se sa svojim Google profilom.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="User Name" />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">Password</Label>
-                <Input id="name" placeholder="Password" />
-               
-              </div>
-            </div>
-          </form>
-        </CardContent>
+        
         <CardFooter className="flex justify-between">
-        <Link to="/Open">
-          <Button variant="outline">Back</Button>
+        <Link to="/Home">
+          <Button variant="outline">Natrag</Button>
           </Link>
-          <Link to="/mainpage">
-          <Button>Log in</Button>
+          <Link >
+          <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
           </Link>
         </CardFooter>
       </Card>

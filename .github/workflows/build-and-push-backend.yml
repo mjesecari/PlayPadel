@@ -45,7 +45,7 @@ jobs:
           context: ./IzvorniKod/ppadel-spring
           push: true
           tags: ghcr.io/${{ env.REPO_LC }}/izvornikod/ppadel-spring:latest
-          file: ./Dockerfile
+          file: ./IzvorniKod/ppadel-spring/Dockerfile
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

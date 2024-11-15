@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api":{
-        target:"https://demo-deployment-latest-j3gc.onrender.com",
+        target:`${process.env.VITE_BACKEND}`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/,'')
       }

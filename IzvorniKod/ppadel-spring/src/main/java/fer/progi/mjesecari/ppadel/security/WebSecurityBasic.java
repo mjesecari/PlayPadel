@@ -60,13 +60,13 @@ public class WebSecurityBasic {
             oauth2.userInfoEndpoint(
                             userInfoEndpoint -> {
                                 userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper());
-                                // userInfoEndpoint.baseUri();   
+                                //userInfoEndpoint.baseUri();
                             })
                             .successHandler(
                                 (request, response, authentication) -> {
                                     response.sendRedirect(frontendUrl);
                                 });
-            oauth2.authorizationEndpoint().baseUri("/oauth2/**");
+            oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
         }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
             .build();

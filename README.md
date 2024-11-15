@@ -11,7 +11,8 @@ Cilj ovog projekta je izgraditi aplikaciju koja povezuje igrače i vlasnike tere
 
 Platforma također služi za promociju padela kao sporta. Mogućnost pratićenja prošlih, aktivnih i budućih turnira pozitivno utječe na izgradnju zajednice.
 
-Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i razviti dobre navike . Kroz projekt ćemo naučiti koristiti neke od popularnih razvojnih okruženja, Spring i React, te naučiti konvencije git-a i GitHuba. 
+Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i razviti dobre navike. Kroz projekt ćemo naučiti koristiti neke od popularnih razvojnih okruženja, Spring i React, te naučiti konvencije gita i GitHuba. 
+
 
 
 # Funkcijski zahtjevi
@@ -47,13 +48,17 @@ Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i raz
 
 
 # Tehnologije
+- Spring 3.3.5
+- Java 21
+- React 18.3.1
+- Vite 5.4.10
+- tailwindcss 3.4.14
 
-#Instalcija
 # Članovi tima 
 > Lorena Ivanišević, Paula Jagić, Dino Plečko, Boris Šeremet, Klara Vrbanac, Šimun Vrsalović, Borna Zelić
 
 # Kontribucije
->Pravila ovise o organizaciji tima i su često izdvojena u CONTRIBUTING.md
+>Izdvojeno u CONTRIBUTING.md
 
 
 
@@ -101,5 +106,3 @@ Orginal [![cc0-1.0][cc0-1.0-shield]][cc0-1.0]
 [cc0-1.0]: https://creativecommons.org/licenses/by/1.0/deed.en
 [cc0-1.0-image]: https://licensebuttons.net/l/by/1.0/88x31.png
 [cc0-1.0-shield]: https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg
-
-### Reference na licenciranje repozitorija

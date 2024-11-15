@@ -17,7 +17,10 @@ const navigation = [
 
 
 function App() {
-  const [userInfo, setUserInfo] = useState(null)
+  const [userInfo, setUserInfo] = useState(() => {
+    const savedUserInfo = sessionStorage.getItem("userInfo");
+    return savedUserInfo ? JSON.parse(savedUserInfo) : null;
+  });
 
   const options = {
     method: 'GET',  
@@ -38,6 +41,7 @@ function App() {
       }
     ).then((data) =>{
       setUserInfo(data)
+      sessionStorage.setItem("userInfo", JSON.stringify(data));
 
     }).catch((error) => {
       console.error('Error fetching user data:', error);

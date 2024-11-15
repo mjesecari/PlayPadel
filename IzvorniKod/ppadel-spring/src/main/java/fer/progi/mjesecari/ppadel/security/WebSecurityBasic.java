@@ -1,3 +1,4 @@
+
 package fer.progi.mjesecari.ppadel.security;
 
 
@@ -56,21 +57,21 @@ public class WebSecurityBasic {
                     auth.requestMatchers("/register").permitAll(); // dostupne svakome
                     auth.requestMatchers("/h2-console/*").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
-        }).oauth2Login(oauth2 -> {
-            oauth2.userInfoEndpoint(
-                            userInfoEndpoint -> {
-                                userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper());
-                                // userInfoEndpoint.baseUri();   
-                            })
+                }).oauth2Login(oauth2 -> {
+                    oauth2.userInfoEndpoint(
+                                    userInfoEndpoint -> {
+                                        userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper());
+                                        // userInfoEndpoint.baseUri();
+                                    })
                             .successHandler(
-                                (request, response, authentication) -> {
-                                    response.sendRedirect(frontendUrl);
-                                });
-            oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
-        }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-            .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
-            .build();
-    }    
+                                    (request, response, authentication) -> {
+                                        response.sendRedirect(frontendUrl);
+                                    });
+                    oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
+                }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
+                .build();
+    }
 
     @Bean
     CorsConfigurationSource CorsConfigurationSource() {
@@ -86,13 +87,13 @@ public class WebSecurityBasic {
 
     private GrantedAuthoritiesMapper authorityMapper() {
         return (authorities) -> {
-			Set<GrantedAuthority> mappedAuthorities = new HashSet<GrantedAuthority>();
+            Set<GrantedAuthority> mappedAuthorities = new HashSet<GrantedAuthority>();
 
-			authorities.forEach(authority -> {
-				if (OAuth2UserAuthority.class.isInstance(authority)) {
-					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
+            authorities.forEach(authority -> {
+                if (OAuth2UserAuthority.class.isInstance(authority)) {
+                    OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 
-					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
+                    Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
                     String userEmail = (String)userAttributes.get("email");
                     Korisnik korisnik = userService.findByEmail(userEmail).orElse(new Korisnik());
                     if(korisnik.getId() == null){
@@ -105,13 +106,13 @@ public class WebSecurityBasic {
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                     else
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
-                    
-                    return;
-				}
-			});
 
-			return mappedAuthorities;
-		};
+                    return;
+                }
+            });
+
+            return mappedAuthorities;
+        };
     }
 
 }

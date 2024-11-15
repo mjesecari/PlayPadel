@@ -14,7 +14,6 @@
 |  0.11 | Ažurirana tablica aktivnosti grupe i dodan izvještaj o pojedinačnim doprinosima članova tima | Lorena Ivanišević | 14.11.2024. |
 |  1.0 | Prva revizija dokumentacije | Klara Vrbanac        | 15.11.2024. |
 
-
 * ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 
 > Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima.  Štoviše, odbačene promjene također su uključene u povijest promjena.

@@ -1,3 +1,4 @@
+
 name: Build and Push Backend Image
 
 on:
@@ -5,25 +6,29 @@ on:
     branches:
       - main
     paths:
-      - 'IzvorniKod/ppdadel-spring/**'      # Trigger only on changes in the /backend directory
+      - "IzvorniKod/ppadel-spring/**"
   workflow_dispatch:
 
 jobs:
   build-and-push-backend:
     name: Build and Push Backend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       BACKEND_DEPLOY_HOOK: ${{ secrets.BACKEND_DEPLOY_HOOK }}
 
     steps:
-      - name: set lower case repository names
+      - name: set lower case owner and repository names
         run: |
           echo "REPO_LC=${REPO,,}" >> ${GITHUB_ENV}
         env:
-          REPO: '${{ github.event.repository.name }}'
+         REPO: '${{ github.event.repository.name }}'
+          
       - name: Clone the repository
         uses: actions/checkout@v4
-
+        
       - name: Set up JDK 21 for x64
         uses: actions/setup-java@v4
         with:
@@ -31,11 +36,11 @@ jobs:
           distribution: 'temurin'
           architecture: x64
           cache: 'maven'
-          cache-dependency-path: 'IzvorniKod/ppdadel-spring/pom.xml'
+          cache-dependency-path: 'backend/pom.xml'
 
       - name: Maven build
         run: mvn clean package
-        working-directory: IzvorniKod/ppdadel-spring
+        working-directory: backend
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -50,9 +55,10 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./IzvorniKod/ppdadel-spring
+          context: ./IzvorniKod/ppadel-spring
           push: true
-          tags: ghcr.io/${{ env.REPO_LC }}/IzvorniKod/ppdadel-spring:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/izvornikod/ppadel-spring:latest
+          file: ./IzvorniKod/ppadel-spring/Dockerfile
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

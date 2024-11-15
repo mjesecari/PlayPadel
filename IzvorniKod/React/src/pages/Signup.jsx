@@ -117,5 +117,3 @@ export default function Signup() {
 
       </Card>
     )}
-
-    

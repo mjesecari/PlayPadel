@@ -33,7 +33,7 @@ export default function Login() {
           <Button variant="outline">Natrag</Button>
           </Link>
           <Link >
-          <Button onClick={() => location.href = `https://playpadel-backend.onrender.com/oauth2/authorization/google`} >Prijavi se</Button>
+          <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
           </Link>
         </CardFooter>
       </Card>

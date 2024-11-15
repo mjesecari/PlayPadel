@@ -114,6 +114,5 @@ export default function Signup() {
           <Button type="button" onClick={()=>onSubmit()}>Registriraj se</Button>
         </CardFooter>
         </form>
-
       </Card>
     )}

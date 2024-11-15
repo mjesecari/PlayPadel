@@ -66,7 +66,7 @@ public class WebSecurityBasic {
                                 (request, response, authentication) -> {
                                     response.sendRedirect(frontendUrl);
                                 });
-            oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
+            oauth2.authorizationEndpoint().baseUri("/oauth2/**");
         }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
             .build();

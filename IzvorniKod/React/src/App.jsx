@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import MainPage from './pages/MainPage';
 
-//import Layout from './components/layout';
 import { useEffect, useState } from 'react';
 
 const navigation = [
@@ -13,7 +12,6 @@ const navigation = [
   { name: 'Turniri', href: '#', current: false },
   { name: 'Kalendar', href: '#', current: false },
 ]
-//const navigate = useNavigate()
 
 
 function App() {

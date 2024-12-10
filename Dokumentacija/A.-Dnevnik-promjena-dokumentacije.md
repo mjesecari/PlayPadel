@@ -12,6 +12,7 @@
 |  0.9  | Opis arhitekture sustava, podnaslov Baza Podataka, umetanje dijagrama razreda | Klara Vrbanac        | 12.11.2024. |
 |  0.10 | Dovršena strana 2 dokumentacije                                               | Šimun Vrsalović      | 12.11.2024. |
 |  0.11 | Ažurirana tablica aktivnosti grupe i dodan izvještaj o pojedinačnim doprinosima članova tima | Lorena Ivanišević | 14.11.2024. |
+|  0.12 | Dodani dijagrami obrazaca uporabe i dodatno uređeni već postojeći dijagrami dkoumentacije na strani 4.  | Šimun Vrsalović, Boris Šeremet Lukšić | 15.11.2024. |
 |  1.0 | Prva revizija dokumentacije | Klara Vrbanac        | 15.11.2024. |
 
 * ovo treba biti vidljivo u samoj dinamici promjena repozitorija

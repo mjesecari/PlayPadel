@@ -15,7 +15,7 @@ public class Teren {
     private Long IDTeren;
 
     @ManyToOne
-    Korisnik VlasnikTeren;
+    Korisnik vlasnikTeren;
 
     @NotNull
     private String TipTeren;
@@ -34,7 +34,7 @@ public class Teren {
             throw new IllegalArgumentException("Tip mora biti unutarnji ili vanjski");
         }
         
-        this.VlasnikTeren = vlasnik;
+        this.vlasnikTeren = vlasnik;
         this.NazivTeren = naziv;
         this.TipTeren = tip;
     }
@@ -48,12 +48,12 @@ public class Teren {
     }
 
     public Korisnik getVlasnikTeren() {
-        return VlasnikTeren;
+        return vlasnikTeren;
     }
 
     public void setVlasnikTerena(Korisnik vlasnikTeren) {
         Assert.notNull(vlasnikTeren, "Vlasnik mora biti naveden");
-        VlasnikTeren = vlasnikTeren;
+        vlasnikTeren = vlasnikTeren;
     }
 
     public String getTipTeren() {

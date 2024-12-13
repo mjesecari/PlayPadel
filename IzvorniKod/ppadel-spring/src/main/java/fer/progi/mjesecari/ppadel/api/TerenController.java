@@ -1,18 +1,25 @@
 package fer.progi.mjesecari.ppadel.api;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
+import fer.progi.mjesecari.ppadel.dao.UserRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Teren;
 import fer.progi.mjesecari.ppadel.service.TerenService;
 
 import java.net.URI;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +34,13 @@ public class TerenController {
     @Autowired
     private TerenService terenService;
 
+    @Autowired
+    private TerenRepository terenRepo;
+
+    @Autowired
+    private UserRepository userRepo;
+
+
     @GetMapping("/")
     public Collection<Teren> getAll() {
         return terenService.listAll();
@@ -38,6 +52,18 @@ public class TerenController {
         Teren saved = terenService.createTeren(terenDTO.getNaziv(), terenDTO.getVlasnikTerenaId(), terenDTO.getTip());
 
         return ResponseEntity.created(URI.create("/tereni/" + saved.getIDTeren())).body(saved);
+    }
+    
+    @GetMapping("/my")
+    public Collection<Teren> myTereni(Principal principal) {
+        if( OAuth2AuthenticationToken.class.isInstance(principal) ){
+            Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
+            String email = (String) attributes.get("email");
+
+            return terenRepo.findAllByVlasnikTerenEmail(email);
+
+        }
+        return new ArrayList<Teren>();
     }
     
     

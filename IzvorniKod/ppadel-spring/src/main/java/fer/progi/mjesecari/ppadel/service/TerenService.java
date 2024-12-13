@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Manages terens in the system.
  * @see Teren
- * @author Hrvoje Šimić hsimic@croz.net
+ * @author Dino Plečko dino.plecko@fer.unizg.hr
  */
 @Service
 public interface TerenService {

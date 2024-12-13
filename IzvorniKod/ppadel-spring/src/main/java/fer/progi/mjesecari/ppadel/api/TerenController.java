@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,7 @@ public class TerenController {
         return terenService.listAll();
     }
     
+    @PostAuthorize("hasRole('ROLE_OWNER')")
     @PostMapping("/")
     public ResponseEntity<Teren> createTeren(@RequestBody createTerenDTO terenDTO) {
         
@@ -54,6 +56,7 @@ public class TerenController {
         return ResponseEntity.created(URI.create("/tereni/" + saved.getIDTeren())).body(saved);
     }
     
+    @PostAuthorize("hasRole('ROLE_OWNER')")
     @GetMapping("/my")
     public Collection<Teren> myTereni(Principal principal) {
         if( OAuth2AuthenticationToken.class.isInstance(principal) ){

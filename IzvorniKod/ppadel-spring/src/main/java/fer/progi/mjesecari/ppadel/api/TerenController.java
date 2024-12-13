@@ -1,11 +1,8 @@
 package fer.progi.mjesecari.ppadel.api;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
-import fer.progi.mjesecari.ppadel.dao.UserRepository;
-import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Teren;
 import fer.progi.mjesecari.ppadel.service.TerenService;
 
@@ -17,7 +14,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -38,8 +34,6 @@ public class TerenController {
     @Autowired
     private TerenRepository terenRepo;
 
-    @Autowired
-    private UserRepository userRepo;
 
 
     @GetMapping("/")

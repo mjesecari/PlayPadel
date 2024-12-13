@@ -1,7 +1,5 @@
 package fer.progi.mjesecari.ppadel.domain;
 
-import java.util.Arrays;
-import java.util.HashSet;
 
 import org.springframework.util.Assert;
 
@@ -53,7 +51,7 @@ public class Teren {
 
     public void setVlasnikTerena(Korisnik vlasnikTeren) {
         Assert.notNull(vlasnikTeren, "Vlasnik mora biti naveden");
-        vlasnikTeren = vlasnikTeren;
+        this.vlasnikTeren = vlasnikTeren;
     }
 
     public String getTipTeren() {

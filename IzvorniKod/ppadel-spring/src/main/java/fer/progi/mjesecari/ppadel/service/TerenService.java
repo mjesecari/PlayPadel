@@ -6,7 +6,6 @@ import fer.progi.mjesecari.ppadel.domain.Teren;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Manages terens in the system.

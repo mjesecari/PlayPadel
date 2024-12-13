@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;

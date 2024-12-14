@@ -59,4 +59,11 @@ public interface TerenService {
   Teren updateTerenName(long terenId, String name);
 
 
+  /**
+   * Deletes one teren.
+   * @param terenId ID of teren to delete from the system
+   * @return deleted data
+   * @throws EntityMissingException if teren with that ID is not found
+   */
+  Teren deleteTeren(long terenId);
 }

@@ -57,4 +57,13 @@ public class TerenServiceJpa implements TerenService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateTerenName'");
     }
+
+
+    @Override
+    public Teren deleteTeren(long terenId) {
+        // TODO Auto-generated method stub
+        Teren teren = fetch(terenId);   // throws EntityMissingException
+        terenRepo.delete(teren);
+        return teren;
+    }
 }

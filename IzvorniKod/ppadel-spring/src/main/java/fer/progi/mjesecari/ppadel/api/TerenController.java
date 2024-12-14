@@ -17,7 +17,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,12 @@ public class TerenController {
         return ResponseEntity.created(URI.create("/tereni/" + saved.getIDTeren())).body(saved);
     }
     
+    @PostAuthorize("hasRole('ROLE_OWNER')")
+    @DeleteMapping("/{id}")
+    public void removeTeren(Principal principal, @PathVariable Long id) {
+        terenService.deleteTeren(id);
+    }
+
     @PostAuthorize("hasRole('ROLE_OWNER')")
     @GetMapping("/my")
     public Collection<Teren> myTereni(Principal principal) {

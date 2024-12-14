@@ -11,6 +11,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -56,6 +57,11 @@ public class TerenController {
     @DeleteMapping("/{id}")
     public void removeTeren(Principal principal, @PathVariable Long id) {
         terenService.deleteTeren(id);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Teren> getTeren(Principal principal, @PathVariable Long id) {
+        return terenService.findById(id);
     }
 
     @PostAuthorize("hasRole('ROLE_OWNER')")

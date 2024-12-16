@@ -7,20 +7,51 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import {Button} from "@/components/ui/button"
 
 export default function Open() {
 
   return (
     <>
-      <Card>
+      <Drawer>
+  <DrawerTrigger>User Info</DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Podatci o korisniku</DrawerTitle>
+    </DrawerHeader>
 
-        <CardHeader>
-          <CardTitle>PlayPadel</CardTitle>
-        </CardHeader>
-
+    <DrawerFooter>
+    <Card>
+  <CardHeader>
+    <CardTitle>Ime Prezime</CardTitle>
+    <CardDescription>Role</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Email:</p>
+  </CardContent>
+  <CardFooter>
+    <p>Broj telefona:</p>
+  </CardFooter>
+</Card>
+<br></br>
+<br></br>
+      <DrawerClose>
       
-      </Card>
-
+        Zatvori
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
     </>
   )
 }

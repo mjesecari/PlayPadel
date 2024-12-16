@@ -24,7 +24,8 @@ export default function Login() {
           </Link>
           <Link >
           <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
-          </Link>
+          </Link> 
+          
         </CardFooter>
       </Card>
     )}

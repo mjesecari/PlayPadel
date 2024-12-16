@@ -63,12 +63,10 @@ export default function CourtPreview() {
 	const onChange = (event) => {
 		const { name, value } = event.target;
 		setForm((oldForm) => ({ ...oldForm, [name]: value }));
-		console.log(form);
 	};
 
 	const handleSelectChange = (value) => {
 		setForm((oldForm) => ({ ...oldForm, tip: value }));
-		console.log(form);
 	};
 
 	const onSubmit = () => {
@@ -77,7 +75,6 @@ export default function CourtPreview() {
 			return;
 		}
 		const data = JSON.stringify(form);
-		console.log(data);
 
 		const options = {
 			method: "POST",
@@ -101,6 +98,22 @@ export default function CourtPreview() {
 			})
 			.catch((err) => {});
 	};
+
+	function deleteCourt(e) {
+		// TODO implement "are you sure" pop-up
+
+		axios({
+			url: "/api/tereni/" + e.target.id,
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((res) => {
+				fetchCourts();
+			})
+			.catch((err) => {});
+	}
 
 	if (!userInfo) return <p>Loading...</p>;
 
@@ -185,13 +198,18 @@ export default function CourtPreview() {
 									<CardDescription>{court.tip}</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<p> > {court.tipTeren}</p>
+									<p> -- {court.tipTeren}</p>
 									<p>vlasnik: {court.vlasnikTeren.email}</p>
 								</CardContent>
 								<CardFooter className="flex justify-between">
 									{/* on click open court details */}
-									<Button variant="outline" className="text-white">
-										Rezerviraj
+									<Button
+										variant="outline"
+										className="text-white"
+										id={court.idteren}
+										onClick={(e) => deleteCourt(e)}
+									>
+										Obriši
 									</Button>
 								</CardFooter>
 							</Card>

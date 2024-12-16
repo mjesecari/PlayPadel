@@ -101,9 +101,9 @@ public class WebSecurityBasic {
                         return;
                     }
                     if (korisnik.isAdmin())
-                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
-                    if(korisnik.isOwner())
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    if(korisnik.isOwner())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
                     else
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
 

@@ -30,8 +30,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 
-import Popup from "../components/Popup";
-
 export default function CourtsOwner() {
 	const [courts, setCourts] = useState([]);
 
@@ -110,7 +108,6 @@ export default function CourtsOwner() {
 	function deleteCourt(e) {
 		setOpenConfirmation(true);
 		setDeleteId(e.target.id);
-		// TODO implement "are you sure" pop-up
 	}
 
 	function deleteConfirmed() {
@@ -223,32 +220,28 @@ export default function CourtsOwner() {
 				</Dialog>
 
 				<div className="flex h-fit flex-wrap">
-					{courts
-						// currently using filter, should have unique endpoint in the future
-						.filter((court) => court.vlasnikTeren.email == userInfo.email)
-						.map((court) => (
-							<Card key={court.idteren} className="w-[350px] m-8">
-								<CardHeader>
-									<CardTitle>{court.nazivTeren}</CardTitle>
-									<CardDescription>{court.tip}</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<p>Tip terena: {court.tipTeren}</p>
-									<p>Vlasnik: {court.vlasnikTeren.email}</p>
-								</CardContent>
-								<CardFooter className="flex justify-between">
-									{/* on click open court details */}
-									<Button
-										variant="outline"
-										className="text-white"
-										id={court.idteren}
-										onClick={(e) => deleteCourt(e)}
-									>
-										Obriši
-									</Button>
-								</CardFooter>
-							</Card>
-						))}
+					{courts.map((court) => (
+						<Card key={court.idteren} className="w-[350px] m-8">
+							<CardHeader>
+								<CardTitle>{court.nazivTeren}</CardTitle>
+								<CardDescription>{court.tip}</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<p>Tip terena: {court.tipTeren}</p>
+								<p>Vlasnik: {court.vlasnikTeren.email}</p>
+							</CardContent>
+							<CardFooter className="flex justify-between">
+								<Button
+									variant="outline"
+									className="text-white"
+									id={court.idteren}
+									onClick={(e) => deleteCourt(e)}
+								>
+									Obriši
+								</Button>
+							</CardFooter>
+						</Card>
+					))}
 				</div>
 			</div>
 		</>

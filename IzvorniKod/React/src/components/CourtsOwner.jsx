@@ -126,7 +126,6 @@ export default function CourtsOwner({ userInfo }) {
 	// checked in local storage
 	return (
 		<>
-			<NavBar></NavBar>
 			<div className="top-0 m-auto mt-10 text-left">
 				<div className="flex">
 					<h1 className="text-left m-10">Moji tereni</h1>

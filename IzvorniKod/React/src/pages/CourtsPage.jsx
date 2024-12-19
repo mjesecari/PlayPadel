@@ -12,8 +12,8 @@ export default function CourtsPage() {
 	if (!userInfo) return <p>Loading...</p>;
 
 	if (userInfo.owner) {
-		return <CourtsOwner></CourtsOwner>;
+		return <CourtsOwner userInfo={userInfo}></CourtsOwner>;
 	} else {
-		return <CourtsPlayer></CourtsPlayer>;
+		return <CourtsPlayer userInfo={userInfo}></CourtsPlayer>;
 	}
 }

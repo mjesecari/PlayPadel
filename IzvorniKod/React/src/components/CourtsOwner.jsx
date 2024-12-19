@@ -30,13 +30,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 
-export default function CourtsOwner() {
+export default function CourtsOwner({ userInfo }) {
 	const [courts, setCourts] = useState([]);
-
-	const [userInfo, setUserInfo] = useState(() => {
-		const savedUserInfo = sessionStorage.getItem("userInfo");
-		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
-	});
 
 	const [openRes, setOpenRes] = useState(false);
 	const [openTerenInp, setOpenTerenInp] = useState(false);
@@ -81,14 +76,6 @@ export default function CourtsOwner() {
 			return;
 		}
 		const data = JSON.stringify(form);
-
-		const options = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: data,
-		};
 
 		axios({
 			url: "/api/tereni/",

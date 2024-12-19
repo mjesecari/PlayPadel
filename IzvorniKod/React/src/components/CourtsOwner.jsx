@@ -7,7 +7,7 @@ import {
 	CardDescription,
 	CardContent,
 	CardFooter,
-} from "./ui/card";
+} from "../components/ui/card";
 import {
 	Dialog,
 	DialogContent,
@@ -30,9 +30,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 
-import Popup from "./Popup";
+import Popup from "../components/Popup";
 
-export default function CourtPreview() {
+export default function CourtsOwner() {
 	const [courts, setCourts] = useState([]);
 
 	const [userInfo, setUserInfo] = useState(() => {

@@ -81,7 +81,7 @@ export default function NavBar() {
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
 									<Link
-										to="/CourtPreview"
+										to="/CourtsPage"
 										key={item.name}
 										href={item.href}
 										aria-current={item.current ? "page" : undefined}

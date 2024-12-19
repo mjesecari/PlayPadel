@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
-import CourtPreview from "./components/CourtPreview";
+import CourtsPage from "./pages/CourtsPage";
 
 import { useEffect, useState } from "react";
 
@@ -46,8 +46,8 @@ function App() {
 					<Route index element={<Home userInfo={userInfo} />} />
 					<Route path="Home" element={<Home userInfo={userInfo} />} />
 					<Route
-						path="CourtPreview"
-						element={<CourtPreview userInfo={userInfo} />}
+						path="CourtsPage"
+						element={<CourtsPage userInfo={userInfo} />}
 					/>
 
 					<Route path="/Login" element={<Login />} />

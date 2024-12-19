@@ -77,7 +77,7 @@ export default function CourtsOwner() {
 			return;
 		}
 		if (form.naziv == "") {
-			alert("Odaberite vrstu terena.");
+			alert("Upišite naziv terena.");
 			return;
 		}
 		const data = JSON.stringify(form);
@@ -101,6 +101,11 @@ export default function CourtsOwner() {
 			.then((res) => {
 				setOpenRes(true);
 				setOpenTerenInp(false);
+				setForm({
+					naziv: "",
+					tip: "",
+					vlasnikTerenaId: userInfo.id,
+				});
 			})
 			.catch((err) => {});
 	};

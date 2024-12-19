@@ -11,7 +11,7 @@ import {
 
 export default function Login() {
 	return (
-		<Card className="w-[350px]">
+		<Card className="w-[350px] m-auto ">
 			<CardHeader>
 				<CardTitle>Prijava</CardTitle>
 				<CardDescription>

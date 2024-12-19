@@ -30,6 +30,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 
+import Popup from "./Popup";
+
 export default function CourtPreview() {
 	const [courts, setCourts] = useState([]);
 
@@ -40,6 +42,8 @@ export default function CourtPreview() {
 
 	const [openRes, setOpenRes] = useState(false);
 	const [openTerenInp, setOpenTerenInp] = useState(false);
+	const [openConfirmation, setOpenConfirmation] = useState(false);
+	const [deleteId, setDeleteId] = useState();
 
 	const [form, setForm] = useState({
 		naziv: "",
@@ -49,7 +53,7 @@ export default function CourtPreview() {
 
 	function fetchCourts() {
 		axios
-			.get("/api/tereni/")
+			.get("/api/tereni/my")
 			.then((res) => {
 				setCourts(res.data);
 			})
@@ -71,6 +75,10 @@ export default function CourtPreview() {
 
 	const onSubmit = () => {
 		if (form.tip == "") {
+			alert("Odaberite vrstu terena.");
+			return;
+		}
+		if (form.naziv == "") {
 			alert("Odaberite vrstu terena.");
 			return;
 		}
@@ -100,10 +108,14 @@ export default function CourtPreview() {
 	};
 
 	function deleteCourt(e) {
+		setOpenConfirmation(true);
+		setDeleteId(e.target.id);
 		// TODO implement "are you sure" pop-up
+	}
 
+	function deleteConfirmed() {
 		axios({
-			url: "/api/tereni/" + e.target.id,
+			url: "/api/tereni/" + deleteId,
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -111,10 +123,15 @@ export default function CourtPreview() {
 		})
 			.then((res) => {
 				fetchCourts();
+				setOpenConfirmation(false);
 			})
 			.catch((err) => {});
 	}
 
+	function deleteCanceled() {
+		setDeleteId();
+		setOpenConfirmation(false);
+	}
 	if (!userInfo) return <p>Loading...</p>;
 
 	// checked in local storage
@@ -179,11 +196,29 @@ export default function CourtPreview() {
 					</DialogContent>
 				</Dialog>
 
+				{/* response after adding new  */}
 				<Dialog open={openRes} onOpenChange={setOpenRes}>
 					<DialogContent className="sm:max-w-[425px]">
 						<DialogHeader>
 							<DialogTitle>Dodano!</DialogTitle>
 						</DialogHeader>
+					</DialogContent>
+				</Dialog>
+
+				<Dialog open={openConfirmation}>
+					<DialogContent className="sm:max-w-[425px]">
+						<DialogHeader>
+							<DialogTitle>Jeste li sigurni?</DialogTitle>
+						</DialogHeader>
+						<DialogFooter>
+							<Button className="text-white" onClick={deleteConfirmed}>
+								Da
+							</Button>
+							<Button className="text-white" onClick={deleteCanceled}>
+								{" "}
+								Ne
+							</Button>
+						</DialogFooter>
 					</DialogContent>
 				</Dialog>
 
@@ -198,8 +233,8 @@ export default function CourtPreview() {
 									<CardDescription>{court.tip}</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<p> -- {court.tipTeren}</p>
-									<p>vlasnik: {court.vlasnikTeren.email}</p>
+									<p>Tip terena: {court.tipTeren}</p>
+									<p>Vlasnik: {court.vlasnikTeren.email}</p>
 								</CardContent>
 								<CardFooter className="flex justify-between">
 									{/* on click open court details */}

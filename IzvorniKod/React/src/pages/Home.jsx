@@ -9,7 +9,7 @@ export default function Home({ userInfo }) {
 	if (!userInfo)
 		return (
 			<>
-				<Card>
+				<Card className="pt-3">
 					<CardHeader>
 						<CardTitle>PlayPadel</CardTitle>
 					</CardHeader>
@@ -30,7 +30,7 @@ export default function Home({ userInfo }) {
 		return (
 			<>
 				<NavBar></NavBar>
-				<Card>
+				<Card className="mt-24	">
 					<CardHeader>
 						<CardTitle>PlayPadel</CardTitle>
 					</CardHeader>

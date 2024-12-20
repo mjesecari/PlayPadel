@@ -8,7 +8,7 @@ import fer.progi.mjesecari.ppadel.domain.Korisnik;
 /**
  * Manages korisnik database.
  * @see Korisnik
- * @author Hrvoje Šimić hsimic@croz.net
+ * @author Dino Plečko dino.plecko@fer.unizg.hr
  */
 public interface KorisnikService {
   /**

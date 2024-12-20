@@ -97,7 +97,9 @@ export default function Signup() {
                   <SelectValue placeholder="Izaberi vrstu računa" />
                 </SelectTrigger>
                 <SelectContent position="popper">
+                  <Link to="/Mainpage">
                   <SelectItem value="igrač">Igrač</SelectItem>
+                  </Link>
                   <SelectItem value="vlasnik">Vlasnik terena</SelectItem>
                
                 </SelectContent>
@@ -111,8 +113,13 @@ export default function Signup() {
           <Button variant="outline">Natrag</Button>
           </Link>
            {/* consider changing to type = "submit" */}
-          <Button type="button" onClick={()=>onSubmit()}>Registriraj se</Button>
+          {/* <Button type="button" onClick={()=>onSubmit()}>Registriraj se</Button> */}
+           <Link to="/Infouser">
+                    <Button>Dalje</Button>
+                    </Link>
         </CardFooter>
         </form>
       </Card>
+
+
     )}

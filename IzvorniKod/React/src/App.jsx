@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
 import CourtPreview from "./components/CourtPreview";
+import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";
 
@@ -47,12 +48,13 @@ function App() {
 					<Route path="Home" element={<Home userInfo={userInfo} />} />
 					<Route
 						path="CourtPreview"
-						element={<CourtPreview userInfo={userInfo} />}
+						//element={<CourtPreview userInfo={userInfo} />}
 					/>
 
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
 					<Route path="/MainPage" element={<MainPage />} />
+					<Route path="/Infouser" element={<Infouser />} />
 				</Routes>
 			</BrowserRouter>
 		</>

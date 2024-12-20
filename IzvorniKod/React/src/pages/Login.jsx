@@ -22,9 +22,9 @@ export default function Login() {
         <Link to="/Home">
           <Button variant="outline">Natrag</Button>
           </Link>
-          <Link >
-          <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
-          </Link> 
+            <Link > 
+           <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
+          </Link>  
           
         </CardFooter>
       </Card>

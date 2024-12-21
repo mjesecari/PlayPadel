@@ -43,7 +43,7 @@ public class Korisnik {
   }
   
   public boolean isOwner(){
-    return tip.equals("vlasnik");
+    return tip.equals("vlasnik") || isAdmin();
   }
   public boolean isAdmin(){
     return tip.equals("admin");

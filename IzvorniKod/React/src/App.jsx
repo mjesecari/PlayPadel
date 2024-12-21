@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
-import CourtPreview from "./components/CourtPreview";
+//import CourtPreview from "./components/CourtPreview";
 import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";

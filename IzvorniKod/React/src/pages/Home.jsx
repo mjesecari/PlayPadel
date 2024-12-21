@@ -2,8 +2,8 @@ import "../Open.css";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Layout from "@/components/Layout";
-import NavBar from "@/components/Navbar";
+//import Layout from "@/components/Layout";
+//import NavBar from "@/components/Navbar";
 
 export default function Home({ userInfo }) {
 	if (!userInfo)

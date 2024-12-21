@@ -18,7 +18,7 @@ export default function Infouser() {
 
       <Card>
       <CardHeader>
-        <CardTitle>Igrač</CardTitle>
+        <CardTitle>Info</CardTitle>
         <CardDescription>
          Potrebne su dodatne infomacije za registraciju
         </CardDescription>

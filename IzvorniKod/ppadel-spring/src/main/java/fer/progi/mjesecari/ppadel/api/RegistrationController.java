@@ -51,7 +51,6 @@ public class RegistrationController {
         }
     }
 
-    // TODO: change to postmapping
     @PostMapping
     public ResponseEntity<Korisnik> setRole(@RequestBody RoleDTO roleDTO){
         // DefaultOidcUser oidcUser = (DefaultOidcUser)((OAuth2AuthenticationToken)principal).getPrincipal();

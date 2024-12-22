@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "PlayPadelApplication",
+            "request": "launch",
+            "mainClass": "fer.progi.mjesecari.ppadel.PlayPadelApplication",
+            "projectName": "ppadel",
+            "env": {
+                "DATASOURCE_CLIENT_ID": "205151789910-lm8ndlqc3hs6m8lqqc18di3ubnjmrddr.apps.googleusercontent.com",
+                "DATASOURCE_CLIENT_SECRET": "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",
+                "DATASOURCE_URL": "jdbc:h2:mem:testdb",
+                "FRONTEND": "http://localhost:5173",
+                "FRONTEND_REGISTER": "http://localhost:5173/register"
+            }
+        }
+    ]
+}

@@ -49,7 +49,6 @@ export default function Home({userInfo}) {
         </CardHeader>
 
         <CardContent className="font-mono">
-        
           Logged in successfully :)
         </CardContent>
         

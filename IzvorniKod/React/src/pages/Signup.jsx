@@ -24,7 +24,7 @@ import { useState } from 'react';
 export default function Signup() {
 
   const[selectedRole, setSelectedRole] = useState("");
-  const[form, setForm] = useState ({email:"", role:""})
+  const[form, setForm] = useState ({email:"", role:"", imeIgrac:"",prezimeIgrac:"",brojTel:""})
   const navigate = useNavigate();
 
   const emailRegex = /^[\w\-\.]+@(gmail+\.)+[\w-]{2,}$/gm;
@@ -62,7 +62,7 @@ export default function Signup() {
       },
       body:data,
     }
-    return fetch("/api/register", options).then(
+    return fetch(`/api/register/${data.role}`, options).then(
       (res)=> {
         console.log(res)
         // TODO if fetch returns error display error msg
@@ -98,10 +98,23 @@ export default function Signup() {
                 </SelectTrigger>
                 <SelectContent position="popper">
                   <SelectItem value="igrač">Igrač</SelectItem>
-                  <SelectItem value="vlasnik">Vlasnik terena</SelectItem>
-               
                 </SelectContent>
               </Select>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Ime igraca</Label>
+                <Input id="name" placeholder="Ime igraca" name="imeIgrac" onChange={onChange}/>
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Prezime igraca</Label>
+                <Input id="name" placeholder="Prezime igraca" name="prezimeIgrac" onChange={onChange}/>
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Broj telefona</Label>
+                <Input id="name" placeholder="Broj telefona igraca" name="brojTel" onChange={onChange}/>
+              </div>
 
             </div>
 

@@ -56,7 +56,7 @@ public class TerenServiceJpa implements TerenService{
     public Teren updateTerenName(long terenId, String name) {
         Teren teren = fetch(terenId);
         teren.setNazivTeren(name);
-        return teren;
+        return terenRepo.save(teren);
     }
     
     @Override
@@ -68,9 +68,8 @@ public class TerenServiceJpa implements TerenService{
 
     @Override
     public Teren deleteTeren(long terenId) {
-        // TODO Auto-generated method stub
         Teren teren = fetch(terenId);   // throws EntityMissingException
         terenRepo.delete(teren);
-        return terenRepo.save(teren);
+        return teren;
     }
 }

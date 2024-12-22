@@ -14,12 +14,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.print.attribute.standard.PrinterMessageFromOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;

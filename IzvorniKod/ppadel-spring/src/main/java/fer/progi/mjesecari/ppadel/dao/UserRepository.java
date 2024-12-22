@@ -14,7 +14,6 @@ public interface UserRepository extends JpaRepository<Korisnik, Long> {
   // Note: exists- query is the best if we just want to predict conflicts
   boolean existsByEmail(String email);
   Optional<Korisnik> findByTip(String tip);
-  Administrator findAdministratorById (Long id);
-  Administrator save(Administrator admin);
+
 }
 

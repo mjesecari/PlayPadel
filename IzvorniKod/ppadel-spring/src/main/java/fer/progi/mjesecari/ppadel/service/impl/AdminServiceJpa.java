@@ -1,5 +1,6 @@
 package fer.progi.mjesecari.ppadel.service.impl;
 
+import fer.progi.mjesecari.ppadel.dao.AdminRepository;
 import fer.progi.mjesecari.ppadel.dao.UserRepository;
 import fer.progi.mjesecari.ppadel.domain.Administrator;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
@@ -20,6 +21,8 @@ public class AdminServiceJpa implements AdminService {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private AdminRepository adminRepo;
 
     @Override
     public List<Korisnik> getAllUsers() {
@@ -69,12 +72,12 @@ public class AdminServiceJpa implements AdminService {
 
     @Override
     public Administrator updateClanarina(long id, Float novaCijenaClanarine) {
-        Administrator admin = userRepo.findAdministratorById(id);
+        Administrator admin = adminRepo.findAdministratorById(id);
         if (admin == null){
             throw new EntityMissingException(Administrator.class, id);
         }
         admin.setCijenaClanarine(novaCijenaClanarine);
-        return userRepo.save(admin);
+        return adminRepo.save(admin);
     }
 
 

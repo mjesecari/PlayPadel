@@ -14,7 +14,7 @@ import {
 	XMarkIcon,
 	UserIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const nav = {
 	player: [
@@ -42,6 +42,8 @@ export default function NavBar() {
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
 
+    const navigate = useNavigate();
+
 	if (userInfo.admin) {
 		navigation = nav.admin;
 	} else if (userInfo.owner) {
@@ -49,6 +51,11 @@ export default function NavBar() {
 	} else {
 		navigation = nav.player;
 	}
+
+    const handleSignOut = () => {
+        sessionStorage.clear();
+        navigate('/login');
+    };
 
 	return (
 		<Disclosure
@@ -140,6 +147,7 @@ export default function NavBar() {
 								<MenuItem>
 									<a
 										href="#"
+                                        onClick={handleSignOut}
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out

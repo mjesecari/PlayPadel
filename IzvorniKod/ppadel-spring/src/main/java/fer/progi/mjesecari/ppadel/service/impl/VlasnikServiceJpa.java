@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 public class VlasnikServiceJpa implements VlasnikService {
     @Autowired
@@ -28,6 +29,11 @@ public class VlasnikServiceJpa implements VlasnikService {
         Assert.hasText(vlasnik.getNazivVlasnik(), "Vlasnik mora imati naziv");
         Assert.hasText(vlasnik.getLokacija(), "Vlasnik mora imati zadanu lokaciju");
         Assert.hasText(vlasnik.getBrojTel(), "Vlasnik mora imati broj telefona");
+    }
+
+    @Override
+    public Optional<Vlasnik> findByEmail(String email) {
+        return vlasnikRepository.findByEmail(email);
     }
 
 }

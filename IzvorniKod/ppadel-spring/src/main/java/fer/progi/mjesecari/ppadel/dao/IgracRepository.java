@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface IgracRepository extends JpaRepository<Igrac, Long> {
     @Override
     Optional<Igrac> findById(Long IDKorisnik);
-
+    Optional<Igrac> findByEmail(String Email);
 }

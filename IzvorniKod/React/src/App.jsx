@@ -35,16 +35,13 @@ function App() {
         }else{
           throw new Error('User not authenticated');
         }
-        
       }
     ).then((data) =>{
       setUserInfo(data)
       sessionStorage.setItem("userInfo", JSON.stringify(data));
-
     }).catch((error) => {
       console.error('Error fetching user data:', error);
     })
-
   }, []
 )
   return (

@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 public class IgracServiceJpa implements IgracService {
+
+    @Override
+    public Optional<Igrac> findByEmail(String email) {
+        return igracRepository.findByEmail(email);
+    }
 
     @Autowired
     private IgracRepository igracRepository;
@@ -30,4 +36,5 @@ public class IgracServiceJpa implements IgracService {
         Assert.hasText(igrac.getPrezimeIgrac(), "Igrac mora imati prezime");
         Assert.hasText(igrac.getBrojTel(), "Igrac mora imati broj telefona");
     }
+
 }

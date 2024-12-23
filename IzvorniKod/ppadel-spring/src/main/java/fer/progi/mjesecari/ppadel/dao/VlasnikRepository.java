@@ -10,4 +10,5 @@ public interface VlasnikRepository extends JpaRepository<Vlasnik, Long> {
     @Override
     Optional<Vlasnik> findById(Long IDKorisnik);
 
+    Optional<Vlasnik> findByEmail(String email);
 }

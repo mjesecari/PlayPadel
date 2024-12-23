@@ -62,13 +62,23 @@ export default function Signup() {
       },
       body:data,
     }
-    return fetch(`/api/register/${data.role}`, options).then(
-      (res)=> {
-        console.log(res)
-        // TODO if fetch returns error display error msg
-        navigate('/Login')
-      }
-    )
+    if (form.role == "igrač")
+      return fetch(`/api/register/igrac`, options).then(
+        (res)=> {
+          console.log(res)
+          // TODO if fetch returns error display error msg
+          navigate('/Login')
+        }
+      )
+    else {
+      return fetch(`/api/register/vlasnik`, options).then(
+        (res)=> {
+          console.log(res)
+          // TODO if fetch returns error display error msg
+          navigate('/Login')
+        }
+      )
+    }
     
   }
 

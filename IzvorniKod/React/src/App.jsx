@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
+
 //import CourtPreview from "./components/CourtPreview";
 import Infouser from "./pages/Infouser";
 
@@ -53,8 +54,9 @@ function App() {
 
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
-					<Route path="/MainPage" element={<MainPage />} />
+					
 					<Route path="/Infouser" element={<Infouser />} />
+					<Route path="/MainPage" element={<MainPage userInfo={userInfo} />} />
 				</Routes>
 			</BrowserRouter>
 		</>

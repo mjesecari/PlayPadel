@@ -1,60 +1,70 @@
-import React, { useState, useEffect } from "react";
-import "../Open.css"; // Ensure this is available for styling
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+//nazivi atributa
+//provjera rute
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { 
+  Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger 
+} from "@/components/ui/drawer";
+import { 
+  Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription 
+} from "@/components/ui/card";
 
-export default function Open() {
-  const [role, setRole] = useState("");
+export default function MainPage({ userInfo }) {
+  const [userDetails, setUserDetails] = useState(null);
 
-  // Fetch role from the backend
   useEffect(() => {
-    fetch("/api/getRole", { method: "GET" }) // Adjust the endpoint as needed
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched role:", data.role);
-        setRole(data.role); // Assuming the backend returns { role: "igrač" } or { role: "vlasnik" }
+    if (userInfo?.email) {
+      fetch(`/api/user/?email=${encodeURIComponent(userInfo.email)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => console.error("Error fetching role:", error));
-  }, []);
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch user details");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setUserDetails(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user details:", error);
+        });
+    }
+  }, [userInfo]);
 
-  // Render based on the role
+  if (!userDetails) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
-      {role === "igrač" && (
+      {userDetails.role === "igrač" && (
         <Drawer>
           <DrawerTrigger>Player Info</DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Podatci o igraču</DrawerTitle>
             </DrawerHeader>
-
             <DrawerFooter>
               <Card>
                 <CardHeader>
-                  <CardTitle>Ime Prezime</CardTitle>
+                  
                   <CardDescription>Igrač</CardDescription>
+
+                 
                 </CardHeader>
                 <CardContent>
-                  <p>Email:</p>
+                <p>Ime: {userDetails.imeIgrac}</p>
+                <br></br>
+                <p>Prezime: {userDetails.prezimeIgrac}</p>
+                <br></br>
+                  <p>Email: {userDetails.email}</p>
                 </CardContent>
                 <CardFooter>
-                  <p>Broj telefona:</p>
+                  <p>Broj telefona: {userDetails.brojTel}</p>
                 </CardFooter>
               </Card>
               <br />
@@ -65,25 +75,27 @@ export default function Open() {
         </Drawer>
       )}
 
-      {role === "vlasnik" && (
+      {userDetails.role === "vlasnik" && (
         <Drawer>
           <DrawerTrigger>Owner Info</DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Podatci o vlasniku</DrawerTitle>
             </DrawerHeader>
-
             <DrawerFooter>
               <Card>
                 <CardHeader>
-                  <CardTitle>Naziv kluba</CardTitle>
+                  <CardTitle>{userDetails.nazivVlasnik}</CardTitle>
                   <CardDescription>Vlasnik</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p>Email:</p>
+                  <p>Email: {userDetails.email}</p>
                 </CardContent>
                 <CardFooter>
-                  <p>Broj telefona:</p>
+                  <p>Broj telefona: {userDetails.brojTel}</p>
+                  <br></br>
+
+                  <p>Lokacija: {userDetails.lokacija}</p>
                 </CardFooter>
               </Card>
               <br />

@@ -15,6 +15,7 @@
 | 0.12  | Dodani dijagrami obrazaca uporabe i dodatno uređeni već postojeći dijagrami dkoumentacije na strani 4. | Šimun Vrsalović, Boris Šeremet Lukšić | 15.11.2024. |
 | 1.0   | Prva revizija dokumentacije                                                                            | Klara Vrbanac                         | 15.11.2024. |
 | 1.1   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 7.12.2024.  |
+| 1.2   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 26.12.2024. |
 
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 

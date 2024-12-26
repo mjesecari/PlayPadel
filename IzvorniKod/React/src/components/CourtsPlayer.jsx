@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import moment from "moment";
+
 import {
 	Card,
 	CardHeader,
@@ -37,19 +39,33 @@ export default function CourtsPlayer({ userInfo }) {
 
 	useEffect(() => {
 		fetchCourts();
+		let busy = "zauzeto";
+		console.log(moment("2024-12-14 13:00", "YYYY-MM-DD HH:mm").isValid());
 		setEvents([
 			{
 				id: "1",
-				title: "Event 1",
-				start: "2024-12-16 13:00",
-				end: "2024-12-16 15:00",
+				title: busy,
+				start: moment("2024-12-25 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-25 15:00", "YYYY-MM-DD HH:mm").toDate(),
 			},
 			{
 				id: "2",
-				title: "Event 2",
-				start: "2024-12-18 03:00",
-				end: "2024-12-18 05:00",
+				title: busy,
+				start: moment("2024-12-26 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-26 15:00", "YYYY-MM-DD HH:mm").toDate(),
 			},
+			{
+				id: "3",
+				title: busy,
+				start: moment("2024-12-22 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-22 15:00", "YYYY-MM-DD HH:mm").toDate(),
+			},
+			// {
+			// 	id: "2",
+			// 	title: "Event 2",
+			// 	start: "2024-12-18 03:00",
+			// 	end: "2024-12-18 05:00",
+			// },
 		]);
 	}, []);
 
@@ -61,6 +77,15 @@ export default function CourtsPlayer({ userInfo }) {
 		setIsOpenCal(false);
 	}
 
+	function sendReservation() {
+		// axios
+		// 	.post("/api/tereni/")
+		// 	.then((res) => {
+		// 		setCourts(res.data);
+		// 	})
+		// 	.catch((error) => console.log(error));
+	}
+
 	return (
 		<>
 			<Dialog
@@ -70,9 +95,15 @@ export default function CourtsPlayer({ userInfo }) {
 			>
 				<DialogContent className="w-screen !max-w-fit	">
 					<DialogTitle>Termini</DialogTitle>
-					Prikazani su moguci termini
+					<p>
+						Prikazani su zauzeti termini. Kliknite i povucite za biranje
+						željenog termina.
+					</p>
 					<CalendarApp eventsProp={events}></CalendarApp>
-					Vlasnik terena dopusta rezervacije u intervalu xx:xx-xx:xx
+					Vaš termin je [fetch from calendar]
+					<Button className="text-white" onClick={sendReservation}>
+						Potvrdi
+					</Button>
 				</DialogContent>
 			</Dialog>
 

@@ -79,7 +79,7 @@ export default function CourtsPlayer({ userInfo }) {
 
 	function sendReservation() {
 		// axios
-		// 	.post("/api/tereni/")
+		// 	.post("/api/tereni/s")
 		// 	.then((res) => {
 		// 		setCourts(res.data);
 		// 	})
@@ -100,10 +100,6 @@ export default function CourtsPlayer({ userInfo }) {
 						željenog termina.
 					</p>
 					<CalendarApp eventsProp={events}></CalendarApp>
-					Vaš termin je [fetch from calendar]
-					<Button className="text-white" onClick={sendReservation}>
-						Potvrdi
-					</Button>
 				</DialogContent>
 			</Dialog>
 

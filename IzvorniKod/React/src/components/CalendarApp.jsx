@@ -1,50 +1,11 @@
-// import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
-// import {
-// 	createViewDay,
-// 	createViewMonthAgenda,
-// 	createViewMonthGrid,
-// 	createViewWeek,
-// } from "@schedule-x/calendar";
-// import { createEventsServicePlugin } from "@schedule-x/events-service";
-
-// import "@schedule-x/theme-default/dist/index.css";
-
-// function CalendarApp({ eventsProp }) {
-// 	console.log(eventsProp);
-// 	const eventsService = useState(() => createEventsServicePlugin())[0];
-
-// 	const calendar = useCalendarApp({
-// 		views: [
-// 			createViewDay(),
-// 			createViewWeek(),
-// 			createViewMonthGrid(),
-// 			createViewMonthAgenda(),
-// 		],
-// 		//[],
-// 		events: eventsProp,
-// 		plugins: [eventsService],
-// 	});
-
-// 	useEffect(() => {
-// 		// get all events
-// 		eventsService.getAll();
-// 	}, []);
-
-// 	return (
-// 		<div>
-// 			<ScheduleXCalendar calendarApp={calendar} />
-// 		</div>
-// 	);
-// }
-
-// export default CalendarApp;
-
+import { Button } from "@headlessui/react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useEffect, useState } from "react";
 import { Overlay } from "@radix-ui/react-dialog";
+import { CoinsIcon } from "lucide-react";
 
 export default function CalendarApp({ eventsProp }) {
 	const localizer = momentLocalizer(moment);
@@ -67,14 +28,8 @@ export default function CalendarApp({ eventsProp }) {
 	}, [timeSelected]);
 
 	function dateSelected(slotinfo) {
-		// if (timeSelected != undefined) {
-		// 	console.log("should  remove");
-		// 	setEventsList([
-		// 		...eventsList.filter((e) => !timeSelected.start == e.start),
-		// 	]);
-		// }
-
 		setTimeSelected({
+			id: 0,
 			title: "ODABRAN TERMIN",
 			start: slotinfo.start,
 			end: slotinfo.end,
@@ -83,14 +38,25 @@ export default function CalendarApp({ eventsProp }) {
 		setEventsList([
 			...eventsList,
 			{
-				id: "0",
+				id: 0,
 				title: "ODABRAN TERMIN",
 				start: slotinfo.start,
 				end: slotinfo.end,
 			},
 		]);
 		console.log(typeof eventsList, eventsList);
-		//checkIfAllowed();
+	}
+
+	function sendReservation() {
+		if (overlap) return;
+		// TODO
+		// axios
+		// 	.post("/api/tereni/s")
+		// 	.then((res) => {
+		// 		setCourts(res.data);
+		// 	})
+		// 	.catch((error) => console.log(error));
+		// CLOSE DIALOG (by sending signal to parent? or click escape)
 	}
 
 	// check if overlap
@@ -101,13 +67,16 @@ export default function CalendarApp({ eventsProp }) {
 		if (
 			eventsList.filter((e) => {
 				return (
-					(timeSelected.end > e.start && timeSelected.end < e.end) ||
-					(timeSelected.start > e.start && timeSelected.start < e.end)
+					e.id != timeSelected.id &&
+					((timeSelected.end > e.start && timeSelected.end <= e.end) ||
+						(timeSelected.start >= e.start &&
+							timeSelected.start < e.end) ||
+						(timeSelected.start < e.start && timeSelected.end > e.end))
 				);
 			}).length != 0
 		)
 			setOverlap(true);
-	}, [timeSelected]);
+	}, [lastSelected]);
 
 	const MyCalendar = (props) => (
 		<div>
@@ -118,7 +87,7 @@ export default function CalendarApp({ eventsProp }) {
 				endAccessor="end"
 				defaultDate={new Date()}
 				defaultView="week"
-				style={{ height: "65vh", width: "50vw" }}
+				style={{ height: "70vh", width: "60vw" }}
 				// sets time interval 08:00-20:00
 				// could be dynamic if necessary
 				min={new Date(2024, 1, 0, 8, 0, 0)}
@@ -138,6 +107,15 @@ export default function CalendarApp({ eventsProp }) {
 	return (
 		<div>
 			<MyCalendar />
+
+			<div>
+				<Button
+					className="text-white w-full mt-4"
+					onClick={sendReservation}
+				>
+					Potvrdi
+				</Button>
+			</div>
 		</div>
 	);
 }

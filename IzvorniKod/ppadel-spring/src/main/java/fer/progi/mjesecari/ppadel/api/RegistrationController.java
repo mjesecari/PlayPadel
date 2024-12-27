@@ -8,6 +8,7 @@ import fer.progi.mjesecari.ppadel.service.IgracService;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Profile({"form-security", "oauth-security"})
@@ -30,14 +32,14 @@ public class RegistrationController {
     private IgracService igracService;
     private VlasnikService vlasnikService;
 
-    private static class RoleIgrac {
+    private static class RoleDTO {
         private String role;
         private String email;
         private String imeIgrac;
         private String prezimeIgrac;
         private String BrojTel;
 
-        public RoleIgrac(@JsonProperty("email") String email,@JsonProperty("role") String role, @JsonProperty("imeIgrac") String imeIgrac, @JsonProperty("prezimeIgrac") String prezimeIgrac, @JsonProperty("brojTel") String brojTel) {
+        public RoleDTO(@JsonProperty("role") String role, @JsonProperty("email") String email, @JsonProperty("imeIgrac") String imeIgrac, @JsonProperty("prezimeIgrac") String prezimeIgrac, @JsonProperty("brojTel") String brojTel) {
             this.role = role;
             this.email = email;
             this.imeIgrac = imeIgrac;
@@ -144,29 +146,21 @@ public class RegistrationController {
     }
 
     // TODO: change to postmapping
-    @PostMapping ("/igrac")
-    public ResponseEntity<Korisnik> setRoleIgrac(@RequestBody RoleIgrac roleIgrac) {
+    @PostMapping ("igrac")
+    public ResponseEntity<Igrac> setRole(@RequestBody RoleDTO roleIgrac) {
         // DefaultOidcUser oidcUser = (DefaultOidcUser)((OAuth2AuthenticationToken)principal).getPrincipal();
         // Map<String,Object> claims = oidcUser.getClaims();
         // String userEmail = (String)claims.get("email");
 
-        if (roleIgrac.getRole().equals("igrač")) {
-            Igrac igrac = new Igrac();
-            igrac.setEmail(roleIgrac.getEmail());
-            igrac.setImeIgrac(roleIgrac.getImeIgrac());
-            igrac.setPrezimeIgrac(roleIgrac.getPrezimeIgrac());
-            igrac.setBrojTel(roleIgrac.getBrojTel());
-            igrac.setTip(roleIgrac.getRole());
-            Igrac saved = igracService.createIgrac(igrac);
-            return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
-        }
-        else {
-            Korisnik newKorisnik = new Korisnik();
-            newKorisnik.setEmail(roleIgrac.getEmail());
-            newKorisnik.setTip(roleIgrac.getRole());
-            Korisnik saved = userService.createKorisnik(newKorisnik);
-            return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
-        }
+        Igrac igrac = new Igrac();
+        igrac.setEmail(roleIgrac.getEmail());
+        igrac.setImeIgrac(roleIgrac.getImeIgrac());
+        igrac.setPrezimeIgrac(roleIgrac.getPrezimeIgrac());
+        igrac.setBrojTel(roleIgrac.getBrojTel());
+        igrac.setTip(roleIgrac.getRole());
+        Igrac saved = igracService.createIgrac(igrac);
+        return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
+
 
         //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));
 
@@ -174,7 +168,7 @@ public class RegistrationController {
 
     // TODO: change to postmapping
     @PostMapping ("/vlasnik")
-    public ResponseEntity<Korisnik> setRole(@RequestBody RoleVlasnik roleVlasnik) {
+    public ResponseEntity<Vlasnik> setRole(@RequestBody RoleVlasnik roleVlasnik) {
         // DefaultOidcUser oidcUser = (DefaultOidcUser)((OAuth2AuthenticationToken)principal).getPrincipal();
         // Map<String,Object> claims = oidcUser.getClaims();
         // String userEmail = (String)claims.get("email");
@@ -190,11 +184,7 @@ public class RegistrationController {
             return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
         }
         else {
-            Korisnik newKorisnik = new Korisnik();
-            newKorisnik.setEmail(roleVlasnik.getEmail());
-            newKorisnik.setTip(roleVlasnik.getRole());
-            Korisnik saved = userService.createKorisnik(newKorisnik);
-            return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not authenticated with oauth2\n");
         }
 
         //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));

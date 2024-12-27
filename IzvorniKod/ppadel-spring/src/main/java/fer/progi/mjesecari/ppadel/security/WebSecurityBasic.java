@@ -25,12 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
 
-import java.util.List;
-
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Configuration
@@ -77,7 +72,7 @@ public class WebSecurityBasic {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(frontendUrl));
         configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);

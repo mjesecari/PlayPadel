@@ -3,9 +3,12 @@ package fer.progi.mjesecari.ppadel.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jdk.jfr.DataAmount;
 
 @Entity
 public class Igrac extends Korisnik{
+
+    public Igrac() {}
 
     private String ImeIgrac;
 

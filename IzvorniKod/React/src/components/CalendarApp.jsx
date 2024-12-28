@@ -21,7 +21,6 @@ export default function CalendarApp({ eventsProp }) {
 			start: slotinfo.start,
 			end: endTime,
 		});
-		console.log("time selected,", timeSelected);
 		setEventsList([
 			...eventsList,
 			{
@@ -47,7 +46,6 @@ export default function CalendarApp({ eventsProp }) {
 	// add to events list
 	useEffect(() => {
 		if (lastSelected != undefined) {
-			console.log("should  remove");
 			setEventsList([
 				...eventsList.filter((e) => e.start != lastSelected.start),
 			]);

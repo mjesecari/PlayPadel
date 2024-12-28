@@ -1,13 +1,15 @@
 package fer.progi.mjesecari.ppadel.domain;
 
 
+import java.io.Serializable;
+
 import org.springframework.util.Assert;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Teren {
+public class Teren implements Serializable{
     @Id
     @GeneratedValue
     private Long IDTeren;

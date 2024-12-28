@@ -99,6 +99,8 @@ export default function CourtsPlayer({ userInfo }) {
 						Prikazani su zauzeti termini. Kliknite i povucite za biranje
 						željenog termina.
 					</p>
+					<p>Svi termini su u trajanju od jednog sata!</p>
+
 					<CalendarApp eventsProp={events}></CalendarApp>
 				</DialogContent>
 			</Dialog>

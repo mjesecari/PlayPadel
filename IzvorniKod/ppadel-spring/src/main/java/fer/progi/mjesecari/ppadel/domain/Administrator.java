@@ -9,6 +9,10 @@ public class Administrator extends Korisnik {
     @NotNull
     private Float cijenaClanarine;
 
+    public Administrator() {
+        cijenaClanarine = 0.0F;
+    }
+
     public @NotNull Float getCijenaClanarine() {
         return cijenaClanarine;
     }

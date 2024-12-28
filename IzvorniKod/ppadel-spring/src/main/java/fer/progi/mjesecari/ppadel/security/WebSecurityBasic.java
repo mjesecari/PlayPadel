@@ -197,7 +197,7 @@ public class WebSecurityBasic {
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/", configuration);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);
         return urlBasedCorsConfigurationSource;
     }
 
@@ -216,10 +216,10 @@ public class WebSecurityBasic {
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_oauth2"));
                         return;
                     }
-                    if (korisnik.isOwner())
-                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
-                    else if(korisnik.isAdmin())
+                    if (korisnik.isAdmin())
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    else if(korisnik.isOwner())
+                        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
                     else
                         mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_PLAYER"));
 

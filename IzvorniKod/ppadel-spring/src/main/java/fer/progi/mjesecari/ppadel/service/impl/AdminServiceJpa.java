@@ -6,6 +6,7 @@ import fer.progi.mjesecari.ppadel.domain.Administrator;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.service.AdminService;
 import fer.progi.mjesecari.ppadel.service.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.KorisnikService;
 import fer.progi.mjesecari.ppadel.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class AdminServiceJpa implements AdminService {
     @Autowired
     private AdminRepository adminRepo;
 
+    @Autowired
+    private KorisnikService korisnikService;
+
     @Override
     public List<Korisnik> getAllUsers() {
         return userRepo.findAll();
@@ -31,7 +35,7 @@ public class AdminServiceJpa implements AdminService {
 
     @Override
     public Korisnik addUser(Korisnik korisnik) {
-        validate(korisnik);
+        /**validate(korisnik);
         Assert.isNull(korisnik.getId(),
                 "User ID must be null, not: " + korisnik.getId()
         );
@@ -39,14 +43,17 @@ public class AdminServiceJpa implements AdminService {
             throw new RequestDeniedException(
                     "User with email " + korisnik.getEmail() + " already exists"
             );
-        return userRepo.save(korisnik);
+
+        return userRepo.save(korisnik);**/
+        return korisnikService.createKorisnik(korisnik);
     }
 
     @Override
     public Korisnik deleteUser(long id) {
-        Korisnik korisnik = fetch(id);
+        /**Korisnik korisnik = fetch(id);
         userRepo.delete(korisnik);
-        return korisnik;
+        return korisnik;**/
+        return korisnikService.deleteKorisnik(id);
     }
 
     @Override

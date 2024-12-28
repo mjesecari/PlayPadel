@@ -2,6 +2,7 @@ package fer.progi.mjesecari.ppadel.api;
 
 import java.net.URI;
 
+import fer.progi.mjesecari.ppadel.domain.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,11 @@ public class RegistrationController {
         newKorisnik.setEmail(roleDTO.getEmail());
         newKorisnik.setTip(roleDTO.getRole());
         Korisnik saved = userService.createKorisnik(newKorisnik);
+        if(roleDTO.getRole().equals("admin")){
+            Administrator newAdministrator = new Administrator();
 
+        }
+        //TODO add if() user has role vlasnik or igrac -> new Vlasnik()/new Igrac()
         //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));
 
         return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);

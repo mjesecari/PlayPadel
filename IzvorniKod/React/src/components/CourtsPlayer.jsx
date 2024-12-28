@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import moment from "moment";
+
 import {
 	Card,
 	CardHeader,
@@ -7,29 +9,100 @@ import {
 	CardContent,
 	CardFooter,
 } from "../components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 
+import CalendarApp from "./CalendarApp";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 
 export default function CourtsPlayer({ userInfo }) {
 	const [courts, setCourts] = useState([]);
+	const [events, setEvents] = useState();
+	const [isOpenCal, setIsOpenCal] = useState(false);
 
 	function fetchCourts() {
 		axios
 			.get("/api/tereni/")
 			.then((res) => {
 				setCourts(res.data);
-				console.log(res.data);
 			})
 			.catch((error) => console.log(error));
 	}
 
 	useEffect(() => {
 		fetchCourts();
+		let busy = "zauzeto";
+		console.log(moment("2024-12-14 13:00", "YYYY-MM-DD HH:mm").isValid());
+		setEvents([
+			{
+				id: "1",
+				title: busy,
+				start: moment("2024-12-25 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-25 15:00", "YYYY-MM-DD HH:mm").toDate(),
+			},
+			{
+				id: "2",
+				title: busy,
+				start: moment("2024-12-26 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-26 15:00", "YYYY-MM-DD HH:mm").toDate(),
+			},
+			{
+				id: "3",
+				title: busy,
+				start: moment("2024-12-22 13:00", "YYYY-MM-DD HH:mm").toDate(),
+				end: moment("2024-12-22 15:00", "YYYY-MM-DD HH:mm").toDate(),
+			},
+			// {
+			// 	id: "2",
+			// 	title: "Event 2",
+			// 	start: "2024-12-18 03:00",
+			// 	end: "2024-12-18 05:00",
+			// },
+		]);
 	}, []);
+
+	function openCal() {
+		setIsOpenCal(true);
+	}
+
+	function closeCal() {
+		setIsOpenCal(false);
+	}
+
+	function sendReservation() {
+		// axios
+		// 	.post("/api/tereni/s")
+		// 	.then((res) => {
+		// 		setCourts(res.data);
+		// 	})
+		// 	.catch((error) => console.log(error));
+	}
 
 	return (
 		<>
+			<Dialog
+				className="w-screen max-w-fit"
+				open={isOpenCal}
+				onOpenChange={setIsOpenCal}
+			>
+				<DialogContent className="w-screen !max-w-fit	">
+					<DialogTitle>Termini</DialogTitle>
+					<p>
+						Prikazani su zauzeti termini. Kliknite i povucite za biranje
+						željenog termina.
+					</p>
+					<CalendarApp eventsProp={events}></CalendarApp>
+				</DialogContent>
+			</Dialog>
+
 			<div className="top-0 m-auto mt-20 text-left">
 				<div>
 					{courts.length == 0 && (
@@ -58,6 +131,7 @@ export default function CourtsPlayer({ userInfo }) {
 									variant="outline"
 									className="text-white"
 									id={court.idteren}
+									onClick={() => openCal()}
 								>
 									Rezerviraj
 								</Button>

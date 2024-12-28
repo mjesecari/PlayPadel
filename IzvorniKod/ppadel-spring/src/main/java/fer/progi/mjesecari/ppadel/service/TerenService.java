@@ -57,6 +57,16 @@ public interface TerenService {
    * @throws IllegalArgumentException if name is empty or any is <code>null</code>
    */
   Teren updateTerenName(long terenId, String name);
+  
+  /**
+  * Updates the type of a given teren.
+  * @param terenId identifies teren to update
+  * @param type new type of the teren
+  * @return updated teren object
+  * @throws EntityMissingException if entity with the same ID as in parameter does not exist
+  * @throws IllegalArgumentException if type is empty or any is <code>null</code>
+  */
+ Teren updateTerenType(long terenId, String type);
 
 
   /**

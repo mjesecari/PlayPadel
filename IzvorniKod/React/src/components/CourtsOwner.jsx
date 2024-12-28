@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import NavBar from "@/components/Navbar";
 import {
 	Card,
 	CardHeader,
@@ -39,6 +38,7 @@ export default function CourtsOwner({ userInfo }) {
 	const [deleteId, setDeleteId] = useState();
 
 	const [form, setForm] = useState({
+		id: undefined,
 		naziv: "",
 		tip: "",
 		vlasnikTerenaId: userInfo.id,
@@ -67,6 +67,7 @@ export default function CourtsOwner({ userInfo }) {
 	};
 
 	const onSubmit = () => {
+		console.log("submit", form);
 		if (form.tip == "") {
 			alert("Odaberite vrstu terena.");
 			return;
@@ -77,18 +78,45 @@ export default function CourtsOwner({ userInfo }) {
 		}
 		const data = JSON.stringify(form);
 
+		// add new
+		if (!form.id) {
+			axios({
+				url: "/api/tereni/",
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				data: data,
+			})
+				.then((res) => {
+					setOpenRes(true);
+					setOpenTerenInp(false);
+					setForm({
+						id: undefined,
+						naziv: "",
+						tip: "",
+						vlasnikTerenaId: userInfo.id,
+					});
+				})
+				.catch((err) => {});
+			return;
+		}
+
+		// update existing
 		axios({
-			url: "/api/tereni/",
-			method: "POST",
+			url: "/api/tereni/" + form.id,
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			data: data,
 		})
 			.then((res) => {
+				console.log("put");
 				setOpenRes(true);
 				setOpenTerenInp(false);
 				setForm({
+					id: undefined,
 					naziv: "",
 					tip: "",
 					vlasnikTerenaId: userInfo.id,
@@ -103,6 +131,7 @@ export default function CourtsOwner({ userInfo }) {
 	}
 
 	function deleteConfirmed() {
+		console.log(deleteId);
 		axios({
 			url: "/api/tereni/" + deleteId,
 			method: "DELETE",
@@ -121,6 +150,21 @@ export default function CourtsOwner({ userInfo }) {
 		setDeleteId();
 		setOpenConfirmation(false);
 	}
+
+	function editCourt(e) {
+		setOpenTerenInp(true);
+
+		let editable = courts.filter((o) => o.idteren == e.target.id)[0];
+
+		setForm({
+			id: editable.idteren,
+			naziv: editable.nazivTeren,
+			tip: "", // editable.tipTeren,
+			vlasnikTerenaId: userInfo.id,
+		});
+		console.log("now", form);
+	}
+
 	if (!userInfo) return <p>Loading...</p>;
 
 	// checked in local storage
@@ -131,7 +175,11 @@ export default function CourtsOwner({ userInfo }) {
 					<h1 className="text-left m-10">Moji tereni</h1>
 				</div>
 
-				<Dialog open={openTerenInp} onOpenChange={setOpenTerenInp}>
+				<Dialog
+					id="input"
+					open={openTerenInp}
+					onOpenChange={setOpenTerenInp}
+				>
 					<DialogTrigger asChild>
 						<Button className="h-fit text-white ml-10">
 							Dodaj novi teren
@@ -210,6 +258,7 @@ export default function CourtsOwner({ userInfo }) {
 					</DialogContent>
 				</Dialog>
 
+				{/* display courts */}
 				<div className="flex h-fit flex-wrap">
 					{courts.map((court) => (
 						<Card key={court.idteren} className="w-[350px] m-8">
@@ -222,6 +271,14 @@ export default function CourtsOwner({ userInfo }) {
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>
 							</CardContent>
 							<CardFooter className="flex justify-between">
+								<Button
+									variant="outline"
+									className="text-white"
+									id={court.idteren}
+									onClick={(e) => editCourt(e)}
+								>
+									Uredi
+								</Button>
 								<Button
 									variant="outline"
 									className="text-white"

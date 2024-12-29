@@ -16,7 +16,7 @@ public class DBInitializaer implements CommandLineRunner {
     public void run(String...args) throws Exception {
         Korisnik admin = new Korisnik();
         admin.setTip("admin");
-        admin.setEmail("dinoplecko@gmail.com");
+        admin.setEmail("playpadel.mjesecari@gmail.com");
         userRepository.save(admin);
     }
 }

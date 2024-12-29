@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fer.progi.mjesecari.ppadel.api.dto.RezervacijaDTO;
@@ -37,8 +38,14 @@ public class RezervacijaController {
 
 
     @GetMapping("")
-    public List<Rezervacija> getAll() {
-        return rezervacijaService.fetchAll();
+    public List<Rezervacija> getAll(@RequestParam(required = false) Long terenId) {
+        if(terenId == null){
+            return rezervacijaService.fetchAll();
+        }
+        // else
+        return rezervacijaService.fetchAllForTeren(terenId);
+        
+        
     }
     
     @PostMapping("")

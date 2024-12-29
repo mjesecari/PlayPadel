@@ -19,4 +19,6 @@ public interface RezervacijaService {
     Rezervacija deleteRezervacija(RezervacijaId rezervacijaId);
     List<Rezervacija> fetchForTerenBetween(Teren teren, LocalDateTime t1, LocalDateTime t2);
     List<Rezervacija> fetchAll();
+    List<Rezervacija> fetchAllForTeren(Teren teren);
+    List<Rezervacija> fetchAllForTeren(Long terenId);
 }

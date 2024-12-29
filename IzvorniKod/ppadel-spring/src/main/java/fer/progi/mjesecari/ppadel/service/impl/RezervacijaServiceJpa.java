@@ -52,5 +52,15 @@ public class RezervacijaServiceJpa implements RezervacijaService {
     public List<Rezervacija> fetchAll() {
         return rezervacijaRepository.findAll();
     }
+
+    @Override
+    public List<Rezervacija> fetchAllForTeren(Teren teren) {
+        return fetchAllForTeren(teren.getIDTeren());
+    }
+
+    @Override
+    public List<Rezervacija> fetchAllForTeren(Long terenId) {
+        return rezervacijaRepository.findAllByZaTerenIDTeren(terenId);
+    }
     
 }

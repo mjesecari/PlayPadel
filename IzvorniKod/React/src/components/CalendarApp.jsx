@@ -4,8 +4,6 @@ import moment from "moment";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useEffect, useState } from "react";
-import { Overlay } from "@radix-ui/react-dialog";
-import { CoinsIcon } from "lucide-react";
 
 export default function CalendarApp({ eventsProp }) {
 	const localizer = momentLocalizer(moment);
@@ -15,36 +13,23 @@ export default function CalendarApp({ eventsProp }) {
 	const [eventsList, setEventsList] = useState(eventsProp);
 	const [overlap, setOverlap] = useState(false);
 
-	useEffect(() => {
-		console.log("last:", lastSelected);
-		console.log("time", timeSelected);
-		if (lastSelected != undefined) {
-			console.log("should  remove");
-			setEventsList([
-				...eventsList.filter((e) => e.start != lastSelected.start),
-			]);
-		}
-		setLastSelected(timeSelected);
-	}, [timeSelected]);
-
 	function dateSelected(slotinfo) {
+		let endTime = new Date(slotinfo.start);
+		endTime.setHours(endTime.getHours() + 1);
 		setTimeSelected({
-			id: 0,
-			title: "ODABRAN TERMIN",
+			title: "ODABRANO",
 			start: slotinfo.start,
-			end: slotinfo.end,
+			end: endTime,
 		});
-		console.log(timeSelected);
+		console.log("time selected,", timeSelected);
 		setEventsList([
 			...eventsList,
 			{
-				id: 0,
-				title: "ODABRAN TERMIN",
+				title: "ODABRANO",
 				start: slotinfo.start,
-				end: slotinfo.end,
+				end: endTime,
 			},
 		]);
-		console.log(typeof eventsList, eventsList);
 	}
 
 	function sendReservation() {
@@ -58,6 +43,17 @@ export default function CalendarApp({ eventsProp }) {
 		// 	.catch((error) => console.log(error));
 		// CLOSE DIALOG (by sending signal to parent? or click escape)
 	}
+
+	// add to events list
+	useEffect(() => {
+		if (lastSelected != undefined) {
+			console.log("should  remove");
+			setEventsList([
+				...eventsList.filter((e) => e.start != lastSelected.start),
+			]);
+		}
+		setLastSelected(timeSelected);
+	}, [timeSelected]);
 
 	// check if overlap
 	useEffect(() => {
@@ -87,6 +83,7 @@ export default function CalendarApp({ eventsProp }) {
 				endAccessor="end"
 				defaultDate={new Date()}
 				defaultView="week"
+				views={["week", "month"]}
 				style={{ height: "70vh", width: "60vw" }}
 				// sets time interval 08:00-20:00
 				// could be dynamic if necessary

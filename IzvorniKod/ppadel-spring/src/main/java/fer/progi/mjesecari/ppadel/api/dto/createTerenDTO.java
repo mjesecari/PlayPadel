@@ -1,4 +1,4 @@
-package fer.progi.mjesecari.ppadel.api;
+package fer.progi.mjesecari.ppadel.api.dto;
 
 public class createTerenDTO {
     private String naziv;

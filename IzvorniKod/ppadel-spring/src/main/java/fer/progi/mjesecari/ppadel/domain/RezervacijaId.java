@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 
 public class RezervacijaId implements Serializable {
     private Teren zaTeren;
-
+    private LocalDateTime vrijeme;
+    
     public Teren getZaTeren() {
         return zaTeren;
     }
@@ -22,9 +23,8 @@ public class RezervacijaId implements Serializable {
         this.vrijeme = vrijeme;
     }
 
-    private LocalDateTime vrijeme;
-
-    // default constructor
+    public RezervacijaId() {
+    }
 
     public RezervacijaId(Teren zaTeren, LocalDateTime vrijeme) {
         this.zaTeren = zaTeren;

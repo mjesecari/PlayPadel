@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Teren;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
-import fer.progi.mjesecari.ppadel.service.RequestDeniedException;
 import fer.progi.mjesecari.ppadel.service.TerenService;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 @Service
 public class TerenServiceJpa implements TerenService{

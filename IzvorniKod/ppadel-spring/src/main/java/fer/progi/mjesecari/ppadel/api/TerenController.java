@@ -3,6 +3,7 @@ package fer.progi.mjesecari.ppadel.api;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import fer.progi.mjesecari.ppadel.api.dto.createTerenDTO;
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Teren;
 import fer.progi.mjesecari.ppadel.service.TerenService;

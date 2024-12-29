@@ -2,6 +2,8 @@ package fer.progi.mjesecari.ppadel.domain;
 
 import java.time.LocalDateTime;
 
+import org.springframework.util.Assert;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -16,9 +18,29 @@ public class Rezervacija {
     @Id
     private LocalDateTime vrijeme;
     
+    @ManyToOne
+    private Korisnik korisnik;
+
     // trajanje uvijek 1h
 
+    public Rezervacija(Teren zaTeren, LocalDateTime vrijeme, Korisnik korisnik){
+        Assert.notNull(korisnik, "Korisnik mora biti naveden");
+        this.zaTeren = zaTeren;
+        this.vrijeme = vrijeme;
+        this.korisnik = korisnik;
 
+    }
+    
+    public Rezervacija() {
+    }
+
+
+    public Korisnik getKorisnik() {
+        return korisnik;
+    }
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
     public Teren getZaTeren() {
         return zaTeren;
     }

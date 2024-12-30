@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fer.progi.mjesecari.ppadel.api.exception.ResourceNotFoundException;
 import fer.progi.mjesecari.ppadel.dao.RezervacijaRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Rezervacija;
@@ -38,6 +39,9 @@ public class RezervacijaServiceJpa implements RezervacijaService {
     public Rezervacija deleteRezervacija(RezervacijaId rezervacijaId) {
 
         Rezervacija rezervacija = rezervacijaRepository.findByZaTerenAndVrijeme(rezervacijaId.getZaTeren(), rezervacijaId.getVrijeme());
+        if(rezervacija == null){
+            throw new ResourceNotFoundException("Nema rezeracije za teren " + rezervacijaId.getZaTeren() + " u " + rezervacijaId.getVrijeme());
+        }
         rezervacijaRepository.delete(rezervacija);
         return rezervacija;
 

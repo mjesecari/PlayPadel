@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
 import CourtsPage from "./pages/CourtsPage";
+import AdminPage from "./pages/AdminPage";
 
 import { useEffect, useState } from "react";
 
@@ -45,11 +46,8 @@ function App() {
 				<Routes>
 					<Route index element={<Home userInfo={userInfo} />} />
 					<Route path="Home" element={<Home userInfo={userInfo} />} />
-					<Route
-						path="CourtsPage"
-						element={<CourtsPage userInfo={userInfo} />}
-					/>
-
+					<Route path="CourtsPage" element={<CourtsPage userInfo={userInfo} />}/>
+					<Route path="AdminPage" element={<AdminPage userInfo={userInfo} />}/>
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
 					<Route path="/MainPage" element={<MainPage />} />

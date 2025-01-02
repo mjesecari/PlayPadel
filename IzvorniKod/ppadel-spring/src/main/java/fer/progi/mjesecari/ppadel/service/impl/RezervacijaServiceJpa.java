@@ -66,5 +66,10 @@ public class RezervacijaServiceJpa implements RezervacijaService {
     public List<Rezervacija> fetchAllForTeren(Long terenId) {
         return rezervacijaRepository.findAllByZaTerenIDTeren(terenId);
     }
+
+    @Override
+    public Rezervacija fetch(Long terenId, LocalDateTime t1) {
+        return rezervacijaRepository.findByZaTerenIDTerenAndVrijeme(terenId, t1);
+    }
     
 }

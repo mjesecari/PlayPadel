@@ -21,4 +21,5 @@ public interface RezervacijaService {
     List<Rezervacija> fetchAll();
     List<Rezervacija> fetchAllForTeren(Teren teren);
     List<Rezervacija> fetchAllForTeren(Long terenId);
+    Rezervacija fetch(Long terenId, LocalDateTime t1);
 }

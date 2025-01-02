@@ -27,6 +27,7 @@ export default function CourtsPlayer({ userInfo }) {
 	const [courts, setCourts] = useState([]);
 	const [events, setEvents] = useState();
 	const [isOpenCal, setIsOpenCal] = useState(false);
+	const [terenId, setTerenId] = useState();
 
 	function fetchCourts() {
 		axios
@@ -69,7 +70,15 @@ export default function CourtsPlayer({ userInfo }) {
 		]);
 	}, []);
 
-	function openCal() {
+	function openCal(idteren) {
+		axios
+			.get("/api/rezervacije?terenId=" + idteren)
+			.then((res) => {
+				console.log("data", res.data);
+				setEvents(res.data);
+			})
+			.then(console.log(events));
+		setTerenId(idteren);
 		setIsOpenCal(true);
 	}
 
@@ -101,7 +110,11 @@ export default function CourtsPlayer({ userInfo }) {
 					</p>
 					<p>Svi termini su u trajanju od jednog sata!</p>
 
-					<CalendarApp eventsProp={events}></CalendarApp>
+					<CalendarApp
+						//eventsProp={events}
+						userInfo={userInfo}
+						id={terenId}
+					></CalendarApp>
 				</DialogContent>
 			</Dialog>
 
@@ -133,7 +146,10 @@ export default function CourtsPlayer({ userInfo }) {
 									variant="outline"
 									className="text-white"
 									id={court.idteren}
-									onClick={() => openCal()}
+									onClick={() => {
+										openCal(court.idteren);
+										console.log(court.idteren);
+									}}
 								>
 									Rezerviraj
 								</Button>

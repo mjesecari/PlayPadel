@@ -25,8 +25,9 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 					let starttime = moment(
 						e.vrijeme.toSpliced(1, 1, e.vrijeme[1] - 1)
 					).toDate();
-					let endtime = new Date(starttime);
-					endtime.setHours(endtime.getHours() + 1);
+					let endtime = moment(e.vrijeme.toSpliced(1, 1, e.vrijeme[1] - 1))
+						.add(1, "hours")
+						.toDate();
 					return {
 						title: "ZAUZETO",
 						start: starttime,
@@ -39,8 +40,9 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 					let starttime = moment(
 						e.vrijeme.toSpliced(1, 1, e.vrijeme[1] - 1)
 					).toDate();
-					let endtime = new Date(starttime);
-					endtime.setHours(endtime.getHours() + 1);
+					let endtime = moment(e.vrijeme.toSpliced(1, 1, e.vrijeme[1] - 1))
+						.add(1, "hours")
+						.toDate();
 					return {
 						title: "ZAUZETO",
 						start: starttime,

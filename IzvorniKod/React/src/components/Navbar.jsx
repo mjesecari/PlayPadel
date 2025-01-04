@@ -19,13 +19,14 @@ import { Link } from "react-router-dom";
 const nav = {
 	player: [
 		{ name: "Početna stranica", href: "/", current: false },
+		{ name: "Moje rezervacije", href: "/Reservations", current: false },
+
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
 		{ name: "Turniri ", href: "#", current: false },
 	],
 
 	owner: [
 		{ name: "Početna stranica", href: "/", current: false },
-
 		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
 		{ name: "Moji turniri ", href: "#", current: false },
 	],

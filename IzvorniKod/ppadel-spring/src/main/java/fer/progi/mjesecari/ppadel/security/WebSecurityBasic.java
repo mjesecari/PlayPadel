@@ -50,7 +50,10 @@ public class WebSecurityBasic {
                 .cors(cors -> cors.configurationSource(CorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/register").permitAll(); // dostupne svakome
-                    auth.requestMatchers("/h2-console/*").hasRole("ADMIN");
+                    auth.requestMatchers("/register/igrac").permitAll();
+                    auth.requestMatchers("/register/vlasnik").permitAll();
+                    auth.requestMatchers("/h2-console/*").permitAll();
+                    auth.requestMatchers("/korisnik/*").permitAll();
                     auth.anyRequest().authenticated();
                 }).oauth2Login(oauth2 -> {
                     oauth2.userInfoEndpoint(
@@ -60,7 +63,7 @@ public class WebSecurityBasic {
                                     })
                             .successHandler(
                                     (request, response, authentication) -> {
-                                        response.sendRedirect(frontendUrl);
+                                        response.sendRedirect("http://localhost:5173/MainPage");
                                     });
                     oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/**");
                 })
@@ -70,7 +73,7 @@ public class WebSecurityBasic {
     @Bean
     CorsConfigurationSource CorsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(frontendUrl));
+        configuration.setAllowedOrigins(List.of(frontendUrl, "http://localhost:8080"));
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         configuration.setAllowCredentials(true);

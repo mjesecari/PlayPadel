@@ -1,11 +1,17 @@
 package fer.progi.mjesecari.ppadel.service;
 
 import fer.progi.mjesecari.ppadel.domain.Igrac;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface IgracService {
+    /**
+     * Lists all users in the system.
+     * @return a list with all users
+     */
     List<Igrac> listAll();
     Igrac createIgrac(Igrac igrac);
     void validate(Igrac igrac);

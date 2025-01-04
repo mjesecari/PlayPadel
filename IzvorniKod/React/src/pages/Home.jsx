@@ -29,7 +29,6 @@ export default function Home({ userInfo }) {
 	else {
 		return (
 			<>
-				<NavBar></NavBar>
 				<Card>
 					<CardHeader>
 						<CardTitle>PlayPadel</CardTitle>

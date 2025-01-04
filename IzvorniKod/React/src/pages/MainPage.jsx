@@ -12,9 +12,9 @@ import {
 export default function MainPage({ userInfo }) {
   const [userDetails, setUserDetails] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (userInfo?.email) {
-      fetch(`/api/user/?email=${encodeURIComponent(userInfo.email)}`, {
+      fetch(`/api/korisnik/igrac/${encodeURIComponent(userInfo.email)}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -32,16 +32,17 @@ export default function MainPage({ userInfo }) {
         .catch((error) => {
           console.error("Error fetching user details:", error);
         });
+        console.log(userInfo);
     }
-  }, [userInfo]);
+  }, [userInfo]); */
 
-  if (!userDetails) {
+  if (!userInfo) {
     return <p>Loading...</p>;
   }
 
   return (
     <>
-      {userDetails.role === "igrač" && (
+      {userInfo.tip === "igrač" && (
         <Drawer>
           <DrawerTrigger>Player Info</DrawerTrigger>
           <DrawerContent>
@@ -57,14 +58,14 @@ export default function MainPage({ userInfo }) {
                  
                 </CardHeader>
                 <CardContent>
-                <p>Ime: {userDetails.imeIgrac}</p>
+                <p>Ime: {userInfo.imeIgrac}</p>
                 <br></br>
-                <p>Prezime: {userDetails.prezimeIgrac}</p>
+                <p>Prezime: {userInfo.prezimeIgrac}</p>
                 <br></br>
-                  <p>Email: {userDetails.email}</p>
+                  <p>Email: {userInfo.email}</p>
                 </CardContent>
                 <CardFooter>
-                  <p>Broj telefona: {userDetails.brojTel}</p>
+                  <p>Broj telefona: {userInfo.brojTel}</p>
                 </CardFooter>
               </Card>
               <br />
@@ -75,7 +76,7 @@ export default function MainPage({ userInfo }) {
         </Drawer>
       )}
 
-      {userDetails.role === "vlasnik" && (
+      {userInfo.tip === "vlasnik" && (
         <Drawer>
           <DrawerTrigger>Owner Info</DrawerTrigger>
           <DrawerContent>
@@ -85,17 +86,17 @@ export default function MainPage({ userInfo }) {
             <DrawerFooter>
               <Card>
                 <CardHeader>
-                  <CardTitle>{userDetails.nazivVlasnik}</CardTitle>
+                  <CardTitle>{userInfo.nazivVlasnik}</CardTitle>
                   <CardDescription>Vlasnik</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p>Email: {userDetails.email}</p>
+                  <p>Email: {userInfo.email}</p>
                 </CardContent>
                 <CardFooter>
-                  <p>Broj telefona: {userDetails.brojTel}</p>
+                  <p>Broj telefona: {userInfo.brojTel}</p>
                   <br></br>
 
-                  <p>Lokacija: {userDetails.lokacija}</p>
+                  <p>Lokacija: {userInfo.lokacija}</p>
                 </CardFooter>
               </Card>
               <br />

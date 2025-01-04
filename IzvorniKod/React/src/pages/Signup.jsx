@@ -205,12 +205,13 @@ export default function Signup() {
       alert("Odaberite vrstu računa.");
       return;
     }
-
+    let url = "";
     const additionalData = {};
     if (form.role === "igrač") {
       const imeIgrac = document.getElementById("imeIgrac").value;
       const prezimeIgrac = document.getElementById("prezimeIgrac").value;
       const brojTel = document.getElementById("brojTel").value;
+      url = "api/register/igrac";
 
       if (!imeIgrac || !brojTel || !prezimeIgrac) {
         alert("Unesite sve podatke za igrača.");
@@ -225,6 +226,8 @@ export default function Signup() {
       const nazivVlasnik = document.getElementById("nazivVlasnik").value;
       const lokacija = document.getElementById("lokacija").value;
       const brojTel = document.getElementById("brojTel").value;
+      url = "api/register/vlasnik";
+
 
       if (!nazivVlasnik || !brojTel || !lokacija) {
         alert("Unesite sve podatke za vlasnika.");
@@ -250,15 +253,6 @@ export default function Signup() {
       },
       body: JSON.stringify(payload),
     };
-
-    var url ="";
-
-    if (form.role == "igrač"){
-      url = "api/register/igrac"
-    }
-    else url = "api/register/vlasnik"
-
-    console.log(url);
 
     fetch(url, options)
       .then((res) => {

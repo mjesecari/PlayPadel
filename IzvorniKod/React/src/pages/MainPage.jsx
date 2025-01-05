@@ -36,15 +36,19 @@ export default function MainPage({ userInfo }) {
     }
   }, [userInfo]); */
 
-  if (!userInfo) {
+ /*  if (!userInfo) {
     return <p>Loading...</p>;
-  }
+  } */
 
   return (
     <>
+    <nav style={styles.navbar}>
+  <ul style={styles.navList}>
+   
+    <li style={styles.navItem}>
       {userInfo.tip === "igrač" && (
         <Drawer>
-          <DrawerTrigger>Player Info</DrawerTrigger>
+          <DrawerTrigger>Podatci o igraču</DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Podatci o igraču</DrawerTitle>
@@ -74,11 +78,11 @@ export default function MainPage({ userInfo }) {
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-      )}
+       )} 
 
       {userInfo.tip === "vlasnik" && (
         <Drawer>
-          <DrawerTrigger>Owner Info</DrawerTrigger>
+          <DrawerTrigger>Podatci o vlasniku</DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Podatci o vlasniku</DrawerTitle>
@@ -106,6 +110,41 @@ export default function MainPage({ userInfo }) {
           </DrawerContent>
         </Drawer>
       )}
+       </li>
+       <li style={styles.navItem}></li>
+    <li style={styles.navItem}></li>
+    <li style={styles.navItem}></li>
+  </ul>
+</nav>
     </>
   );
 }
+
+
+const styles = {
+  navbar: {
+    backgroundColor: '#333',
+    padding: '10px 0',
+    position: 'fixed', // Fixed at the top
+    top: '0',
+    left: '0',
+    width: '100%',
+    zIndex: '1000', // Ensures it stays on top
+  },
+  navList: {
+    display: 'flex',
+    justifyContent: 'flex-start', // Aligns items to the left
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+  },
+  navItem: {
+    margin: '0 20px',
+  },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
+    fontSize: '18px',
+    transition: 'color 0.3s',
+  },
+};

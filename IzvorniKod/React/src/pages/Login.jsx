@@ -22,10 +22,11 @@ export default function Login() {
         <Link to="/Home">
           <Button variant="outline">Natrag</Button>
           </Link>
-            <Link > 
+           <Link > 
            <Button onClick={() => location.href = `/api/oauth2/authorization/google`} >Prijavi se</Button>
-          </Link>  
-{/*           <Link to="/Mainpage">
+          </Link> 
+
+          {/* <Link to="/Mainpage">
           <Button>Dalje</Button>
           </Link> */}
           

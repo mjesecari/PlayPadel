@@ -7,8 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface VlasnikRepository extends JpaRepository<Vlasnik, Long> {
+
     @Override
     Optional<Vlasnik> findById(Long IDKorisnik);
 
     Optional<Vlasnik> findByEmail(String email);
+
+    @Override
+    void deleteById(Long IDKorisnik);
 }

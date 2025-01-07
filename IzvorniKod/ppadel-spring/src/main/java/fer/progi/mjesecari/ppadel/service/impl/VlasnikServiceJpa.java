@@ -2,10 +2,13 @@ package fer.progi.mjesecari.ppadel.service.impl;
 
 import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
+import fer.progi.mjesecari.ppadel.service.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +39,38 @@ public class VlasnikServiceJpa implements VlasnikService {
     @Override
     public Optional<Vlasnik> findByEmail(String email) {
         return vlasnikRepository.findByEmail(email);
+    }
+
+    @Override
+    public void deleteVlasnik(Long id) {
+        vlasnikRepository.deleteById(id);
+    }
+
+    @Override
+    public Vlasnik fetch(Long id) {
+        return vlasnikRepository.findById(id).orElseThrow(() ->
+                new EntityMissingException(Vlasnik.class, id));
+    }
+
+    @Override
+    public Vlasnik updateNazivVlasnik(Long id, String nazivVlasnik) {
+        Vlasnik vlasnik = fetch(id);
+        vlasnik.setNazivVlasnik(nazivVlasnik);
+        return vlasnikRepository.save(vlasnik);
+    }
+
+    @Override
+    public Vlasnik updateLokacija(Long id, String lokacija) {
+        Vlasnik vlasnik = fetch(id);
+        vlasnik.setLokacija(lokacija);
+        return vlasnikRepository.save(vlasnik);
+    }
+
+    @Override
+    public Vlasnik updateBrojTel(Long id, String brojTel) {
+        Vlasnik vlasnik = fetch(id);
+        vlasnik.setBrojTel(brojTel);
+        return vlasnikRepository.save(vlasnik);
     }
 
 }

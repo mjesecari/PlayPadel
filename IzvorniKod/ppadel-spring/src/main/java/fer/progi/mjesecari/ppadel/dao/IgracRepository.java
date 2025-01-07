@@ -11,4 +11,6 @@ public interface IgracRepository extends JpaRepository<Igrac, Long> {
     Optional<Igrac> findById(Long IDKorisnik);
     Optional<Igrac> findByEmail(String Email);
     List<Igrac> findAll();
+    @Override
+    void deleteById(Long IDKorisnik);
 }

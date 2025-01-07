@@ -11,4 +11,9 @@ public interface VlasnikService {
     Vlasnik createVlasnik(Vlasnik vlasnik);
     void validate(Vlasnik vlasnik);
     Optional<Vlasnik> findByEmail (String email);
+    void deleteVlasnik(Long id);
+    Vlasnik fetch(Long id);
+    Vlasnik updateNazivVlasnik(Long id, String NazivVlasnik);
+    Vlasnik updateLokacija(Long id, String lokacija);
+    Vlasnik updateBrojTel(Long id, String brojTel);
 }

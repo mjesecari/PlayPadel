@@ -31,7 +31,7 @@ public class KorisnkiDetailController {
     @Autowired
     private VlasnikService vlasnikService;
 
-    @GetMapping ("igrac")
+    @GetMapping ("igrac/{email}")
     public Igrac activeIgrac(@PathVariable String email) {
             return igracRepository.findByEmail(email).orElseThrow(() ->
                     new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user email\n")

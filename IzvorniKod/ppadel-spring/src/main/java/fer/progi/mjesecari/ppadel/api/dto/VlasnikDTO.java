@@ -1,15 +1,20 @@
 package fer.progi.mjesecari.ppadel.api.dto;
 
-public class VlasnikDTO extends KorisnikDTO{
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class VlasnikDTO{
     private String NazivVlasnik;
     private String Lokacija;
     private String BrojTel;
+    private String Role;
+    private String Email;
 
-    public VlasnikDTO(String role, String email, String nazivVlasnik, String lokacija, String brojTel) {
-        super(role, email);
-        NazivVlasnik = nazivVlasnik;
-        Lokacija = lokacija;
+    public VlasnikDTO(@JsonProperty("role") String role, @JsonProperty("email") String email, @JsonProperty("nazivVlasnik") String nazivVlasnik,@JsonProperty("lokacija") String lokacija,@JsonProperty("brojeTel") String brojTel) {
+        this.NazivVlasnik = nazivVlasnik;
+        this.Lokacija = lokacija;
         BrojTel = brojTel;
+        this.Role = role;
+        this.Email = email;
     }
 
     public String getNazivVlasnik() {
@@ -34,5 +39,21 @@ public class VlasnikDTO extends KorisnikDTO{
 
     public void setBrojTel(String brojTel) {
         BrojTel = brojTel;
+    }
+
+    public String getRole() {
+        return Role;
+    }
+
+    public void setRole(String role) {
+        Role = role;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 }

@@ -80,6 +80,13 @@ public class RegistrationController {
         newKorisnik.setEmail(roleDTO.getEmail());
         newKorisnik.setTip(roleDTO.getRole());
         Korisnik saved = userService.createKorisnik(newKorisnik);
+        if(roleDTO.getRole().equals("admin")){
+            Administrator newAdministrator = new Administrator();
+
+        }
+        //TODO add if() user has role vlasnik or igrac -> new Vlasnik()/new Igrac()
+        //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));
+
         return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
     }
 

@@ -1,4 +1,3 @@
-
 package fer.progi.mjesecari.ppadel.service;
 
 import fer.progi.mjesecari.ppadel.domain.Administrator;

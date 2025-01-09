@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import fer.progi.mjesecari.ppadel.dao.UserRepository;
+import fer.progi.mjesecari.ppadel.domain.Administrator;
 
 import java.util.List;
 
@@ -109,6 +111,8 @@ public class AdminController {
         }
     }
 
-    //TODO: add filter owners by payed membership endpoint
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<Administrator> listAdmins(){return adminRepo.findAll();}
 
 }

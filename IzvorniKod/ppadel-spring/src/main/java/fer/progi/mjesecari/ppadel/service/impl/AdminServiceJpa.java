@@ -36,23 +36,23 @@ public class AdminServiceJpa implements AdminService {
     @Override
     public Korisnik addUser(Korisnik korisnik) {
         /**validate(korisnik);
-        Assert.isNull(korisnik.getId(),
-                "User ID must be null, not: " + korisnik.getId()
-        );
-        if (userRepo.existsByEmail(korisnik.getEmail()))
-            throw new RequestDeniedException(
-                    "User with email " + korisnik.getEmail() + " already exists"
-            );
+         Assert.isNull(korisnik.getId(),
+         "User ID must be null, not: " + korisnik.getId()
+         );
+         if (userRepo.existsByEmail(korisnik.getEmail()))
+         throw new RequestDeniedException(
+         "User with email " + korisnik.getEmail() + " already exists"
+         );
 
-        return userRepo.save(korisnik);**/
+         return userRepo.save(korisnik);**/
         return korisnikService.createKorisnik(korisnik);
     }
 
     @Override
     public Korisnik deleteUser(long id) {
         /**Korisnik korisnik = fetch(id);
-        userRepo.delete(korisnik);
-        return korisnik;**/
+         userRepo.delete(korisnik);
+         return korisnik;**/
         return korisnikService.deleteKorisnik(id);
     }
 

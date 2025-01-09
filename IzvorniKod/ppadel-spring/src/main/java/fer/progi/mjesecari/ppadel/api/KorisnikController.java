@@ -25,7 +25,7 @@ public class KorisnikController {
 
     @GetMapping
     public Korisnik activeUser(Principal principal){
-        if( OAuth2AuthenticationToken.class.isInstance(principal) ){
+         if( OAuth2AuthenticationToken.class.isInstance(principal) ){
             Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
             return userRepo.findByEmail((String) attributes.get("email")).orElseThrow(() -> 
                 new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user email\n")

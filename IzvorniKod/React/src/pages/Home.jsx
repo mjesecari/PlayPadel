@@ -18,6 +18,10 @@ export default function Home({ userInfo }) {
 						<Link to="/login">
 							<Button className="m-5 text-zinc-50">Prijava</Button>
 						</Link>
+					<CardContent className="font-mono">
+						<Link to="/login">
+							<Button className="m-5 text-zinc-50">Prijava</Button>
+						</Link>
 
 						<Link to="/signup">
 							<Button className="m-5 text-zinc-50">Registracija</Button>
@@ -35,6 +39,13 @@ export default function Home({ userInfo }) {
 						<CardTitle>PlayPadel</CardTitle>
 					</CardHeader>
 
+					<CardContent className="font-mono">
+						Logged in successfully :)
+					</CardContent>
+				</Card>
+			</>
+		);
+	}
 					<CardContent className="font-mono">
 						Logged in successfully :)
 					</CardContent>

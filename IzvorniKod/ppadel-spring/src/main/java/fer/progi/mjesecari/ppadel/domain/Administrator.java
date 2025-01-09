@@ -31,11 +31,3 @@ public class Administrator extends Korisnik {
                 '}';
     }
 }
-
-    @Override
-    public String toString() {
-        return "Administrator{" +
-                "cijenaClanarine=" + cijenaClanarine +
-                '}';
-    }
-}

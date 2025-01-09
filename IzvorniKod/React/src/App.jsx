@@ -16,17 +16,6 @@ function App() {
 		const savedUserInfo = sessionStorage.getItem("userInfo");
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
-	const [userInfo, setUserInfo] = useState(() => {
-		const savedUserInfo = sessionStorage.getItem("userInfo");
-		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
-	});
-
-	const options = {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	};
 	const options = {
 		method: "GET",
 		headers: {
@@ -79,6 +68,8 @@ function App() {
 				<Routes>
 					<Route index element={<Home userInfo={userInfo} />} />
 					<Route path="Home" element={<Home userInfo={userInfo} />} />
+					<Route path="CourtsPage" element={<CourtsPage userInfo={userInfo} />}/>
+					<Route path="AdminPage" element={<AdminPage userInfo={userInfo} />}/>
 					<Route
 						path="CourtPreview"
 						//element={<CourtPreview userInfo={userInfo} />}
@@ -89,19 +80,6 @@ function App() {
 					
 					<Route path="/Infouser" element={<Infouser userInfo={userInfo} />} />
 					<Route path="/MainPage" element={<MainPage userInfo={userInfo} />} />
-				</Routes>
-			</BrowserRouter>
-		</>
-	);
-			<BrowserRouter>
-				<Routes>
-					<Route index element={<Home userInfo={userInfo} />} />
-					<Route path="Home" element={<Home userInfo={userInfo} />} />
-					<Route path="CourtsPage" element={<CourtsPage userInfo={userInfo} />}/>
-					<Route path="AdminPage" element={<AdminPage userInfo={userInfo} />}/>
-					<Route path="/Login" element={<Login />} />
-					<Route path="/Signup" element={<Signup />} />
-					<Route path="/MainPage" element={<MainPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

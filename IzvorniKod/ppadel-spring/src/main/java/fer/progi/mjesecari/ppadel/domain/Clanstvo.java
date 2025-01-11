@@ -30,7 +30,7 @@ public class Clanstvo {
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.Id = id;
     }
 
     public LocalDate getDatumIsteka() {

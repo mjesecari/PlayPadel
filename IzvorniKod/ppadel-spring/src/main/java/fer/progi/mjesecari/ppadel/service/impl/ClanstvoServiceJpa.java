@@ -39,9 +39,11 @@ public class ClanstvoServiceJpa  implements ClanstvoService {
 
     @Override
     public Clanstvo CreateClanstvo(Long id) {
-        Clanstvo clanstvo = new Clanstvo(id);
-        clanstvoRepository.save(clanstvo);
-        return clanstvo;
+        Clanstvo clanstvo = new Clanstvo();
+        clanstvo.setId(id);
+        System.out.println(id);
+        return clanstvoRepository.save(clanstvo);
+
     }
 
     @Override

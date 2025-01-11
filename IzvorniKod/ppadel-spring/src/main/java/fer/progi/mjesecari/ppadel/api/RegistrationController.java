@@ -5,10 +5,12 @@ import java.net.URI;
 import fer.progi.mjesecari.ppadel.api.dto.IgracDTO;
 import fer.progi.mjesecari.ppadel.api.dto.KorisnikDTO;
 import fer.progi.mjesecari.ppadel.api.dto.VlasnikDTO;
+import fer.progi.mjesecari.ppadel.domain.Administrator;
 import fer.progi.mjesecari.ppadel.domain.Igrac;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
 import fer.progi.mjesecari.ppadel.service.IgracService;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import fer.progi.mjesecari.ppadel.service.KorisnikService;
 import org.springframework.web.server.ResponseStatusException;
 
 
+@Slf4j
 @Profile({"form-security", "oauth-security"})
 @RestController
 @RequestMapping("/register")
@@ -58,6 +61,7 @@ public class RegistrationController {
     // TODO: change to postmapping
     @PostMapping ("/vlasnik")
     public ResponseEntity<Vlasnik> makeVlasnik(@RequestBody VlasnikDTO roleVlasnik) {
+        log.info("vlasnik");
         if (roleVlasnik.getRole().equals("vlasnik")) {
             Vlasnik vlasnik = new Vlasnik();
             vlasnik.setEmail(roleVlasnik.getEmail());
@@ -76,6 +80,7 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<Korisnik> makeKorisnik(@RequestBody KorisnikDTO roleDTO){
+        log.info(roleDTO.getRole());
         Korisnik newKorisnik = new Korisnik();
         newKorisnik.setEmail(roleDTO.getEmail());
         newKorisnik.setTip(roleDTO.getRole());
@@ -86,7 +91,6 @@ public class RegistrationController {
         }
         //TODO add if() user has role vlasnik or igrac -> new Vlasnik()/new Igrac()
         //oidcUser.getAuthorities().add(new SimpleGrantedAuthority("ROLE_OWNER"));
-
         return ResponseEntity.created(URI.create("/users/" + saved.getId())).body(saved);
     }
 

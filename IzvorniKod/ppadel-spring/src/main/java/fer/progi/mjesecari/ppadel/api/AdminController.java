@@ -30,8 +30,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService adminsrv;
-    /**@Autowired
-    private AdminRepository adminRepo;**/
+    @Autowired
+    private AdminRepository adminRepo;
     @Autowired
     private IgracService igracService;
     @Autowired
@@ -114,5 +114,10 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Administrator> listAdmins(){return adminRepo.findAll();}
+
+    @GetMapping("/vlasnici")
+    public List<Vlasnik> listVlasnici(){return vlasnikRepository.findAll();}
+    @GetMapping("/igraci")
+    public List<Igrac> listIgraci(){return igracRepository.findAll();}
 
 }

@@ -4,6 +4,7 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
+import fer.progi.mjesecari.ppadel.service.AdminService;
 import fer.progi.mjesecari.ppadel.service.ClanstvoService;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
 import fer.progi.mjesecari.ppadel.service.PayPalService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -26,14 +28,21 @@ public class PayPalController {
     private final ClanstvoService clanstvoService;
     @Autowired
     private KorisnikService korisnikService;
-
+    @Autowired
+    private AdminService adminService;
     @GetMapping("/payment")
     public String home(){return "index";}
     @PostMapping("/payment/create")
     public RedirectView createPayment(@RequestParam Long userId,
-                                      @RequestParam Double total,
-                                      @RequestParam String currency,
                                       @RequestParam String description){
+        Double total;
+        if (Objects.equals(description, "membership")){
+            total = adminService.getClanarina();
+        }
+        else{
+            total = 0.0;
+        }
+        String currency = "EUR";
         try {
             String cancelUrl ="http://localhost:8080/payment/cancel";
             String successUrl = "http://localhost:8080/payment/success?userId=" + userId;
@@ -68,13 +77,13 @@ public class PayPalController {
             Payment payment = payPalService.executePayment(paymentId,payerId);
             if(payment.getState().equals("approved")){
                 log.info("Payment successful for user" + userId);
-                /**Optional<Korisnik> currentUser = korisnikService.findById(userId);
+                Optional<Korisnik> currentUser = korisnikService.findById(userId);
                 Korisnik korisnik = currentUser.orElseThrow(() -> new IllegalArgumentException("korisnik nije pronaden"));
-                if(korisnik.isOwner()){}**/
-                clanstvoService.UpdateClanstvo(userId,
-                        Double.parseDouble(payment.getTransactions().get(0).getAmount().getTotal()),
-                        "PayPal");
-
+                if(korisnik.isOwner()) {
+                    clanstvoService.UpdateClanstvo(userId,
+                            Double.parseDouble(payment.getTransactions().get(0).getAmount().getTotal()),
+                            "PayPal");
+                }
                 return "PaymentSuccess";
             }
 

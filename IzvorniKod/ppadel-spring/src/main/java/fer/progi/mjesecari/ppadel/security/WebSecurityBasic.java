@@ -113,7 +113,7 @@ public class WebSecurityBasic {
     }
 
 }**/
-package fer.progi.mjesecari.ppadel.security;
+/**package fer.progi.mjesecari.ppadel.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

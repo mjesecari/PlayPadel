@@ -1,7 +1,10 @@
 package fer.progi.mjesecari.ppadel.service.impl;
 
+import fer.progi.mjesecari.ppadel.dao.ClanstvoRepository;
 import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
+import fer.progi.mjesecari.ppadel.domain.Clanstvo;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
+import fer.progi.mjesecari.ppadel.service.ClanstvoService;
 import fer.progi.mjesecari.ppadel.service.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,8 @@ import java.util.Optional;
 public class VlasnikServiceJpa implements VlasnikService {
     @Autowired
     private VlasnikRepository vlasnikRepository;
-
+    @Autowired
+    private ClanstvoService clanstvoService;
     @Override
     public List<Vlasnik> listAll() {
         return vlasnikRepository.findAll();
@@ -25,7 +29,9 @@ public class VlasnikServiceJpa implements VlasnikService {
     @Override
     public Vlasnik createVlasnik(Vlasnik vlasnik) {
         validate(vlasnik);
-        return vlasnikRepository.save(vlasnik);
+        Vlasnik vlasnikSaved = vlasnikRepository.save(vlasnik);
+        Clanstvo clanstvo = clanstvoService.CreateClanstvo(vlasnikSaved.getId());
+        return vlasnikSaved;
     }
 
     @Override

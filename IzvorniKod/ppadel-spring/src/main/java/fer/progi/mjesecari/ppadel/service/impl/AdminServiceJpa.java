@@ -87,6 +87,12 @@ public class AdminServiceJpa implements AdminService {
         return adminRepo.save(admin);
     }
 
+    @Override
+    public Double getClanarina() {
+        Administrator admin = adminRepo.findAll().get(0);
+        return Double.valueOf(admin.getCijenaClanarine());
+    }
+
 
     private void validate(Korisnik korisnik) {
         Assert.notNull(korisnik, "User object must be given");

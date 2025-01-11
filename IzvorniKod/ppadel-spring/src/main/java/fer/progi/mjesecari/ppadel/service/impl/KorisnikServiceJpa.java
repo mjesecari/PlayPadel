@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import fer.progi.mjesecari.ppadel.dao.AdminRepository;
+import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
 import fer.progi.mjesecari.ppadel.domain.Administrator;
+import fer.progi.mjesecari.ppadel.domain.Vlasnik;
+import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,6 +29,9 @@ public class KorisnikServiceJpa implements KorisnikService {
 
     @Autowired
     private AdminRepository adminRepo;
+
+    @Autowired
+    private VlasnikService vlasnikService;
 
     @Override 
     public List<Korisnik> listAll(){
@@ -60,7 +66,7 @@ public class KorisnikServiceJpa implements KorisnikService {
         throw new RequestDeniedException(
           "User with email " + korisnik.getEmail() + " already exists"
         );
-
+      System.out.println(korisnik.getTip());
       if(korisnik.isAdmin()){
             Administrator newAdmin = new Administrator();
             newAdmin.setId(korisnik.getId());
@@ -69,8 +75,17 @@ public class KorisnikServiceJpa implements KorisnikService {
             return adminRepo.save(newAdmin);
       }
       //TODO create new Vlasnik and new Igrac if korisnik.isOwner/!korisnik.isOwner
-      
-      return userRepo.save(korisnik);
+      else if (korisnik.isOwner()) {
+          Vlasnik newVlasnik = new Vlasnik();
+          newVlasnik.setId(korisnik.getId());
+          newVlasnik.setEmail(korisnik.getEmail());
+          newVlasnik.setTip(korisnik.getTip());
+          newVlasnik.setNazivVlasnik("vlasnik1");
+          newVlasnik.setLokacija("zagreb");
+          newVlasnik.setBrojTel("091 1111 222");
+          return vlasnikService.createVlasnik(newVlasnik);
+      }
+        return userRepo.save(korisnik);
     }
   
     @Override

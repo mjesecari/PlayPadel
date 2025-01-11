@@ -15,5 +15,6 @@ public interface AdminService {
     Korisnik fetch(long korisnikId);
     Optional<Korisnik> findById(long korisnikId);
     public Administrator updateClanarina (long id, Float novaCijenaClanarine);
+    public Double getClanarina();
     //TODO add method for filtering owners by payed membership
 }

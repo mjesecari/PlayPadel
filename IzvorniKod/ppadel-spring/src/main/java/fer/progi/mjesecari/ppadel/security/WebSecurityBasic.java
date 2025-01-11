@@ -280,6 +280,8 @@ public class WebSecurityBasic {
                 .cors(cors -> cors.configurationSource(CorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/register").permitAll(); // dostupne svakome
+                    auth.requestMatchers("register/vlasnik").permitAll();
+                    auth.requestMatchers("register/igrac").permitAll();
                     auth.requestMatchers("/h2-console/*").permitAll();
                     auth.anyRequest().authenticated();
                 }).oauth2Login(oauth2 -> {

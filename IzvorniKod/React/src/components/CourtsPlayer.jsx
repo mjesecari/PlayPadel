@@ -27,6 +27,7 @@ export default function CourtsPlayer({ userInfo }) {
 	const [courts, setCourts] = useState([]);
 	const [events, setEvents] = useState();
 	const [isOpenCal, setIsOpenCal] = useState(false);
+	const [terenId, setTerenId] = useState();
 
 	function fetchCourts() {
 		axios
@@ -40,36 +41,17 @@ export default function CourtsPlayer({ userInfo }) {
 	useEffect(() => {
 		fetchCourts();
 		let busy = "zauzeto";
-		console.log(moment("2024-12-14 13:00", "YYYY-MM-DD HH:mm").isValid());
-		setEvents([
-			{
-				id: "1",
-				title: busy,
-				start: moment("2024-12-25 13:00", "YYYY-MM-DD HH:mm").toDate(),
-				end: moment("2024-12-25 15:00", "YYYY-MM-DD HH:mm").toDate(),
-			},
-			{
-				id: "2",
-				title: busy,
-				start: moment("2024-12-26 13:00", "YYYY-MM-DD HH:mm").toDate(),
-				end: moment("2024-12-26 15:00", "YYYY-MM-DD HH:mm").toDate(),
-			},
-			{
-				id: "3",
-				title: busy,
-				start: moment("2024-12-22 13:00", "YYYY-MM-DD HH:mm").toDate(),
-				end: moment("2024-12-22 15:00", "YYYY-MM-DD HH:mm").toDate(),
-			},
-			// {
-			// 	id: "2",
-			// 	title: "Event 2",
-			// 	start: "2024-12-18 03:00",
-			// 	end: "2024-12-18 05:00",
-			// },
-		]);
 	}, []);
 
-	function openCal() {
+	function openCal(idteren) {
+		axios
+			.get("/api/rezervacije?terenId=" + idteren)
+			.then((res) => {
+				console.log("data", res.data);
+				setEvents(res.data);
+			})
+			.then(console.log(events));
+		setTerenId(idteren);
 		setIsOpenCal(true);
 	}
 
@@ -101,7 +83,11 @@ export default function CourtsPlayer({ userInfo }) {
 					</p>
 					<p>Svi termini su u trajanju od jednog sata!</p>
 
-					<CalendarApp eventsProp={events}></CalendarApp>
+					<CalendarApp
+						//eventsProp={events}
+						userInfo={userInfo}
+						id={terenId}
+					></CalendarApp>
 				</DialogContent>
 			</Dialog>
 
@@ -133,7 +119,10 @@ export default function CourtsPlayer({ userInfo }) {
 									variant="outline"
 									className="text-white"
 									id={court.idteren}
-									onClick={() => openCal()}
+									onClick={() => {
+										openCal(court.idteren);
+										console.log(court.idteren);
+									}}
 								>
 									Rezerviraj
 								</Button>

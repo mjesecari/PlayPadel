@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./pages/MainPage";
 import CourtsPage from "./pages/CourtsPage";
-
+import Reservations from "./pages/Reservations";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -49,7 +49,10 @@ function App() {
 						path="CourtsPage"
 						element={<CourtsPage userInfo={userInfo} />}
 					/>
-
+					<Route
+						path="Reservations"
+						element={<Reservations userInfo={userInfo} />}
+					/>
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
 					<Route path="/MainPage" element={<MainPage />} />

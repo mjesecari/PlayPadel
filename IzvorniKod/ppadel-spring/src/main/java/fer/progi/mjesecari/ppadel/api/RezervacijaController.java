@@ -118,7 +118,7 @@ public class RezervacijaController {
                 //.setLocation("800 Howard St., San Francisco, CA 94103")
                 //.setDescription("A chance to hear more about Google's developer products.");
 
-            event.setStart(rezervacija.getVrijeme());
+            event.setStart(new EventDateTime().setDateTime(rezervacija.getVrijeme().atz));
 
             DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
             EventDateTime end = new EventDateTime()

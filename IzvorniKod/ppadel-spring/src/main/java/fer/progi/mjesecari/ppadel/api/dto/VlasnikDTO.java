@@ -9,7 +9,7 @@ public class VlasnikDTO{
     private String Role;
     private String Email;
 
-    public VlasnikDTO(@JsonProperty("role") String role, @JsonProperty("email") String email, @JsonProperty("nazivVlasnik") String nazivVlasnik,@JsonProperty("lokacija") String lokacija,@JsonProperty("brojeTel") String brojTel) {
+    public VlasnikDTO(@JsonProperty("role") String role, @JsonProperty("email") String email, @JsonProperty("nazivVlasnik") String nazivVlasnik,@JsonProperty("lokacija") String lokacija,@JsonProperty("brojTel") String brojTel) {
         this.NazivVlasnik = nazivVlasnik;
         this.Lokacija = lokacija;
         BrojTel = brojTel;

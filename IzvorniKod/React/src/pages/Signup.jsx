@@ -88,10 +88,11 @@ export default function Signup() {
 			options.body = data;
 			console.log(data);
 
-			return fetch("/api/register/igrac", options)
+			fetch("api/register/igrac", options)
 				.then((res) => {
 					console.log(res);
 					navigate("/Login");
+					//return;
 				})
 				.catch((err) => {
 					setErrorMsg(true);
@@ -118,7 +119,7 @@ export default function Signup() {
 			console.log(data);
 			options.body = data;
 
-			return fetch("/api/register/vlasnik", options)
+			fetch("api/register/vlasnik", options)
 				.then((res) => {
 					console.log(res);
 					navigate("/Login");
@@ -217,10 +218,10 @@ export default function Signup() {
 								Molimo upišite dodatne podatke
 							</CardDescription>{" "}
 							<div className="flex flex-col space-y-1.5 mt-4">
-								<Label>Ime i prezime</Label>
+								<Label>Ime kluba</Label>
 								<Input
 									id="nazivVlasnik"
-									placeholder="Ime i prezime"
+									placeholder="Upisite ime kluba"
 									name="nazivVlasnik"
 									onChange={onChange}
 									value={form.nazivVlasnik}

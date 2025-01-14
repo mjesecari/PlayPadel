@@ -29,6 +29,7 @@ export default function UserData({ userInfo }) {
 	function fetchNewData() {
 		axios.get("api/user").then((res) => {
 			setUserDetails(res.data);
+			sessionStorage.setItem("userInfo", JSON.stringify(res.data));
 		});
 	}
 
@@ -62,8 +63,24 @@ export default function UserData({ userInfo }) {
 		let url = "";
 		if (userDetails.tip === "igrač") {
 			url = "api/igrac/" + userInfo.id;
+			if (
+				payload.imeIgrac.trim() == "" ||
+				payload.prezimeIgrac.trim() == "" ||
+				payload.brojTel.trim() == ""
+			) {
+				alert("Neispravni podaci");
+				return;
+			}
 		} else if (userDetails.tip === "vlasnik") {
-			url = "api/korisnik/vlasnik";
+			url = "api/vlasnik/" + userInfo.id;
+			if (
+				payload.nazivVlasnik.trim() == "" ||
+				payload.lokacija.trim() == "" ||
+				payload.brojTel.trim() == ""
+			) {
+				alert("Neispravni podaci");
+				return;
+			}
 		}
 
 		const options = {
@@ -142,6 +159,7 @@ export default function UserData({ userInfo }) {
 											<p>Prezime: {userDetails.prezimeIgrac} </p>
 											<br></br>
 											<p>Email: {userDetails.email} </p>
+											<br />
 											<p>Broj telefona: {userDetails.brojTel} </p>
 										</CardContent>
 									</>
@@ -155,8 +173,12 @@ export default function UserData({ userInfo }) {
 										</CardHeader>
 										<CardContent>
 											<br></br>
+											<p>Naziv kluba: {userDetails.nazivVlasnik} </p>
+											<br></br>
 											<p>Email: {userDetails.email} </p>
+											<br></br>
 											<p>Broj telefona: {userDetails.brojTel} </p>
+											<br></br>
 											<p>Lokacija: {userDetails.lokacija} </p>
 										</CardContent>
 									</>
@@ -201,7 +223,7 @@ export default function UserData({ userInfo }) {
 											</CardDescription>
 										</CardHeader>
 										<CardContent>
-											<p>Naziv </p>
+											<p>Naziv kluba </p>
 											<Input
 												id="nazivVlasnik"
 												defaultValue={userDetails.nazivVlasnik}
@@ -215,7 +237,7 @@ export default function UserData({ userInfo }) {
 												onChange={handleInputChange}
 											/>
 											<br></br>
-											<p>Lokacijia </p>
+											<p>Lokacija </p>
 											<Input
 												id="lokacija"
 												defaultValue={userDetails.lokacija}

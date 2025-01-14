@@ -4,6 +4,14 @@ public class createTerenDTO {
     private String naziv;
     private String tip;
     private Long vlasnikTerenaId;
+    private String lokacija;
+
+    public String getLokacija() {
+        return lokacija;
+    }
+    public void setLokacija(String lokacija) {
+        this.lokacija = lokacija;
+    }
     public String getNaziv() {
         return naziv;
     }

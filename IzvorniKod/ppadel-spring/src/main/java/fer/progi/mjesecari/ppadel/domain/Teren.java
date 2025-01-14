@@ -21,6 +21,8 @@ public class Teren {
     @NotNull
     private String NazivTeren;
 
+    private String LokacijaTeren;
+
     public Teren(){
         
     }

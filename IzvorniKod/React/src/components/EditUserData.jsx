@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 
-export default function UserData({ userInfo }) {
+export default function EditUserData({ userInfo }) {
 	const [userDetails, setUserDetails] = useState(userInfo);
 	const [isEditing, setIsEditing] = useState(false); // Tracks editing state
 	const [form, setForm] = useState({});

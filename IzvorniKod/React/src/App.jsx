@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import MainPage from "./pages/UserData";
+import MainPage from "./components/EditUserData";
 import CourtsPage from "./pages/CourtsPage";
 import AdminPage from "./pages/AdminPage";
 

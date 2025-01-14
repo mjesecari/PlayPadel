@@ -15,7 +15,7 @@ import {
 	UserIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import UserData from "@/pages/UserData";
+import EditUserData from "./EditUserData";
 const nav = {
 	player: [
 		{ name: "Tereni i termini ", href: "#", current: false },
@@ -108,8 +108,9 @@ export default function NavBar() {
 							<BellIcon aria-hidden="true" className="h-6 w-6" />
 						</button>
 
+						{!userInfo.admin && <EditUserData userInfo={userInfo} />}
+
 						{/* Profile dropdown */}
-						<UserData userInfo={userInfo} />
 
 						<Menu as="div" className="relative ml-3">
 							<div>

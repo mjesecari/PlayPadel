@@ -76,6 +76,10 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite naziv terena.");
 			return;
 		}
+		if (form.lokacija == "") {
+			alert("Upišite lokaciju terena.");
+			return;
+		}
 		const data = JSON.stringify(form);
 
 		// add new
@@ -96,6 +100,7 @@ export default function CourtsOwner({ userInfo }) {
 						naziv: "",
 						tip: "",
 						vlasnikTerenaId: userInfo.id,
+						lokacija: ""
 					});
 				})
 				.catch((err) => {});
@@ -120,6 +125,7 @@ export default function CourtsOwner({ userInfo }) {
 					naziv: "",
 					tip: "",
 					vlasnikTerenaId: userInfo.id,
+					lokacija: ""
 				});
 			})
 			.catch((err) => {});
@@ -161,6 +167,7 @@ export default function CourtsOwner({ userInfo }) {
 			naziv: editable.nazivTeren,
 			tip: "", // editable.tipTeren,
 			vlasnikTerenaId: userInfo.id,
+			lokacija: editable.lokacijaTeren
 		});
 		console.log("now", form);
 	}
@@ -218,6 +225,19 @@ export default function CourtsOwner({ userInfo }) {
 										</SelectItem>
 									</SelectContent>
 								</Select>
+
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="lokacija" className="text-right">
+										Lokacija
+									</Label>
+									<Input
+										id="lokacija"
+										name="lokacija"
+										value={form.lokacija}
+										onChange={onChange}
+										className="col-span-3"
+									/>
+								</div>
 							</div>
 						</form>
 						<DialogFooter>

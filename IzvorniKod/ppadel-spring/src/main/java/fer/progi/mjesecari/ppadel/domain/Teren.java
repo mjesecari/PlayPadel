@@ -23,6 +23,14 @@ public class Teren {
 
     private String LokacijaTeren;
 
+    public String getLokacijaTeren() {
+        return LokacijaTeren;
+    }
+
+    public void setLokacijaTeren(String lokacijaTeren) {
+        LokacijaTeren = lokacijaTeren;
+    }
+
     public Teren(){
         
     }

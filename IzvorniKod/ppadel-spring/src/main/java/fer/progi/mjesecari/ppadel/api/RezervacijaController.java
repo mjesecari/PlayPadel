@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,6 +78,11 @@ public class RezervacijaController {
         
         
     }
+    @GetMapping("/my")
+    public List<Rezervacija> getAllForUser() {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
     
     @PostMapping("")
     public Rezervacija newRezervacija(@RequestBody RezervacijaDTO rezDTO) {
@@ -93,7 +99,7 @@ public class RezervacijaController {
         
     }
     @PostMapping("/save")
-    public Rezervacija saveRezervacija(@RequestBody RezervacijaDTO rezDTO) {
+    public ResponseEntity<String> saveRezervacija(@RequestBody RezervacijaDTO rezDTO) {
         
         com.google.api.services.calendar.model.Events eventList;
         String message;
@@ -111,14 +117,14 @@ public class RezervacijaController {
             
             NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, credential)
-            .setApplicationName(APPLICATION_NAME).build();
+                .setApplicationName(APPLICATION_NAME).build();
 
             Event event = new Event()
-                .setSummary("Rezervacija za teren " + rezervacija.getZaTeren().getNazivTeren())
+                .setSummary("Rezervacija za teren " + rezervacija.getZaTeren().getNazivTeren());
                 //.setLocation("800 Howard St., San Francisco, CA 94103")
                 //.setDescription("A chance to hear more about Google's developer products.");
 
-            event.setStart(new EventDateTime().setDateTime(rezervacija.getVrijeme().atz));
+            event.setStart(new EventDateTime().setDateTime(DateTime.parseRfc3339(rezervacija.getVrijeme().toString())));
 
             DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
             EventDateTime end = new EventDateTime()
@@ -128,14 +134,14 @@ public class RezervacijaController {
 
 
             Events events = service.events();
-            events.insert("primary", null)
+            events.insert("primary", event);
+
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+
         } catch (Exception e) {
-            
-            message = "Exception while handling OAuth2 callback (" + e.getMessage() + ")."
-            + " Redirecting to google connection status page.";
+            return new ResponseEntity<>("Problem inserting event into Google callendar", HttpStatus.SERVICE_UNAVAILABLE);
         }
         
-        return new ResponseEntity<>(message, HttpStatus.OK);
     }
     
     @DeleteMapping("")

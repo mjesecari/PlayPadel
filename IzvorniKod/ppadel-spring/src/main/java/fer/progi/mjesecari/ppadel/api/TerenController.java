@@ -52,7 +52,7 @@ public class TerenController {
     @PostMapping("/")
     public ResponseEntity<Teren> createTeren(@RequestBody createTerenDTO terenDTO) {
         
-        Teren saved = terenService.createTeren(terenDTO.getNaziv(), terenDTO.getVlasnikTerenaId(), terenDTO.getTip());
+        Teren saved = terenService.createTeren(terenDTO.getNaziv(), terenDTO.getVlasnikTerenaId(), terenDTO.getTip(), terenDTO.getLokacija());
 
         return ResponseEntity.created(URI.create("/tereni/" + saved.getIDTeren())).body(saved);
     }

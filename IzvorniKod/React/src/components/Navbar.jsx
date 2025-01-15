@@ -18,16 +18,16 @@ import { Link } from "react-router-dom";
 
 const nav = {
 	player: [
-		{ name: "Tereni i termini ", href: "#", current: false },
+		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
 		{ name: "Turniri ", href: "#", current: false },
 	],
 
 	owner: [
-		{ name: "Moji tereni ", href: "#", current: false },
+		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
 		{ name: "Moji turniri ", href: "#", current: false },
 	],
 
-	admin: [{ name: "Popis korisnika", href: "#", current: false }],
+	admin: [{ name: "Popis korisnika", href: "/AdminPage", current: false }],
 };
 
 let navigation;
@@ -81,7 +81,7 @@ export default function NavBar() {
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
 									<Link
-										to="/CourtsPage"
+										to={item.href}
 										key={item.name}
 										href={item.href}
 										aria-current={item.current ? "page" : undefined}

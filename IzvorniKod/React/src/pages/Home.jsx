@@ -36,7 +36,7 @@ export default function Home({ userInfo }) {
 					</CardHeader>
 
 					<CardContent className="font-mono">
-						Logged in successfully :)
+						Logged in successfully :3
 					</CardContent>
 				</Card>
 			</>

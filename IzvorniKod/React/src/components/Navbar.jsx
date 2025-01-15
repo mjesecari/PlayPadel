@@ -15,7 +15,7 @@ import {
 	UserIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-
+import EditUserData from "./EditUserData";
 const nav = {
 	player: [
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
@@ -108,7 +108,10 @@ export default function NavBar() {
 							<BellIcon aria-hidden="true" className="h-6 w-6" />
 						</button>
 
+						{!userInfo.admin && <EditUserData userInfo={userInfo} />}
+
 						{/* Profile dropdown */}
+
 						<Menu as="div" className="relative ml-3">
 							<div>
 								<MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2  hover:text-white  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -122,20 +125,9 @@ export default function NavBar() {
 								className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
 							>
 								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-									>
+									<p className="block px-4 py-2 text-sm text-gray-700 ">
 										{userInfo.email}
-									</a>
-								</MenuItem>
-								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-									>
-										Settings
-									</a>
+									</p>
 								</MenuItem>
 								<MenuItem>
 									<a

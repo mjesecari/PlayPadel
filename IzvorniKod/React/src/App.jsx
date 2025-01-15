@@ -2,9 +2,12 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import MainPage from "./pages/MainPage";
+import MainPage from "./components/EditUserData";
 import CourtsPage from "./pages/CourtsPage";
 import AdminPage from "./pages/AdminPage";
+
+//import CourtPreview from "./components/CourtPreview";
+import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";
 
@@ -46,11 +49,30 @@ function App() {
 				<Routes>
 					<Route index element={<Home userInfo={userInfo} />} />
 					<Route path="Home" element={<Home userInfo={userInfo} />} />
-					<Route path="CourtsPage" element={<CourtsPage userInfo={userInfo} />}/>
-					<Route path="AdminPage" element={<AdminPage userInfo={userInfo} />}/>
+					<Route
+						path="CourtPreview"
+						//element={<CourtPreview userInfo={userInfo} />}
+					/>
+					<Route
+						path="CourtsPage"
+						element={<CourtsPage userInfo={userInfo} />}
+					/>
+					<Route
+						path="AdminPage"
+						element={<AdminPage userInfo={userInfo} />}
+					/>
+
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
-					<Route path="/MainPage" element={<MainPage />} />
+
+					<Route
+						path="/Infouser"
+						element={<Infouser userInfo={userInfo} />}
+					/>
+					<Route
+						path="MainPage"
+						element={<MainPage userInfo={userInfo} />}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>

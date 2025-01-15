@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import fer.progi.mjesecari.ppadel.dao.AdminRepository;
+import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
 import fer.progi.mjesecari.ppadel.domain.Administrator;
+import fer.progi.mjesecari.ppadel.domain.Vlasnik;
+import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,6 +29,9 @@ public class KorisnikServiceJpa implements KorisnikService {
 
     @Autowired
     private AdminRepository adminRepo;
+
+    @Autowired
+    private VlasnikService vlasnikService;
 
     @Override 
     public List<Korisnik> listAll(){
@@ -60,16 +66,14 @@ public class KorisnikServiceJpa implements KorisnikService {
         throw new RequestDeniedException(
           "User with email " + korisnik.getEmail() + " already exists"
         );
-
-      if(korisnik.isAdmin()){
-            Administrator newAdmin = new Administrator();
-            newAdmin.setId(korisnik.getId());
-            newAdmin.setEmail(korisnik.getEmail());
-            newAdmin.setTip(korisnik.getTip());
-            return adminRepo.save(newAdmin);
+      //System.out.println(korisnik.getTip());
+      if(korisnik.isAdmin()) {
+          Administrator newAdmin = new Administrator();
+          newAdmin.setId(korisnik.getId());
+          newAdmin.setEmail(korisnik.getEmail());
+          newAdmin.setTip(korisnik.getTip());
+          return adminRepo.save(newAdmin);
       }
-      //TODO create new Vlasnik and new Igrac if korisnik.isOwner/!korisnik.isOwner
-      
       return userRepo.save(korisnik);
     }
   

@@ -98,6 +98,7 @@ public class RezervacijaController {
         return rezervacijaService.addRezervacija(teren, rezDTO.getVrijeme(), korisnik);
         
     }
+    /*
     @PostMapping("/save")
     public ResponseEntity<String> saveRezervacija(@RequestBody RezervacijaDTO rezDTO) {
         
@@ -164,5 +165,6 @@ public class RezervacijaController {
         }
         throw new IllegalStateException("Oauth2 Security Context not found!");
     }
+        */
 
 }

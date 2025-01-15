@@ -39,7 +39,8 @@ public class CalendarController {
     private static final String APPLICATION_NAME = "PlayPadel spring";
     @Autowired
     private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
-
+    // does nothing, template for future google calendar integration
+    /*
     @GetMapping("")
     public ResponseEntity<String> getEvents(
     @RequestParam(value = "sdate") String sdate, 
@@ -94,4 +95,5 @@ public class CalendarController {
         }
         throw new IllegalStateException("Oauth2 Security Context not found!");
     }
+        */
 }

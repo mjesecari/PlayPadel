@@ -115,9 +115,21 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Administrator> listAdmins(){return adminRepo.findAll();}
 
-    @GetMapping("/vlasnici")
+   /** @GetMapping("/vlasnici")
     public List<Vlasnik> listVlasnici(){return vlasnikRepository.findAll();}
     @GetMapping("/igraci")
-    public List<Igrac> listIgraci(){return igracRepository.findAll();}
+    public List<Igrac> listIgraci(){return igracRepository.findAll();}**/
+
+    @PostMapping("/users/vlasnik")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Korisnik addUser(@RequestBody VlasnikDTO vlasnik){
+        return adminsrv.addVlasnik(vlasnik);
+    }
+
+    @PostMapping("/users/igrac")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Korisnik addUser(@RequestBody IgracDTO igrac){
+        return adminsrv.addIgrac(igrac);
+    }
 
 }

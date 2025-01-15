@@ -12,24 +12,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Profile({"form-security", "oauth-security"})
 public class ClanstvoController {
     @Autowired
     private ClanstvoService clanstvoService;
+    @Autowired
+    private ClanstvoRepository clanstvoRepository;
 
-    @PostMapping("/membership/payment")
-    public RedirectView PayMembership(@RequestParam Long userId,
-                                      @RequestParam double total,
-                                      @RequestParam String currency,
-                                      @RequestParam String method,
-                                      @RequestParam String intent,
-                                      @RequestParam String description) {
-        String redirectUrl = String.format("/payment/create?userId=%d&total=%.2f&currency=%s&method=%s&intent=%s&description=%s",
-                userId, total, currency, method, intent, description);
-        return new RedirectView(redirectUrl);
-    }
     @PostMapping("/membership/create/{id}")
     public Clanstvo createMembership (@PathVariable Long id){
         Clanstvo clanstvo = clanstvoService.CreateClanstvo(id);
@@ -38,5 +30,16 @@ public class ClanstvoController {
     @GetMapping("membership/all")
     public List<Clanstvo> listAll (){
         return clanstvoService.listAll();
+    }
+    @GetMapping("membership/isPayed")
+    public boolean isPayed (@RequestParam Long id){
+        Optional<Clanstvo> Currentclanstvo = clanstvoRepository.findById(id);
+        Clanstvo clanstvo = Currentclanstvo.orElseThrow(()->new IllegalArgumentException("Clanstvo za vlasnika nije pronađeno"));
+        if (clanstvo.getDatumIsteka() != null && clanstvo.getDatumIsteka().isAfter(LocalDate.now())){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

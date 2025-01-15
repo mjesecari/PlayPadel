@@ -66,26 +66,15 @@ public class KorisnikServiceJpa implements KorisnikService {
         throw new RequestDeniedException(
           "User with email " + korisnik.getEmail() + " already exists"
         );
-      System.out.println(korisnik.getTip());
-      if(korisnik.isAdmin()){
-            Administrator newAdmin = new Administrator();
-            newAdmin.setId(korisnik.getId());
-            newAdmin.setEmail(korisnik.getEmail());
-            newAdmin.setTip(korisnik.getTip());
-            return adminRepo.save(newAdmin);
+      //System.out.println(korisnik.getTip());
+      if(korisnik.isAdmin()) {
+          Administrator newAdmin = new Administrator();
+          newAdmin.setId(korisnik.getId());
+          newAdmin.setEmail(korisnik.getEmail());
+          newAdmin.setTip(korisnik.getTip());
+          return adminRepo.save(newAdmin);
       }
-      //TODO create new Vlasnik and new Igrac if korisnik.isOwner/!korisnik.isOwner
-      else if (korisnik.isOwner()) {
-          Vlasnik newVlasnik = new Vlasnik();
-          newVlasnik.setId(korisnik.getId());
-          newVlasnik.setEmail(korisnik.getEmail());
-          newVlasnik.setTip(korisnik.getTip());
-          newVlasnik.setNazivVlasnik("vlasnik1");
-          newVlasnik.setLokacija("zagreb");
-          newVlasnik.setBrojTel("091 1111 222");
-          return vlasnikService.createVlasnik(newVlasnik);
-      }
-        return userRepo.save(korisnik);
+      return userRepo.save(korisnik);
     }
   
     @Override

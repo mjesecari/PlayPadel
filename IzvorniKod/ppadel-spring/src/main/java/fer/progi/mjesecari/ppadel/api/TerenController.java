@@ -1,12 +1,16 @@
 package fer.progi.mjesecari.ppadel.api;
 
-import org.springframework.web.bind.annotation.RestController;
+import fer.progi.mjesecari.ppadel.domain.SlikaTeren;
+import fer.progi.mjesecari.ppadel.service.SlikaTerenService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Teren;
 import fer.progi.mjesecari.ppadel.service.TerenService;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -21,13 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Profile({"form-security", "oauth-security"})
@@ -41,6 +38,8 @@ public class TerenController {
     @Autowired
     private TerenRepository terenRepo;
 
+    @Autowired
+    private SlikaTerenService slikaTerenService;
 
 
     @GetMapping("/")
@@ -50,10 +49,11 @@ public class TerenController {
     
     @PostAuthorize("hasRole('ROLE_OWNER')")
     @PostMapping("/")
-    public ResponseEntity<Teren> createTeren(@RequestBody createTerenDTO terenDTO) {
+    public ResponseEntity<Teren> createTeren(@RequestPart("teren") createTerenDTO terenDTO, @RequestPart("slika") MultipartFile file) throws IOException {
         
         Teren saved = terenService.createTeren(terenDTO.getNaziv(), terenDTO.getVlasnikTerenaId(), terenDTO.getTip(), terenDTO.getLokacija());
-
+        slikaTerenService.uploadPicture(file.getBytes(), saved);
+        System.out.println(saved.getIDTeren());
         return ResponseEntity.created(URI.create("/tereni/" + saved.getIDTeren())).body(saved);
     }
     
@@ -76,6 +76,7 @@ public class TerenController {
     @GetMapping("/my")
     public Collection<Teren> myTereni(Principal principal) {
         String mail = mailFromPrincipal(principal);
+        System.out.println(terenRepo.findAllByVlasnikTerenEmail(mail));
         if(mail != null)
             return terenRepo.findAllByVlasnikTerenEmail(mail);
         else
@@ -84,7 +85,7 @@ public class TerenController {
     
     @PostAuthorize("hasRole('ROLE_OWNER')")
     @PutMapping("/{id}")
-    public Teren editTeren(Principal principal, @PathVariable Long id, @RequestBody createTerenDTO terenDto) {
+    public Teren editTeren(Principal principal, @PathVariable Long id, @RequestPart("teren") createTerenDTO terenDto, @RequestPart("slika") MultipartFile file) throws IOException {
         String mail = mailFromPrincipal(principal);
         
         if(mail == null || !terenService.fetch(id).getVlasnikTeren().getEmail().equals(mail)){
@@ -92,6 +93,7 @@ public class TerenController {
         }
         else{
             terenService.updateTerenName(id, terenDto.getNaziv());
+            slikaTerenService.UpdateSlikaTeren(id, file.getBytes());
             return terenService.updateTerenType(id, terenDto.getTip());
         }
 

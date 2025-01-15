@@ -48,6 +48,7 @@ export default function CourtsOwner({ userInfo }) {
 		axios
 			.get("/api/tereni/my")
 			.then((res) => {
+				console.log(res);
 				setCourts(res.data);
 			})
 			.catch((error) => console.log(error));
@@ -66,6 +67,10 @@ export default function CourtsOwner({ userInfo }) {
 		setForm((oldForm) => ({ ...oldForm, tip: value }));
 	};
 
+	const handleFileChange = (event) => {
+		setForm((oldForm) => ({ ...oldForm, slika: event.target.files[0] }));
+	};
+
 	const onSubmit = () => {
 		console.log("submit", form);
 		if (form.tip == "") {
@@ -80,15 +85,34 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite lokaciju terena.");
 			return;
 		}
-		const data = JSON.stringify(form);
-
+		if (form.slika === null){
+			alert("Dodajte sliku terena.");
+			return;
+		}
+		//const data = JSON.stringify(form);
+		const data = new FormData();
+		data.append("naziv", form.naziv);
+		data.append("tip", form.tip);
+		data.append("lokacija", form.lokacija);
+		data.append("vlasnikTerenaId", form.vlasnikTerenaId);
+		const terenDTO = {
+			naziv: form.naziv,
+			tip: form.tip,
+			lokacija: form.lokacija,
+			vlasnikTerenaId: form.vlasnikTerenaId,
+		};
+		data.append("teren",new Blob([JSON.stringify(form)], { type: 'application/json' }));
+		if (form.slika) {
+		data.append("slika", form.slika); // Append file to FormData if it exists
+		}
 		// add new
 		if (!form.id) {
 			axios({
 				url: "/api/tereni/",
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
+					//"Content-Type": "application/json",
+					"Content-Type": "multipart/form-data",
 				},
 				data: data,
 			})
@@ -100,7 +124,8 @@ export default function CourtsOwner({ userInfo }) {
 						naziv: "",
 						tip: "",
 						vlasnikTerenaId: userInfo.id,
-						lokacija: ""
+						lokacija: "",
+						slika: null
 					});
 				})
 				.catch((err) => {});
@@ -112,7 +137,8 @@ export default function CourtsOwner({ userInfo }) {
 			url: "/api/tereni/" + form.id,
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				//"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
 			data: data,
 		})
@@ -125,7 +151,8 @@ export default function CourtsOwner({ userInfo }) {
 					naziv: "",
 					tip: "",
 					vlasnikTerenaId: userInfo.id,
-					lokacija: ""
+					lokacija: "",
+					slika: null
 				});
 			})
 			.catch((err) => {});
@@ -167,7 +194,8 @@ export default function CourtsOwner({ userInfo }) {
 			naziv: editable.nazivTeren,
 			tip: "", // editable.tipTeren,
 			vlasnikTerenaId: userInfo.id,
-			lokacija: editable.lokacijaTeren
+			lokacija: editable.lokacijaTeren,
+			slika: editable.slikaTeren
 		});
 		console.log("now", form);
 	}
@@ -238,6 +266,19 @@ export default function CourtsOwner({ userInfo }) {
 										className="col-span-3"
 									/>
 								</div>
+								{/* File input */}
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="slika" className="text-right">
+										Dodaj sliku
+									</Label>
+									<Input
+										type="file"
+										id="slika"
+										name="slika"
+										onChange={handleFileChange}
+										className="col-span-3"
+									/>
+								</div>
 							</div>
 						</form>
 						<DialogFooter>
@@ -287,6 +328,12 @@ export default function CourtsOwner({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
+								<p> <img
+										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
+										alt={court.naziv}
+										style={{ width: "300px", height: "200px", objectFit: "cover" }}
+										/>
+								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>
 							</CardContent>

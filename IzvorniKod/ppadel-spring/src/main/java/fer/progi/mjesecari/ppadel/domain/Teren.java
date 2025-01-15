@@ -1,6 +1,7 @@
 package fer.progi.mjesecari.ppadel.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.Assert;
 
 import jakarta.persistence.*;
@@ -14,6 +15,10 @@ public class Teren {
 
     @ManyToOne
     Korisnik vlasnikTeren;
+
+
+    @OneToOne(mappedBy = "teren", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private SlikaTeren slikaTeren;
 
     @NotNull
     private String TipTeren;
@@ -85,5 +90,11 @@ public class Teren {
     }
 
 
+    public SlikaTeren getSlikaTeren() {
+        return slikaTeren;
+    }
 
+    public void setSlikaTeren(SlikaTeren slikaTeren) {
+        this.slikaTeren = slikaTeren;
+    }
 }

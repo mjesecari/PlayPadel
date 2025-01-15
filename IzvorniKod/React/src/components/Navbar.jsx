@@ -15,6 +15,7 @@ import {
 	UserIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const nav = {
 	player: [
@@ -52,10 +53,17 @@ export default function NavBar() {
 		navigation = nav.player;
 	}
 
-    const handleSignOut = () => {
-        sessionStorage.clear();
-        navigate('/login');
-    };
+	const handleSignOut = async (event) => {
+		try {
+			event.preventDefault();
+			sessionStorage.clear();
+			document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			await axios.post('http://localhost:8080/signout');
+			navigate('/login', { replace: true });
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
+	};
 
 	return (
 		<Disclosure

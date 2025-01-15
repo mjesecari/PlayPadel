@@ -122,7 +122,8 @@ export default function AdminPage() {
       <h1>Admin Page</h1> 
       <div>
         <h2>Popis korisnika:</h2>
-          <select value = {role} onChange={changeRole}>
+          <select value = {role} onChange={changeRole}
+          className="border border-gray-300 rounded-md p-2 text-zinc-50">
             <option value="svi">Svi</option>
             <option value="admin">Admin</option>
             <option value="vlasnik">Vlasnik</option>
@@ -142,12 +143,12 @@ export default function AdminPage() {
                     placeholder="Unesite članarinu"
                     value={clanarine[user.id] || ""}
                     onChange={(val) => handleClanarinaChange(user.id, val.target.value)}/>
-                    <button onClick={() => updateClanarina(user.id)}>
+                    <button className="m-5 text-zinc-50" onClick={() => updateClanarina(user.id)}>
                       Promjeni članarinu
                     </button>
                   </div>
                 )}
-                <button onClick={() => deleteKorizznik(user.id)}> Obriši korisnika </button>
+                <button className="m-5 text-zinc-50" onClick={() => deleteKorizznik(user.id)}> Obriši korisnika </button>
               </li>
             ))}
           </ul>
@@ -162,13 +163,14 @@ export default function AdminPage() {
               <select
                 value={korizznik.tip}
                 onChange={(val) => setKorizznik({ ...korizznik, tip: val.target.value })}
+                className="border border-gray-300 rounded-md p-2 text-zinc-50" 
               >
                 <option value="">Odaberite tip</option>
                 <option value="admin">Admin</option>
                 <option value="vlasnik">Vlasnik</option>
                 <option value="igrac">Igrač</option>
               </select>
-              <button onClick={addKorizznik}>Dodaj korisnika</button>
+              <button className="m-5 text-zinc-50" onClick={addKorizznik}>Dodaj korisnika</button>
           </div>
       </div>
     </div>

@@ -85,7 +85,7 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite lokaciju terena.");
 			return;
 		}
-		if (form.slika === null){
+		if (form.slika == null){
 			alert("Dodajte sliku terena.");
 			return;
 		}

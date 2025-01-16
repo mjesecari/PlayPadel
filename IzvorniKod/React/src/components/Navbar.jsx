@@ -58,8 +58,8 @@ export default function NavBar() {
 			event.preventDefault();
 			sessionStorage.clear();
 			document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			navigate('/signup', { replace: true });
 			await axios.post('http://localhost:8080/signout');
-			navigate('/login', { replace: true });
 		} catch (error) {
 			console.error('Error signing out:', error);
 		}

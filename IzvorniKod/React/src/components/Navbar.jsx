@@ -14,7 +14,8 @@ import {
 	XMarkIcon,
 	UserIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const nav = {
 	player: [
@@ -48,6 +49,8 @@ export default function NavBar() {
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
 
+    const navigate = useNavigate();
+
 	if (userInfo.admin) {
 		navigation = nav.admin;
 	} else if (userInfo.owner) {
@@ -55,6 +58,18 @@ export default function NavBar() {
 	} else {
 		navigation = nav.player;
 	}
+
+	const handleSignOut = async (event) => {
+		try {
+			event.preventDefault();
+			sessionStorage.clear();
+			document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			navigate('/signup', { replace: true });
+			await axios.post('http://localhost:8080/signout');
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
+	};
 
 	return (
 		<Disclosure
@@ -144,7 +159,8 @@ export default function NavBar() {
 								<MenuItem>
 									<a
 										href="#"
-										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                    onClick={handleSignOut}
+										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out
 									</a>

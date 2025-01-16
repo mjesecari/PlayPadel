@@ -18,11 +18,25 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Signup() {
+	const [errorMsg, setErrorMsg] = useState(false);
 	const [selectedRole, setSelectedRole] = useState("");
-	const [form, setForm] = useState({ email: "", role: "" });
+	const [form, setForm] = useState({
+		email: "",
+		role: "",
+		ime: "",
+		prezime: "",
+		brojTel: "",
+		nazivVlasnik: "",
+		lokacija: "",
+	});
+
+	useEffect(() => {
+		setErrorMsg(false);
+	}, []);
+
 	const navigate = useNavigate();
 
 	const emailRegex = /^[\w\-\.]+@(gmail+\.)+[\w-]{2,}$/gm;
@@ -35,10 +49,11 @@ export default function Signup() {
 
 	const handleSelectChange = (value) => {
 		setForm((oldForm) => ({ ...oldForm, role: value }));
-		console.log("-- ignored Selected Role: ", value);
+		console.log("-- Selected Role:", value);
 	};
 
 	const onSubmit = () => {
+		console.log(form);
 		if (!emailRegex.test(form.email)) {
 			// TODO change error display
 			alert("Unesite ispravnu gmail adresu.");
@@ -49,21 +64,70 @@ export default function Signup() {
 			return;
 		}
 
-		const data = JSON.stringify(form);
-		console.log(data);
-
 		const options = {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: data,
 		};
-		return fetch("/api/register", options).then((res) => {
-			console.log(res);
-			// TODO if fetch returns error display error msg
-			navigate("/Login");
-		});
+
+		// REGISTER PLAYER
+		if (form.role == "igrač") {
+			if (form.ime == "" || form.prezime == "" || form.brojTel == "") {
+				alert("Nedostaju podaci");
+				return;
+			}
+
+			let data = JSON.stringify({
+				email: form.email,
+				role: form.role,
+				imeIgrac: form.ime,
+				prezimeIgrac: form.prezime,
+				brojTel: form.brojTel,
+			});
+			options.body = data;
+			console.log(data);
+
+			fetch("api/register/igrac", options)
+				.then((res) => {
+					console.log(res);
+					navigate("/Login");
+					//return;
+				})
+				.catch((err) => {
+					setErrorMsg(true);
+				});
+		}
+
+		// REGISTER COURT OWNER
+		else if (form.role == "vlasnik") {
+			if (
+				form.nazivVlasnik == "" ||
+				form.lokacija == "" ||
+				form.brojTel == ""
+			) {
+				alert("Nedostaju podaci");
+				return;
+			}
+			let data = JSON.stringify({
+				email: form.email,
+				role: form.role,
+				nazivVlasnik: form.nazivVlasnik,
+				lokacija: form.lokacija,
+				brojTel: form.brojTel,
+			});
+			console.log(data);
+			options.body = data;
+
+			fetch("api/register/vlasnik", options)
+				.then((res) => {
+					console.log(res);
+					navigate("/Login");
+				})
+				.catch((err) => {
+					setErrorMsg(true);
+				});
+		}
 	};
 
 	return (
@@ -71,6 +135,11 @@ export default function Signup() {
 			<CardHeader>
 				<CardTitle>Registriraj se</CardTitle>
 				<CardDescription>Napravi svoj korisnički račun</CardDescription>
+				{errorMsg && (
+					<CardDescription className="text-red-500 text-md ">
+						Došlo je do pogreške, postoji profil s tom gmail adresom
+					</CardDescription>
+				)}
 			</CardHeader>
 
 			{/* consider changing to =onSubmit() */}
@@ -98,6 +167,88 @@ export default function Signup() {
 							</SelectContent>
 						</Select>
 					</div>
+
+					{/* samo za igrača: */}
+
+					{form.role == "igrač" && (
+						<div name="container">
+							<hr className="m-8" />
+							<CardDescription>
+								Molimo upišite dodatne podatke
+							</CardDescription>
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Ime</Label>
+								<Input
+									id="ime"
+									placeholder="Ime"
+									name="ime"
+									onChange={onChange}
+									value={form.ime}
+								/>
+							</div>
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Prezime</Label>
+								<Input
+									id="prezime"
+									placeholder="Prezime"
+									name="prezime"
+									onChange={onChange}
+									value={form.prezime}
+								/>
+							</div>
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Broj mobitela</Label>
+								<Input
+									id="brojTel"
+									placeholder="Broj mobitela"
+									name="brojTel"
+									onChange={onChange}
+									value={form.brojTel}
+								/>
+							</div>
+						</div>
+					)}
+
+					{/* samo za vlasnika terena: */}
+
+					{form.role == "vlasnik" && (
+						<div name="container">
+							<hr className="m-8" />
+							<CardDescription>
+								Molimo upišite dodatne podatke
+							</CardDescription>{" "}
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Ime kluba</Label>
+								<Input
+									id="nazivVlasnik"
+									placeholder="Upisite ime kluba"
+									name="nazivVlasnik"
+									onChange={onChange}
+									value={form.nazivVlasnik}
+								/>
+							</div>
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Lokacija</Label>
+								<Input
+									id="lokacija"
+									placeholder="Lokacija vaših terena"
+									name="lokacija"
+									onChange={onChange}
+									value={form.lokacija}
+								/>
+							</div>
+							<div className="flex flex-col space-y-1.5 mt-4">
+								<Label>Broj mobitela/telefona</Label>
+								<Input
+									id="brojTel"
+									placeholder="Broj mobitela"
+									name="brojTel"
+									onChange={onChange}
+									value={form.brojTel}
+								/>
+							</div>
+						</div>
+					)}
 				</CardContent>
 				<CardFooter className="flex justify-between">
 					<Link to="/Home">

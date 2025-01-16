@@ -1,4 +1,4 @@
-package fer.progi.mjesecari.ppadel.api;
+package fer.progi.mjesecari.ppadel.service;
 
 
 
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
-import fer.progi.mjesecari.ppadel.service.KorisnikService;
 
 import java.util.List;
 

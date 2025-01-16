@@ -26,7 +26,6 @@ const nav = {
 
 	owner: [
 		{ name: "Početna stranica", href: "/", current: false },
-
 		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
 		{ name: "Moji turniri ", href: "#", current: false },
 	],
@@ -35,6 +34,7 @@ const nav = {
 		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Popis korisnika", href: "#", current: false },
 	],
+	admin: [{ name: "Popis korisnika", href: "/AdminPage", current: false }],
 };
 
 let navigation;
@@ -101,18 +101,20 @@ export default function NavBar() {
 						<div className="hidden sm:ml-6 sm:block">
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
-									<a href={item.href}>
-										<p
-											className={classNames(
-												item.current
-													? "bg-gray-900 text-white"
-													: "text-gray-300 hover:bg-gray-700 hover:text-white",
-												"rounded-md px-3 py-2 text-md font-medium"
-											)}
-										>
-											{item.name}
-										</p>
-									</a>
+									<Link
+										to={item.href}
+										key={item.name}
+										href={item.href}
+										aria-current={item.current ? "page" : undefined}
+										className={classNames(
+											item.current
+												? "bg-gray-900 text-white"
+												: "text-gray-300 hover:bg-gray-700 hover:text-white",
+											"rounded-md px-3 py-2 text-sm font-medium"
+										)}
+									>
+										{item.name}
+									</Link>
 								))}
 							</div>
 						</div>
@@ -127,7 +129,10 @@ export default function NavBar() {
 							<BellIcon aria-hidden="true" className="h-6 w-6" />
 						</button>
 
+						{!userInfo.admin && <EditUserData userInfo={userInfo} />}
+
 						{/* Profile dropdown */}
+
 						<Menu as="div" className="relative ml-3">
 							<div>
 								<MenuButton className="relative flex rounded-full bg-gray-800 text-md focus:outline-none focus:ring-2  hover:text-white  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">

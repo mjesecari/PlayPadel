@@ -49,6 +49,16 @@ public interface TerenService {
   Teren createTeren(String terenName, Long vlasnikID, String terenTip);
 
   /**
+   * Creates new teren with given name, vlasnik and tip.
+   * @param terenName name of the new teren
+   * @param vlasnikID id of vlasnik of the new teren
+   * @return created teren object, with ID set
+   * @throws IllegalArgumentException if name is empty or any is <code>null</code>
+   * @throws RequestDeniedException if no user with given Id
+   */
+  Teren createTeren(String terenName, Long vlasnikID, String terenTip, String lokacija);
+
+  /**
    * Updates the name of a given teren.
    * @param terenId identifies teren to update
    * @param name new name of the teren
@@ -57,6 +67,16 @@ public interface TerenService {
    * @throws IllegalArgumentException if name is empty or any is <code>null</code>
    */
   Teren updateTerenName(long terenId, String name);
+  
+  /**
+  * Updates the type of a given teren.
+  * @param terenId identifies teren to update
+  * @param type new type of the teren
+  * @return updated teren object
+  * @throws EntityMissingException if entity with the same ID as in parameter does not exist
+  * @throws IllegalArgumentException if type is empty or any is <code>null</code>
+  */
+ Teren updateTerenType(long terenId, String type);
 
 
   /**

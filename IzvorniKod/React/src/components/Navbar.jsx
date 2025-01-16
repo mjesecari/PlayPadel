@@ -14,19 +14,26 @@ import {
 	XMarkIcon,
 	UserIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import EditUserData from "./EditUserData";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 const nav = {
 	player: [
+		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
 		{ name: "Turniri ", href: "#", current: false },
 	],
 
 	owner: [
+		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
 		{ name: "Moji turniri ", href: "#", current: false },
 	],
 
+	admin: [
+		{ name: "Početna stranica", href: "/", current: false },
+		{ name: "Popis korisnika", href: "#", current: false },
+	],
 	admin: [{ name: "Popis korisnika", href: "/AdminPage", current: false }],
 };
 
@@ -42,6 +49,8 @@ export default function NavBar() {
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
 
+    const navigate = useNavigate();
+
 	if (userInfo.admin) {
 		navigation = nav.admin;
 	} else if (userInfo.owner) {
@@ -49,6 +58,18 @@ export default function NavBar() {
 	} else {
 		navigation = nav.player;
 	}
+
+	const handleSignOut = async (event) => {
+		try {
+			event.preventDefault();
+			sessionStorage.clear();
+			document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			navigate('/signup', { replace: true });
+			await axios.post('http://localhost:8080/signout');
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
+	};
 
 	return (
 		<Disclosure
@@ -114,7 +135,7 @@ export default function NavBar() {
 
 						<Menu as="div" className="relative ml-3">
 							<div>
-								<MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2  hover:text-white  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+								<MenuButton className="relative flex rounded-full bg-gray-800 text-md focus:outline-none focus:ring-2  hover:text-white  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 									<span className="absolute -inset-1.5" />
 									<span className="sr-only">Open user menu</span>
 									<UserIcon className="h-6 w-6 text-gray-400" />
@@ -125,13 +146,25 @@ export default function NavBar() {
 								className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
 							>
 								<MenuItem>
-									<p className="block px-4 py-2 text-sm text-gray-700 ">
+									<a
+										href="#"
+										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+									>
 										{userInfo.email}
-									</p>
+									</a>
 								</MenuItem>
 								<MenuItem>
 									<a
 										href="#"
+										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+									>
+										Settings
+									</a>
+								</MenuItem>
+								<MenuItem>
+									<a
+										href="#"
+                    onClick={handleSignOut}
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out
@@ -143,7 +176,7 @@ export default function NavBar() {
 				</div>
 			</div>
 
-			<DisclosurePanel className="sm:hidden">
+			<DisclosurePanel className="sm:hidden bg-gray-700">
 				<div className="space-y-1 px-2 pb-3 pt-2">
 					{navigation.map((item) => (
 						<DisclosureButton

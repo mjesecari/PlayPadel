@@ -53,17 +53,35 @@ public class TerenServiceJpa implements TerenService{
     }
 
     @Override
-    public Teren updateTerenName(long terenId, String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateTerenName'");
+    public Teren createTeren(String terenName, Long vlasnikID, String terenTip, String lokacija) {
+        Korisnik vlasnik = korisnikService.findById(vlasnikID).orElseThrow(
+            () -> new RequestDeniedException("No user with ID " + vlasnikID)
+        );
+        Teren t = new Teren(terenName, vlasnik, terenTip);
+        t.setLokacijaTeren(lokacija);
+        return terenRepo.save(t);
     }
 
+    @Override
+    public Teren updateTerenName(long terenId, String name) {
+        Teren teren = fetch(terenId);
+        teren.setNazivTeren(name);
+        return terenRepo.save(teren);
+    }
+    
+    @Override
+    public Teren updateTerenType(long terenId, String type) {
+        Teren teren = fetch(terenId);
+        teren.setTipTeren(type);
+        return terenRepo.save(teren);
+    }
 
     @Override
     public Teren deleteTeren(long terenId) {
-        // TODO Auto-generated method stub
         Teren teren = fetch(terenId);   // throws EntityMissingException
         terenRepo.delete(teren);
         return teren;
     }
+
+
 }

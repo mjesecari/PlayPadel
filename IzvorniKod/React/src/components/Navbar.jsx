@@ -15,7 +15,8 @@ import {
 	UserIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
+import EditUserData from "./EditUserData";
 
 const nav = {
 	player: [
@@ -49,7 +50,7 @@ export default function NavBar() {
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	if (userInfo.admin) {
 		navigation = nav.admin;
@@ -63,11 +64,12 @@ export default function NavBar() {
 		try {
 			event.preventDefault();
 			sessionStorage.clear();
-			document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
-			navigate('/signup', { replace: true });
-			await axios.post('http://localhost:8080/signout');
+			document.cookie =
+				"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			navigate("/signup", { replace: true });
+			await axios.post("http://localhost:8080/signout");
 		} catch (error) {
-			console.error('Error signing out:', error);
+			console.error("Error signing out:", error);
 		}
 	};
 
@@ -164,7 +166,7 @@ export default function NavBar() {
 								<MenuItem>
 									<a
 										href="#"
-                    onClick={handleSignOut}
+										onClick={handleSignOut}
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out

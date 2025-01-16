@@ -17,6 +17,7 @@
 | 1.1   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 7.12.2024.  |
 | 1.2   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 26.12.2024. |
 | 1.3   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 28.12.2024. |
+| 1.4   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 16.1.2024. |
 
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 

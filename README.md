@@ -42,9 +42,33 @@ Cilj tima koji izrađuje ovaj projekt je savladati osnove razvoja softvera i raz
  - podatke o turniru unosi organizator, tj. vlasnik terena
  
 
-## Nefunkcijski zahtjevi
+# Nefunkcijski zahtjevi
  - podatci o korisnicima su zaštićeni
-
+ - Web-aplikacija treba se učitavati unutar 2-3 sekunde za ključne stranice (prijava, pregled terena, rezervacija termina).
+ -  Sustav mora odgovoriti na korisničke zahtjeve za rezervaciju i učitavanje kalendara u roku od 2 sekunde. 
+## Zahtjevi za sigurnost                                                                                                                                      
+ - Sustav mora koristiti OAuth2 za prijavu i upravljanje sesijama kako bi osigurao siguran pristup korisničkim podacima.
+ - Sustav mora integrirati PayPal API za online plaćanja te osigurati podršku za dodatne načine plaćanja poput kreditnih kartica.
+ - Proces transakcija mora koristiti enkripciju kako bi se spriječila krađa korisničkih podataka ili pokušaj neovlaštenog pristupa.
+ - Osobni podaci korisnika (e-mail, povijest rezervacija, financijski podaci) moraju biti pohranjeni u skladu s regulativama.
+## Zahtjevi za pouzdanost i dostupnost
+ - Aplikacija mora biti dostupna 99.9% vremena tijekom godine, osim tijekom unaprijed planiranog održavanja.
+ - Sustav mora imati implementiran plan oporavka koji uključuje redovne sigurnosne kopije baza podataka (npr. svaka 24 sata).
+ -  Mogućnost vraćanja sustava u funkcionalno stanje unutar maksimalno jednog sata u slučaju kvara.  
+## Zahtjevi za upotrebljivost
+ - Sučelje mora biti prilagođeno za pristup osobama s različitim potrebama, uključujući opcije za povećanje fonta i navigaciju putem tipkovnice.
+ - Aplikacija mora biti jednostavna za korištenje, s jasnim navigacijskim elementima za korisnike svih razina tehničke pismenosti.
+ -  Aplikacija bi trebala podržavati više jezika (npr. engleski) za širenje na međunarodna tržišta.   
+## Zahtjevi za kompatibilnost
+ - Aplikacija mora raditi ispravno na najnovijim verzijama svih glavnih preglednika (Chrome, Firefox, Safari, Edge).
+ - Sučelje treba biti optimizirano za korištenje na različitim veličinama zaslona, uključujući mobilne uređaje i tablete. 
+## Zahtjevi za održavanje
+ - Razvojni tim treba voditi detaljnu tehničku dokumentaciju za jednostavno održavanje i proširenje aplikacije.
+ - Sustav mora sadržavati tehničku dokumentaciju za razvojni tim te korisničku dokumentaciju koja objašnjava ključne funkcionalnosti.
+ - Dokumentacija mora biti redovito ažurirana.
+ - Sustav treba imati niz automatiziranih testova kako bi se osigurala pouzdanost novih verzija.   
+## Zahtjevi za ekonomičnost
+ - Troškovi održavanja i nadogradnje trebaju biti optimizirani, npr. korištenje odgovarajućih cloud resursa za smanjenje nepotrebnih troškova.  
 
 
 # Tehnologije

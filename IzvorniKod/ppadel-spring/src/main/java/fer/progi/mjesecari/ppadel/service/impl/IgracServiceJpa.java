@@ -2,7 +2,7 @@ package fer.progi.mjesecari.ppadel.service.impl;
 
 import fer.progi.mjesecari.ppadel.dao.IgracRepository;
 import fer.progi.mjesecari.ppadel.domain.Igrac;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.IgracService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

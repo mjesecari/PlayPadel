@@ -89,19 +89,15 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Dodajte sliku terena.");
 			return;
 		}
-		//const data = JSON.stringify(form);
 		const data = new FormData();
-		data.append("naziv", form.naziv);
-		data.append("tip", form.tip);
-		data.append("lokacija", form.lokacija);
-		data.append("vlasnikTerenaId", form.vlasnikTerenaId);
+		
 		const terenDTO = {
 			naziv: form.naziv,
 			tip: form.tip,
 			lokacija: form.lokacija,
 			vlasnikTerenaId: form.vlasnikTerenaId,
 		};
-		data.append("teren",new Blob([JSON.stringify(form)], { type: 'application/json' }));
+		data.append("teren",new Blob([JSON.stringify(terenDTO)], { type: 'application/json' }));
 		if (form.slika) {
 		data.append("slika", form.slika); // Append file to FormData if it exists
 		}
@@ -112,14 +108,10 @@ export default function CourtsOwner({ userInfo }) {
 				method: "POST",
 				headers: {
 					//"Content-Type": "application/json",
-					"Content-Type": "multipart/form-data",
+					//"Content-Type": "multipart/form-data",
 				},
-				// data: data,
-				data: JSON.stringify({
-					naziv: form.naziv,
-					tip: form.tip,
-					vlasnikTerenaId: form.vlasnikTerenaId,
-				}),
+				data: data,
+				
 			})
 				.then((res) => {
 					setOpenRes(true);
@@ -205,50 +197,6 @@ export default function CourtsOwner({ userInfo }) {
 		console.log("now", form);
 	}
 
-	// update teren data
-	function onUpdate() {
-		console.log("submit", form);
-		if (form.tip == "") {
-			alert("Odaberite vrstu terena.");
-			return;
-		}
-		if (form.naziv == "") {
-			alert("Upišite naziv terena.");
-			return;
-		}
-		const data = JSON.stringify(form);
-
-		// update existing
-		axios({
-			url: "/api/tereni/" + form.id,
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			//data: data,
-			data: JSON.stringify({
-				naziv: form.naziv,
-				tip: form.tip,
-				vlasnikTerenaId: form.vlasnikTerenaId,
-			}),
-		})
-			.then((res) => {
-				console.log("put");
-				setOpenRes(true);
-				setOpenTerenInp(false);
-				setForm({
-					id: undefined,
-					naziv: "",
-					tip: "",
-					vlasnikTerenaId: userInfo.id,
-				});
-			})
-			.catch((err) => {});
-	}
-
-	function clearTerenId() {
-		form.id = "";
-	}
 	if (!userInfo) return <p>Loading...</p>;
 
 	// checked in local storage
@@ -267,7 +215,6 @@ export default function CourtsOwner({ userInfo }) {
 					<DialogTrigger asChild>
 						<Button
 							className="h-fit text-white ml-10"
-							onClick={clearTerenId}
 						>
 							Dodaj novi teren
 						</Button>
@@ -334,7 +281,7 @@ export default function CourtsOwner({ userInfo }) {
 							</div>
 						</form>
 						<DialogFooter>
-							{!form.id && (
+					
 								<Button
 									type="submit"
 									onClick={() => onSubmit()}
@@ -342,16 +289,6 @@ export default function CourtsOwner({ userInfo }) {
 								>
 									Dodaj
 								</Button>
-							)}
-							{form.id && (
-								<Button
-									type="submit"
-									onClick={() => onUpdate()}
-									className="h-fit text-white ml-10"
-								>
-									Potvrdi
-								</Button>
-							)}
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>

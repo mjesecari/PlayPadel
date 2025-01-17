@@ -29,6 +29,7 @@ export default function EditUserData({ userInfo }) {
 	function fetchNewData() {
 		axios.get("api/user").then((res) => {
 			setUserDetails(res.data);
+			console.log(res.data);
 			sessionStorage.setItem("userInfo", JSON.stringify(res.data));
 		});
 	}
@@ -59,9 +60,16 @@ export default function EditUserData({ userInfo }) {
 			...userDetails, // Keep original data if not edited
 			...form, // Include edited data
 		};
-
+		let SendBody = {};
 		let url = "";
 		if (userDetails.tip === "igrač") {
+			SendBody ={
+				imeIgrac: payload.imeIgrac,
+				prezimeIgrac: payload.prezimeIgrac,
+				role: payload.tip,
+				email: payload.email,
+				brojTel:payload.brojTel
+			};
 			url = "api/igrac/" + userInfo.id;
 			if (
 				payload.imeIgrac.trim() == "" ||
@@ -73,6 +81,13 @@ export default function EditUserData({ userInfo }) {
 			}
 		} else if (userDetails.tip === "vlasnik") {
 			url = "api/vlasnik/" + userInfo.id;
+			SendBody ={
+				role: payload.tip,
+				email: payload.email,
+				nazivVlasnik: payload.nazivVlasnik,
+				lokacija: payload.lokacija,
+				brojTel:payload.brojTel
+			};
 			if (
 				payload.nazivVlasnik.trim() == "" ||
 				payload.lokacija.trim() == "" ||
@@ -81,18 +96,21 @@ export default function EditUserData({ userInfo }) {
 				alert("Neispravni podaci");
 				return;
 			}
+			
 		}
-
+		
 		const options = {
 			method: "PUT", // Use PUT for updating existing data
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(payload),
+			//body: JSON.stringify(payload),
+			body: JSON.stringify(SendBody),
 		};
 
 		fetch(url, options)
 			.then((res) => {
+				console.log(res)
 				if (res.ok) {
 					alert("Podaci su uspješno spremljeni.");
 					setIsEditing(false); // Toggle back to view mode

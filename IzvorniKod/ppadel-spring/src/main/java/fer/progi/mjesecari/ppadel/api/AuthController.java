@@ -1,4 +1,4 @@
-package fer.progi.mjesecari.ppadel.api;
+/**package fer.progi.mjesecari.ppadel.api;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,4 +22,4 @@ public class AuthController {
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
-}
+}**/

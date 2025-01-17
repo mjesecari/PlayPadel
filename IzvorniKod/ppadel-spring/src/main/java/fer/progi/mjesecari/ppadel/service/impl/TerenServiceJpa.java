@@ -53,6 +53,16 @@ public class TerenServiceJpa implements TerenService{
     }
 
     @Override
+    public Teren createTeren(String terenName, Long vlasnikID, String terenTip, String lokacija) {
+        Korisnik vlasnik = korisnikService.findById(vlasnikID).orElseThrow(
+            () -> new RequestDeniedException("No user with ID " + vlasnikID)
+        );
+        Teren t = new Teren(terenName, vlasnik, terenTip);
+        t.setLokacijaTeren(lokacija);
+        return terenRepo.save(t);
+    }
+
+    @Override
     public Teren updateTerenName(long terenId, String name) {
         Teren teren = fetch(terenId);
         teren.setNazivTeren(name);
@@ -72,4 +82,6 @@ public class TerenServiceJpa implements TerenService{
         terenRepo.delete(teren);
         return teren;
     }
+
+
 }

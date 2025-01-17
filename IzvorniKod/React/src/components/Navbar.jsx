@@ -14,7 +14,9 @@ import {
 	XMarkIcon,
 	UserIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import EditUserData from "./EditUserData";
 
 const nav = {
 	player: [
@@ -35,6 +37,7 @@ const nav = {
 		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Popis korisnika", href: "#", current: false },
 	],
+	admin: [{ name: "Popis korisnika", href: "/AdminPage", current: false }],
 };
 
 let navigation;
@@ -49,6 +52,8 @@ export default function NavBar() {
 		return savedUserInfo ? JSON.parse(savedUserInfo) : null;
 	});
 
+	const navigate = useNavigate();
+
 	if (userInfo.admin) {
 		navigation = nav.admin;
 	} else if (userInfo.owner) {
@@ -56,6 +61,19 @@ export default function NavBar() {
 	} else {
 		navigation = nav.player;
 	}
+
+	const handleSignOut = async (event) => {
+		try {
+			event.preventDefault();
+			sessionStorage.clear();
+			document.cookie =
+				"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			navigate("/signup", { replace: true });
+			await axios.post("http://localhost:8080/signout");
+		} catch (error) {
+			console.error("Error signing out:", error);
+		}
+	};
 
 	return (
 		<Disclosure
@@ -87,18 +105,20 @@ export default function NavBar() {
 						<div className="hidden sm:ml-6 sm:block">
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
-									<a href={item.href}>
-										<p
-											className={classNames(
-												item.current
-													? "bg-gray-900 text-white"
-													: "text-gray-300 hover:bg-gray-700 hover:text-white",
-												"rounded-md px-3 py-2 text-md font-medium"
-											)}
-										>
-											{item.name}
-										</p>
-									</a>
+									<Link
+										to={item.href}
+										key={item.name}
+										href={item.href}
+										aria-current={item.current ? "page" : undefined}
+										className={classNames(
+											item.current
+												? "bg-gray-900 text-white"
+												: "text-gray-300 hover:bg-gray-700 hover:text-white",
+											"rounded-md px-3 py-2 text-sm font-medium"
+										)}
+									>
+										{item.name}
+									</Link>
 								))}
 							</div>
 						</div>
@@ -113,7 +133,10 @@ export default function NavBar() {
 							<BellIcon aria-hidden="true" className="h-6 w-6" />
 						</button>
 
+						{!userInfo.admin && <EditUserData userInfo={userInfo} />}
+
 						{/* Profile dropdown */}
+
 						<Menu as="div" className="relative ml-3">
 							<div>
 								<MenuButton className="relative flex rounded-full bg-gray-800 text-md focus:outline-none focus:ring-2  hover:text-white  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -145,7 +168,8 @@ export default function NavBar() {
 								<MenuItem>
 									<a
 										href="#"
-										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+										onClick={handleSignOut}
+										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out
 									</a>

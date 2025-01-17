@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Korisnik {
 
   @Id

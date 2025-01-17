@@ -48,6 +48,7 @@ export default function CourtsOwner({ userInfo }) {
 		axios
 			.get("/api/tereni/my")
 			.then((res) => {
+				console.log(res);
 				setCourts(res.data);
 			})
 			.catch((error) => console.log(error));
@@ -66,6 +67,10 @@ export default function CourtsOwner({ userInfo }) {
 		setForm((oldForm) => ({ ...oldForm, tip: value }));
 	};
 
+	const handleFileChange = (event) => {
+		setForm((oldForm) => ({ ...oldForm, slika: event.target.files[0] }));
+	};
+
 	const onSubmit = () => {
 		console.log("submit", form);
 		if (form.tip == "") {
@@ -76,15 +81,38 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite naziv terena.");
 			return;
 		}
-		const data = JSON.stringify(form);
-
+		if (form.lokacija == "") {
+			alert("Upišite lokaciju terena.");
+			return;
+		}
+		if (form.slika == null){
+			alert("Dodajte sliku terena.");
+			return;
+		}
+		//const data = JSON.stringify(form);
+		const data = new FormData();
+		data.append("naziv", form.naziv);
+		data.append("tip", form.tip);
+		data.append("lokacija", form.lokacija);
+		data.append("vlasnikTerenaId", form.vlasnikTerenaId);
+		const terenDTO = {
+			naziv: form.naziv,
+			tip: form.tip,
+			lokacija: form.lokacija,
+			vlasnikTerenaId: form.vlasnikTerenaId,
+		};
+		data.append("teren",new Blob([JSON.stringify(form)], { type: 'application/json' }));
+		if (form.slika) {
+		data.append("slika", form.slika); // Append file to FormData if it exists
+		}
 		// add new
 		if (!form.id) {
 			axios({
 				url: "/api/tereni/",
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
+					//"Content-Type": "application/json",
+					"Content-Type": "multipart/form-data",
 				},
 				// data: data,
 				data: JSON.stringify({
@@ -101,11 +129,38 @@ export default function CourtsOwner({ userInfo }) {
 						naziv: "",
 						tip: "",
 						vlasnikTerenaId: userInfo.id,
+						lokacija: "",
+						slika: null
 					});
 				})
 				.catch((err) => {});
 			return;
 		}
+
+		// update existing
+		axios({
+			url: "/api/tereni/" + form.id,
+			method: "PUT",
+			headers: {
+				//"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
+			},
+			data: data,
+		})
+			.then((res) => {
+				console.log("put");
+				setOpenRes(true);
+				setOpenTerenInp(false);
+				setForm({
+					id: undefined,
+					naziv: "",
+					tip: "",
+					vlasnikTerenaId: userInfo.id,
+					lokacija: "",
+					slika: null
+				});
+			})
+			.catch((err) => {});
 	};
 
 	function deleteCourt(e) {
@@ -144,6 +199,8 @@ export default function CourtsOwner({ userInfo }) {
 			naziv: editable.nazivTeren,
 			tip: "", // editable.tipTeren,
 			vlasnikTerenaId: userInfo.id,
+			lokacija: editable.lokacijaTeren,
+			slika: editable.slikaTeren
 		});
 		console.log("now", form);
 	}
@@ -248,6 +305,32 @@ export default function CourtsOwner({ userInfo }) {
 										</SelectItem>
 									</SelectContent>
 								</Select>
+
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="lokacija" className="text-right">
+										Lokacija
+									</Label>
+									<Input
+										id="lokacija"
+										name="lokacija"
+										value={form.lokacija}
+										onChange={onChange}
+										className="col-span-3"
+									/>
+								</div>
+								{/* File input */}
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="slika" className="text-right">
+										Dodaj sliku
+									</Label>
+									<Input
+										type="file"
+										id="slika"
+										name="slika"
+										onChange={handleFileChange}
+										className="col-span-3"
+									/>
+								</div>
 							</div>
 						</form>
 						<DialogFooter>
@@ -308,6 +391,12 @@ export default function CourtsOwner({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
+								<p> <img
+										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
+										alt={court.naziv}
+										style={{ width: "300px", height: "200px", objectFit: "cover" }}
+										/>
+								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>
 							</CardContent>

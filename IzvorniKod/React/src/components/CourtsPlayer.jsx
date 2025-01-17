@@ -111,6 +111,12 @@ export default function CourtsPlayer({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
+								<p> <img
+										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
+										alt={court.naziv}
+										style={{ width: "300px", height: "200px", objectFit: "cover" }}
+										/>
+								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>
 							</CardContent>

@@ -5,7 +5,7 @@ import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
 import fer.progi.mjesecari.ppadel.domain.Clanstvo;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
 import fer.progi.mjesecari.ppadel.service.ClanstvoService;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

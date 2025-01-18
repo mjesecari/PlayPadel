@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import moment from "moment";
+
 import {
 	Card,
 	CardHeader,
@@ -25,6 +27,7 @@ export default function CourtsPlayer({ userInfo }) {
 	const [courts, setCourts] = useState([]);
 	const [events, setEvents] = useState();
 	const [isOpenCal, setIsOpenCal] = useState(false);
+	const [terenId, setTerenId] = useState();
 
 	function fetchCourts() {
 		axios
@@ -37,28 +40,32 @@ export default function CourtsPlayer({ userInfo }) {
 
 	useEffect(() => {
 		fetchCourts();
-		setEvents([
-			{
-				id: "1",
-				title: "Event 1",
-				start: "2024-12-16 13:00",
-				end: "2024-12-16 15:00",
-			},
-			{
-				id: "2",
-				title: "Event 2",
-				start: "2024-12-18 03:00",
-				end: "2024-12-18 05:00",
-			},
-		]);
+		let busy = "zauzeto";
 	}, []);
 
-	function openCal() {
+	function openCal(idteren) {
+		axios
+			.get("/api/rezervacije?terenId=" + idteren)
+			.then((res) => {
+				console.log("data", res.data);
+				setEvents(res.data);
+			})
+			.then(console.log(events));
+		setTerenId(idteren);
 		setIsOpenCal(true);
 	}
 
 	function closeCal() {
 		setIsOpenCal(false);
+	}
+
+	function sendReservation() {
+		// axios
+		// 	.post("/api/tereni/s")
+		// 	.then((res) => {
+		// 		setCourts(res.data);
+		// 	})
+		// 	.catch((error) => console.log(error));
 	}
 
 	return (
@@ -70,9 +77,17 @@ export default function CourtsPlayer({ userInfo }) {
 			>
 				<DialogContent className="w-screen !max-w-fit	">
 					<DialogTitle>Termini</DialogTitle>
-					Prikazani su moguci termini
-					<CalendarApp eventsProp={events}></CalendarApp>
-					Vlasnik terena dopusta rezervacije u intervalu xx:xx-xx:xx
+					<p>
+						Prikazani su zauzeti termini. Kliknite i povucite za biranje
+						željenog termina.
+					</p>
+					<p>Svi termini su u trajanju od jednog sata!</p>
+
+					<CalendarApp
+						//eventsProp={events}
+						userInfo={userInfo}
+						id={terenId}
+					></CalendarApp>
 				</DialogContent>
 			</Dialog>
 
@@ -110,7 +125,10 @@ export default function CourtsPlayer({ userInfo }) {
 									variant="outline"
 									className="text-white"
 									id={court.idteren}
-									onClick={() => openCal()}
+									onClick={() => {
+										openCal(court.idteren);
+										console.log(court.idteren);
+									}}
 								>
 									Rezerviraj
 								</Button>

@@ -21,6 +21,8 @@ import EditUserData from "./EditUserData";
 const nav = {
 	player: [
 		{ name: "Početna stranica", href: "/", current: false },
+		{ name: "Moje rezervacije", href: "/Reservations", current: false },
+
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
 		{ name: "Turniri ", href: "#", current: false },
 	],

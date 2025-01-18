@@ -89,19 +89,15 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Dodajte sliku terena.");
 			return;
 		}
-		//const data = JSON.stringify(form);
 		const data = new FormData();
-		data.append("naziv", form.naziv);
-		data.append("tip", form.tip);
-		data.append("lokacija", form.lokacija);
-		data.append("vlasnikTerenaId", form.vlasnikTerenaId);
+		
 		const terenDTO = {
 			naziv: form.naziv,
 			tip: form.tip,
 			lokacija: form.lokacija,
 			vlasnikTerenaId: form.vlasnikTerenaId,
 		};
-		data.append("teren",new Blob([JSON.stringify(form)], { type: 'application/json' }));
+		data.append("teren",new Blob([JSON.stringify(terenDTO)], { type: 'application/json' }));
 		if (form.slika) {
 		data.append("slika", form.slika); // Append file to FormData if it exists
 		}
@@ -112,15 +108,16 @@ export default function CourtsOwner({ userInfo }) {
 				method: "POST",
 				headers: {
 					//"Content-Type": "application/json",
-					"Content-Type": "multipart/form-data",
+					//"Content-Type": "multipart/form-data",
 				},
 				data: data,
+				
 			})
 				.then((res) => {
 					setOpenRes(true);
 					setOpenTerenInp(false);
 					setForm({
-						id: undefined,
+						//id: undefined,
 						naziv: "",
 						tip: "",
 						vlasnikTerenaId: userInfo.id,
@@ -216,7 +213,9 @@ export default function CourtsOwner({ userInfo }) {
 					onOpenChange={setOpenTerenInp}
 				>
 					<DialogTrigger asChild>
-						<Button className="h-fit text-white ml-10">
+						<Button
+							className="h-fit text-white ml-10"
+						>
 							Dodaj novi teren
 						</Button>
 					</DialogTrigger>
@@ -282,13 +281,14 @@ export default function CourtsOwner({ userInfo }) {
 							</div>
 						</form>
 						<DialogFooter>
-							<Button
-								type="submit"
-								onClick={() => onSubmit()}
-								className="h-fit text-white ml-10"
-							>
-								Dodaj
-							</Button>
+					
+								<Button
+									type="submit"
+									onClick={() => onSubmit()}
+									className="h-fit text-white ml-10"
+								>
+									Dodaj
+								</Button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>

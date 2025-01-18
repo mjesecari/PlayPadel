@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 /**
  * Manages korisnik database.

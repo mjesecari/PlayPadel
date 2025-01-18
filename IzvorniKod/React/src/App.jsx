@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MainPage from "./components/EditUserData";
 import CourtsPage from "./pages/CourtsPage";
+import Reservations from "./pages/Reservations";
 import AdminPage from "./pages/AdminPage";
 
 //import CourtPreview from "./components/CourtPreview";
@@ -56,6 +57,10 @@ function App() {
 					<Route
 						path="CourtsPage"
 						element={<CourtsPage userInfo={userInfo} />}
+					/>
+					<Route
+						path="Reservations"
+						element={<Reservations userInfo={userInfo} />}
 					/>
 					<Route
 						path="AdminPage"

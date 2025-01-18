@@ -3,6 +3,8 @@ package fer.progi.mjesecari.ppadel.service;
 import org.springframework.stereotype.Service;
 
 import fer.progi.mjesecari.ppadel.domain.Teren;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 import java.util.List;
 import java.util.Optional;

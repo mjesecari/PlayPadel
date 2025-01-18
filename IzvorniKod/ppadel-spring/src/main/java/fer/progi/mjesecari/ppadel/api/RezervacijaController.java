@@ -144,12 +144,13 @@ public class RezervacijaController {
         }
         
     }
+        */
     
     @DeleteMapping("")
     public Rezervacija deleteRezervacija(@RequestParam Long terenId, @RequestParam LocalDateTime startTime){
         return rezervacijaService.deleteRezervacija(new RezervacijaId(terenService.fetch(terenId), startTime));
     }
-    
+    /* 
     private OAuth2AccessToken getAccessToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof OAuth2AuthenticationToken token) {

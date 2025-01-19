@@ -30,7 +30,7 @@ const nav = {
 	owner: [
 		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
-		{ name: "Moji turniri ", href: "#", current: false },
+		{ name: "Moji turniri ", href: "/TournamentsPage", current: false },
 	],
 
 	admin: [

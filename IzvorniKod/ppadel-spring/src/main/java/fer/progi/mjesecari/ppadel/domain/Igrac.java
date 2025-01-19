@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jdk.jfr.DataAmount;
 
+import java.io.Serializable;
+
 @Entity
-public class Igrac extends Korisnik{
+public class Igrac extends Korisnik implements Serializable {
 
     public Igrac() {}
 

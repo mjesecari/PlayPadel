@@ -9,7 +9,7 @@ import AdminPage from "./pages/AdminPage";
 import TournamentsPage from "./pages/TournamentsPage";
 //import CourtPreview from "./components/CourtPreview";
 import Infouser from "./pages/Infouser";
-import TournamentDetails from "./pages/TournamentDetails"
+import TournamentDetails from "./components/TournamentDetails"
 
 import { useEffect, useState } from "react";
 
@@ -79,10 +79,10 @@ function App() {
 						path="MainPage"
 						element={<MainPage userInfo={userInfo} />}
 					/>
-					<Routes>
-						<Route path="TournamentsPage" element={<TournamentsOwner userInfo={userInfo} />} />
-						<Route path="/tournament/:id/details" element={<TournamentDetails userInfo={userInfo}/>} />
-					</Routes>
+					
+					<Route path="TournamentsPage" element={<TournamentsPage userInfo={userInfo} />} />
+					<Route path="/tournament/:idTurnir/details" element={<TournamentDetails userInfo={userInfo}/>} />
+					
 				</Routes>
 			</BrowserRouter>
 		</>

@@ -43,19 +43,20 @@ export default function TournamentsOwner({ userInfo }) {
         nagrade: [""],
         opis: ""
 	});
+	const navigate = useNavigate();
 
 	function fetchTournaments() {
 		axios
-			.get("/api/#") //endpoint for turniri/my
+			.get("api/turnir/" + userInfo.id) //endpoint for turniri/my
 			.then((res) => {
-				console.log(res);
+				console.log(res.data);
 				setTournaments(res.data);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log(error + "TU"));
 	}
     function fetchPlayers(idTurnir) {
 		axios
-			.get("/api/#") //endpoint for getting all players that aplied for tournament with id = idTurnir
+			.get("/api/turnir/cekanje/"+idTurnir) //endpoint for getting all players that aplied for tournament with id = idTurnir
 			.then((res) => {
 				console.log(res);
 				setPlayers(res.data);
@@ -121,27 +122,28 @@ export default function TournamentsOwner({ userInfo }) {
 			return;
 		}
 		const data = new FormData();
+		
         const formData ={
-            idTurnir: form.id,
-            idVlasnik: form.idVlasnik,
-            naziv: form.naziv,
-            lokacija: form.lokacija,
-            datum: form.datum,
-            cijenaKotizacije: form.cijenaKotizacije,
-            nagrade: form.nagrade,
-            opis: form.opis
+            vlasnikId : userInfo.id,
+			lokacijaTurnir:form.lokacija,
+			nazivTurnir: form.naziv,
+			datumTurnir: form.datum,
+			nagrade: form.nagrade,
+			statusTurnir: "otvoren"
         };
-		data.append("formData",JSON.stringify(formData));
+		console.log(formData);
+		console.log("Type of userInfo.id:", typeof userInfo.id);
+		//data.append("formData",JSON.stringify(formData));
 		// add new
 		if (!form.id) {
 			axios({
-				url: "/api/#", //endpoint for adding new turnir
+				url: "/api/turnir/", //endpoint for adding new turnir
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					//"Content-Type": "multipart/form-data",
 				},
-				data: data,
+				data:formData,
 				
 			})
 				.then((res) => {
@@ -198,7 +200,7 @@ export default function TournamentsOwner({ userInfo }) {
 	function deleteConfirmed() {
 		console.log(deleteId);
 		axios({
-			url: "/api/#" + deleteId, //endpoint for deleting court
+			url: "/api/turnir/" + deleteId, //endpoint for deleting court
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -213,23 +215,18 @@ export default function TournamentsOwner({ userInfo }) {
 
     function TournamentDetails(e){
         const idTurnir= e.target.id; // Get the tournament ID from the button
-        const navigate = useNavigate();
-        axios({
-			url: "/api/#" + idTurnir, //endpoint for getting status of tournament with idTurnir
-			method: "GET",
-			
-		})
-			.then((res) => {
-				const status = res.data.status;
-                if(status === "open"){
-                    fetchPlayers(idTurnir);
-                    setOpenPlayerDialog(true);
-                }else {
+        //let turnirDate = new Date(e.target.dataset.datum)
+		let today = new Date();
+		console.log();
+		console.log(today);
+        if(e.target.dataset.datum > today){
+            fetchPlayers(idTurnir);
+            setOpenPlayerDialog(true);
+        }else {
                     // Navigate to the TournamentDetails component
-                    navigate(`/tournament/${idTurnir}/details`);
-                }
-			})
-			.catch((err) => {});
+             navigate(`/tournament/${idTurnir}/details`);
+        }
+			
     }
     function handlePlayerAction(playerId, action) {
         // Example: Send an API request to accept or reject the player
@@ -435,17 +432,17 @@ export default function TournamentsOwner({ userInfo }) {
 				{/* display tournaments */}
 				<div className="flex h-fit flex-wrap">
 					{tournaments.map((tournament) => (
-						<Card key={tournament.idturnir} className="w-[350px] m-8">
+						<Card key={tournament.idturnir} className="w-[400px] m-8">
 							<CardHeader>
 								<CardTitle>{tournament.nazivTurnir}</CardTitle>
-								<CardDescription>{tournament.status}</CardDescription>
+								<CardDescription>{tournament.statusTurnir}</CardDescription>
 							</CardHeader>
-							<CardContent>
+							<CardContent >
 								<p>Lokacija Turnira: {tournament.lokacijaTurnir}</p>
-                                <p>Datum: {tournament.datum}</p>
+                                <p>Datum: {tournament.datumTurnir}</p>
                                 <p>Cijena kotizacije: {tournament.cijenaKotizacije}</p>
-								<p>Vlasnik: {tournament.vlasnikTeren.email}</p>
-                                <p opacity-0 group-hover:opacity-100 bg-opacity-50 transition-opacity>Opis: {tournament.opis}</p>
+								<p>Vlasnik: {tournament.vlasnik.email}</p>
+                                <p>Opis: {tournament.opis}</p>
 							</CardContent>
 							<CardFooter className="flex justify-between">
 								<Button
@@ -468,6 +465,7 @@ export default function TournamentsOwner({ userInfo }) {
                                     variant="outline"
                                     className="text-white"
                                     id={tournament.idturnir}
+									data-datum={tournament.datumTurnir}
                                     onClick={(e) => TournamentDetails(e)}
                                 >
                                     Prikaži detalje

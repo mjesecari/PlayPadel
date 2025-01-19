@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import TournamentsOwner from "@/components/TournamentsOwner";
-//import TournamentsPlayer from "@/components/TournamentsPlayer";
+import TournamentsPlayer from "@/components/TournamentsPlayer";
+import TournamentDetails from "@/components/TournamentDetails";
 import NavBar from "@/components/Navbar";
 import { useNavigate } from "react-router-dom";
 
@@ -22,13 +23,14 @@ export default function TournamentsPage() {
             <>
                 <NavBar></NavBar>
                 <TournamentsOwner userInfo={userInfo}></TournamentsOwner>
+                
             </>
         );
     } else {
         return (
             <>
                 <NavBar></NavBar>
-                //<TournamentsPlayer userInfo={userInfo}></TournamentsPlayer>
+                <TournamentsPlayer userInfo={userInfo}></TournamentsPlayer>
             </>
         );
     }

@@ -5,11 +5,13 @@ import fer.progi.mjesecari.ppadel.domain.Turnir;
 import fer.progi.mjesecari.ppadel.service.TurnirService;
 import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TurnirServiceJpa implements TurnirService {
 
     @Autowired

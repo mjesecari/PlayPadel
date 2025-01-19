@@ -16,6 +16,6 @@ public interface TurnirRepository extends JpaRepository<Turnir, Long> {
     List<Turnir> findAll();
     @Override
     void deleteById (Long IDTurnir);
-    @Query("SELECT i FROM Igrac i JOIN PrijavaTurnir p WHERE (p.turnir.IDTurnir = :turnirID and i.IDKorisnik = p.igrac.IDKorisnik and StatusTurnir = 'naCekanju')")
+    @Query("SELECT i FROM Igrac i JOIN PrijavaTurnir p ON i.id = p.igrac.id WHERE (p.turnir.IDTurnir = :turnirID and i.id = p.igrac.id and p.StatusPrijava = 'naCekanju')")
     List<Igrac> findIgracByIDTurnirAndStatus(@Param("turnirID")Long IDTurnir);
 }

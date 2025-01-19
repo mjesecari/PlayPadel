@@ -56,10 +56,10 @@ public class TurnirController {
         return turnir.getStatusTurnir();
     }
 
-    @GetMapping("/cekanje/{id}")
+    /*@GetMapping("/cekanje/{id}")
     private List<Igrac> getNaCekanju (Long IDTurnir) {
         return turnirRepository.findIgracByIDTurnirAndStatus(IDTurnir);
-    }
+    }*/
 
     @PostMapping("/")
     private Turnir createTurnir (@RequestBody TurnirDTO turnirDTO) {

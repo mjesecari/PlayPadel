@@ -7,10 +7,10 @@ import CourtsPage from "./pages/CourtsPage";
 import Reservations from "./pages/Reservations";
 import AdminPage from "./pages/AdminPage";
 
-//import CourtPreview from "./components/CourtPreview";
 import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";
+import MembershipPage from "./pages/MembershipPage";
 
 function App() {
 	const [userInfo, setUserInfo] = useState(() => {
@@ -74,10 +74,7 @@ function App() {
 						path="/Infouser"
 						element={<Infouser userInfo={userInfo} />}
 					/>
-					<Route
-						path="MainPage"
-						element={<MainPage userInfo={userInfo} />}
-					/>
+					<Route path="/Membership" element={<MembershipPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

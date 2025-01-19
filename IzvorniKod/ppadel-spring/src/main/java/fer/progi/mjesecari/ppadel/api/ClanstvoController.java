@@ -2,6 +2,7 @@ package fer.progi.mjesecari.ppadel.api;
 
 import fer.progi.mjesecari.ppadel.dao.ClanstvoRepository;
 import fer.progi.mjesecari.ppadel.domain.Clanstvo;
+import fer.progi.mjesecari.ppadel.service.AdminService;
 import fer.progi.mjesecari.ppadel.service.ClanstvoService;
 import fer.progi.mjesecari.ppadel.service.impl.ClanstvoServiceJpa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ClanstvoController {
     private ClanstvoService clanstvoService;
     @Autowired
     private ClanstvoRepository clanstvoRepository;
+
+     @Autowired
+    private AdminService adminService;
 
     @PostMapping("/membership/create/{id}")
     public Clanstvo createMembership (@PathVariable Long id){
@@ -42,4 +46,10 @@ public class ClanstvoController {
             return false;
         }
     }
+
+    @GetMapping("membership/price")
+    public Double price(){
+        return adminService.getClanarina();
+    }
+
 }

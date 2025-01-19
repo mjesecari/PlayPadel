@@ -38,7 +38,7 @@ public class TurnirController {
     }
 
     @GetMapping("/{id}")
-    private List<Turnir> getAllTurnir(Long IDKorisnik, Principal principal) {
+    private List<Turnir> getAllTurnir(@PathVariable Long IDKorisnik, Principal principal) {
         String mail = mailFromPrincipal(principal);
         if (mail == null || !vlasnikService.fetch(IDKorisnik).getEmail().equals(mail)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -50,16 +50,18 @@ public class TurnirController {
     }
 
     @GetMapping("/status/{id}")
-    private String getStatus(Long IDTurnir) {
+    private String getStatus(@PathVariable Long IDTurnir) {
         Turnir turnir = turnirRepository.findById(IDTurnir).orElseThrow(
                 () -> new EntityMissingException(Turnir.class, IDTurnir));
         return turnir.getStatusTurnir();
     }
 
-    /*@GetMapping("/cekanje/{id}")
-    private List<Igrac> getNaCekanju (Long IDTurnir) {
-        return turnirRepository.findIgracByIDTurnirAndStatus(IDTurnir);
-    }*/
+    @GetMapping("/cekanje/{id}/{status}")
+    private List<Igrac> getNaCekanju (@PathVariable Long IDTurnir,@PathVariable String StatusPrijave) {
+        return turnirRepository.findIgracByIDTurnirAndStatus(IDTurnir, StatusPrijave);
+    }
+
+    @GetMapping("/status")
 
     @PostMapping("/")
     private Turnir createTurnir (@RequestBody TurnirDTO turnirDTO) {

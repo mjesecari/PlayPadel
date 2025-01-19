@@ -294,7 +294,7 @@ public class WebSecurityBasic {
                                     (request, response, authentication) -> {
                                         response.sendRedirect(frontendUrl);
                                     });
-                    oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/");
+                    oauth2.authorizationEndpoint().baseUri("/oauth2/authorization");
                 })
                 .build();
     }

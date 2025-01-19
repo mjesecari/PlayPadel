@@ -37,15 +37,19 @@ public class TurnirController {
         return "Turnir";
     }
 
+    @GetMapping("/{id}/detalji")
+    public Turnir getTurnirDetails (@PathVariable Long id){
+        return turnirService.fetch(id);
+    }
     @GetMapping("/{id}")
-    private List<Turnir> getAllTurnir(Long IDKorisnik, Principal principal) {
+    private List<Turnir> getAllTurnir(@PathVariable Long id, Principal principal) {
         String mail = mailFromPrincipal(principal);
-        if (mail == null || !vlasnikService.fetch(IDKorisnik).getEmail().equals(mail)) {
+        if (mail == null || !vlasnikService.fetch(id).getEmail().equals(mail)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         else {
-
-            return turnirRepository.findByVlasnik(vlasnikService.fetch(IDKorisnik));
+            System.out.println(turnirRepository.findByVlasnik(vlasnikService.fetch(id)));
+            return turnirRepository.findByVlasnik(vlasnikService.fetch(id));
         }
     }
 
@@ -56,16 +60,20 @@ public class TurnirController {
         return turnir.getStatusTurnir();
     }
 
-    /*@GetMapping("/cekanje/{id}")
-    private List<Igrac> getNaCekanju (Long IDTurnir) {
-        return turnirRepository.findIgracByIDTurnirAndStatus(IDTurnir);
-    }*/
+    @GetMapping("/cekanje/{id}")
+    private List<Igrac> getNaCekanju (@PathVariable Long id) {
+        return turnirRepository.findIgracByIDTurnirAndStatus(id);
+    }
 
     @PostMapping("/")
     private Turnir createTurnir (@RequestBody TurnirDTO turnirDTO) {
         Turnir turnir = new Turnir();
-        validate(turnir);
-        turnir.setVlasnik(turnirDTO.getVlasnik());
+        System.out.println(turnirDTO.getVlasnik());
+        //validate(turnir);
+
+        Vlasnik vlasnik = vlasnikService.fetch(turnirDTO.getVlasnik());
+        System.out.println(vlasnik);
+        turnir.setVlasnik(vlasnik);
         turnir.setNazivTurnir(turnirDTO.getNazivTurnir());
         turnir.setLokacijaTurnir(turnirDTO.getLokacijaTurnir());
         turnir.setDatumTurnir(turnirDTO.getDatumTurnir());
@@ -76,11 +84,11 @@ public class TurnirController {
     }
 
     @DeleteMapping("/{id}")
-    private Turnir deleteTurnir (@PathVariable Long IDTurnir, Principal principal) {
-        if (mailFromPrincipal(principal) != null && mailFromPrincipal(principal).equals(turnirService.fetch(IDTurnir).getVlasnik().getEmail()))
-            if (turnirRepository.existsById(IDTurnir)) {
-                Turnir turnir = turnirService.fetch(IDTurnir);
-                turnirRepository.deleteById(IDTurnir);
+    private Turnir deleteTurnir (@PathVariable Long id, Principal principal) {
+        if (mailFromPrincipal(principal) != null && mailFromPrincipal(principal).equals(turnirService.fetch(id).getVlasnik().getEmail()))
+            if (turnirRepository.existsById(id)) {
+                Turnir turnir = turnirService.fetch(id);
+                turnirRepository.deleteById(id);
                 return turnir;
             }
             else {

@@ -19,7 +19,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function TournamentDetails({userInfo}) {
-    const { id } = useParams(); 
+    const { idTurnir } = useParams(); 
     const [tournamentPhotos, setTournamentPhotos] = useState([]);
     const [tournamentComments, setTournamentComments] = useState([]);
     const [details, setDetails] = useState(null);
@@ -31,11 +31,12 @@ export default function TournamentDetails({userInfo}) {
         fetchTournamentDetails();
         fetchTournamentPhotos();
 		fetchTournamentComments();
-    }, [id]);
+    }, [idTurnir]);
 
     function fetchTournamentDetails(){
+		console.log(idTurnir);
         axios
-            .get(`/api/tournaments/${id}/details`) // Replace with your actual API endpoint
+            .get(`/api/turnir/${idTurnir}/detalji`) // Replace with your actual API endpoint
             .then((res) => {
                 setDetails(res.data);
             })
@@ -43,7 +44,7 @@ export default function TournamentDetails({userInfo}) {
     }
     function fetchTournamentPhotos(){
         axios
-			.get("/api/#") //endpoint for turnir/id/slike
+			.get("/api/slikeTurnir/" + idTurnir) //endpoint for turnir/id/slike
 			.then((res) => {
 				console.log(res);
 				setTournamentPhotos(res.data);
@@ -52,7 +53,7 @@ export default function TournamentDetails({userInfo}) {
     }
     function fetchTournamentComments(){
         axios
-			.get("/api/#") //endpoint for turniri/id/komentari
+			.get("/api/komentariTurnir/" + idTurnir) //endpoint for turniri/id/komentari
 			.then((res) => {
 				console.log(res);
 				setTournamentComments(res.data);
@@ -64,20 +65,25 @@ export default function TournamentDetails({userInfo}) {
 		const formData = new FormData();
 		formData.append("photo", newPhoto);
         formData.append("userId", userInfo.id);
-
-		axios
-			.post(`/api/#s`, formData) // Replace with your API endpoint
-			.then(() => {
+		axios({
+			url: `/api/slikaTurnir/${idTurnir}`,
+			method: "POST",
+			headers: {
+				//"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
+			},
+			data: formData
+		}).then(() => {
 				setPhotoDialogOpen(false);
 				fetchTournamentPhotos(); // Refresh photos
-			})
-			.catch((err) => console.error("Error uploading photo:", err));
+		})
+		.catch((err) => console.error("Error uploading photo:", err));
 	}
 
 	// Handle Comment Submission
 	function handleCommentSubmit() {
 		axios
-			.post(`/api/#`, { comment: newComment, userId: userInfo.id }) // Replace with your API endpoint
+			.post(`/api/komentarTurnir/${idTurnir}`, { tekst: newComment, userId: userInfo.id }) // Replace with your API endpoint
 			.then(() => {
 				setCommentDialogOpen(false);
 				fetchTournamentComments(); // Refresh comments
@@ -90,33 +96,50 @@ export default function TournamentDetails({userInfo}) {
         return <p>Loading...</p>;
     }
 
-    const sliderSettings = {
+    const sliderSettingsPhotos = {
 		dots: true,
-		infinite: true,
+		infinite: tournamentPhotos.length > 1,
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		arrows: true,
+		arrows: true,         // Show previous/next arrows
+		autoplay: true,       // Enable autoplay
+		autoplaySpeed: 3000,  // Time between transitions (in milliseconds)
+		pauseOnHover: true, 
+	};
+	const sliderSettingsComments = {
+		dots: true,
+		infinite: tournamentComments.length > 1,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		arrows: true,         // Show previous/next arrows
+		autoplay: true,       // Enable autoplay
+		autoplaySpeed: 3000,  // Time between transitions (in milliseconds)
+		pauseOnHover: true, 
 	};
 
     return (
 		<div className="p-8">
 			{/* Tournament Header */}
-			<h1 className="text-4xl font-bold text-center mb-6">{details.naziv}</h1>
+			<h1 className="text-4xl font-bold text-center mb-6">{details.nazivTurnir}</h1>
 
 			{/* Photo Slideshow */}
 			<div className="relative group">
-				<Slider {...sliderSettings}>
+				<Slider {...sliderSettingsPhotos}>
 					{tournamentPhotos.map((photo, index) => (
-						<div key={index} className="w-full">
+						<div
+							key={index}
+							className="relative w-full h-full flex items-center justify-center w-[90vw] h-[50vh] mx-auto overflow-hidden"
+						>
 							<img
-                                src={`data:image/jpeg;base64,${photo.photoData}`}
+								src={`data:image/jpeg;base64,${photo.photoData}`}
 								alt={`Tournament Photo ${index + 1}`}
-								className="w-full h-64 object-cover"
+								className="w-full h-full object-cover rounded-lg shadow-lg"
 							/>
-                            <div opacity-0 group-hover:opacity-100 bg-opacity-50 transition-opacity>
-                                Sliku postavio: {photo.Korisnik.email}
-                            </div>
+							<div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+								Sliku postavio: {photo.korisnik.email}
+							</div>
 						</div>
 					))}
 				</Slider>
@@ -133,21 +156,21 @@ export default function TournamentDetails({userInfo}) {
 
 			{/* Tournament Details */}
 			<div className="mt-6">
-				<h2 className="text-2xl font-semibold">Details</h2>
+				<h2 className="text-2xl font-semibold">Detalji</h2>
 				<p className="mt-2">Nagrade: {details.nagrade}</p>
 				<p className="mt-2">Opis: {details.opis}</p>
-                <p className="mt-2">Lokacija: {details.lokacija}</p>
-                <p className="mt-2">Datum: {details.datum}</p>
+                <p className="mt-2">Lokacija: {details.lokacijaTurnir}</p>
+                <p className="mt-2">Datum: {details.datumTurnir}</p>
 			</div>
 
 			{/* Comments Slideshow */}
 			<div className="mt-6 relative group">
-				<h2 className="text-2xl font-semibold mb-4">Comments</h2>
-				<Slider {...sliderSettings}>
+				<h2 className="text-2xl font-semibold mb-4">Komentari</h2>
+				<Slider {...sliderSettingsComments}>
 					{tournamentComments.map((comment, index) => (
 						<div key={index} className="p-4 border rounded">
-							<p>{comment.text}</p>
-							<p className="text-sm text-gray-500">— {comment.Korisnik.email}</p>
+							<p>{comment.tekstKomentara}</p>
+							<p className="text-sm text-gray-500">— {comment.korisnik.email}</p>
 						</div>
 					))}
 				</Slider>

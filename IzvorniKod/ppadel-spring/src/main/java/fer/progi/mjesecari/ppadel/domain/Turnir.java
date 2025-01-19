@@ -13,7 +13,7 @@ public class Turnir implements Serializable {
     @Id
     @GeneratedValue
     private Long IDTurnir;
-    @OneToOne
+    @ManyToOne
     private Vlasnik vlasnik;
     @NotNull
     private String LokacijaTurnir;

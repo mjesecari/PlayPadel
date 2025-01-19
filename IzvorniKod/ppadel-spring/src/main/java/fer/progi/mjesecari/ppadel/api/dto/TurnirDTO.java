@@ -8,15 +8,15 @@ import java.util.Date;
 import java.util.List;
 
 public class TurnirDTO {
-    private Vlasnik Vlasnik;
+    private Long VlasnikID;
     private String LokacijaTurnir;
     private String NazivTurnir;
     private Date DatumTurnir;
     private List<String> Nagrade;
     private String StatusTurnir;
 
-    public TurnirDTO(@JsonProperty("vlasnik") Vlasnik vlasnik, @JsonProperty("lokacijaTurnir") String lokacijaTurnir, @JsonProperty("nazivTurnir") String nazivTurnir, @JsonProperty("datumTurnir") Date datumTurnir, @JsonProperty("nagrade") List<String> nagrade, @JsonProperty("statusTurnir") String statusTurnir) {
-        this.Vlasnik = vlasnik;
+    public TurnirDTO(@JsonProperty("vlasnikId") Long vlasnikId, @JsonProperty("lokacijaTurnir") String lokacijaTurnir, @JsonProperty("nazivTurnir") String nazivTurnir, @JsonProperty("datumTurnir") Date datumTurnir, @JsonProperty("nagrade") List<String> nagrade, @JsonProperty("statusTurnir") String statusTurnir) {
+        this.VlasnikID = vlasnikId;
         this.LokacijaTurnir = lokacijaTurnir;
         this.NazivTurnir = nazivTurnir;
         this.DatumTurnir = datumTurnir;
@@ -24,12 +24,12 @@ public class TurnirDTO {
         this.StatusTurnir = statusTurnir;
     }
 
-    public fer.progi.mjesecari.ppadel.domain.Vlasnik getVlasnik() {
-        return Vlasnik;
+    public Long getVlasnik() {
+        return VlasnikID;
     }
 
-    public void setVlasnik(fer.progi.mjesecari.ppadel.domain.Vlasnik vlasnik) {
-        Vlasnik = vlasnik;
+    public void setVlasnik(Long vlasnikId) {
+        VlasnikID = vlasnikId;
     }
 
     public String getLokacijaTurnir() {

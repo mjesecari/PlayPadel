@@ -6,6 +6,8 @@ import Layout from "@/components/Layout";
 import NavBar from "@/components/Navbar";
 
 export default function Home({ userInfo }) {
+	console.log(!userInfo);
+
 	if (!userInfo)
 		return (
 			<>

@@ -295,7 +295,7 @@ public class WebSecurityBasic {
                                         response.sendRedirect(frontendUrl);
                                     });
                     oauth2.authorizationEndpoint().baseUri("/oauth2/authorization/");
-                })
+                }).logout(logout -> logout.logoutSuccessUrl("/").permitAll())
                 .build();
     }
 

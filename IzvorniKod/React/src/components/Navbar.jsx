@@ -67,9 +67,10 @@ export default function NavBar() {
 			event.preventDefault();
 			sessionStorage.clear();
 			document.cookie =
-				"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
-			navigate("/signup", { replace: true });
-			await axios.post("http://localhost:8080/signout");
+			"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			localStorage.clear;
+			navigate("/Login", { replace: true });
+			await axios.post("api/logout");
 		} catch (error) {
 			console.error("Error signing out:", error);
 		}
@@ -167,7 +168,7 @@ export default function NavBar() {
 								</MenuItem>
 								<MenuItem>
 									<a
-										href="#"
+										href="api/logout"
 										onClick={handleSignOut}
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>

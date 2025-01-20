@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @Profile({"form-security", "oauth-security"})
@@ -43,9 +44,34 @@ public class PrijavaTurnirController {
     @Autowired
     private VlasnikService vlasnikService;
 
-    @PostMapping("/")
-    private PrijavaTurnir createPrijavaTurnir(@RequestBody PrijavaTurnirDTO prijavaTurnirDTO, Principal principal) {
+    @GetMapping("/AllForApplying/{idIgrac}")
+    public List<Turnir> getAllTournamentsForApplying (@PathVariable Long idIgrac){
+        return prijavaTurnirService.getAllForAplying(idIgrac);
+    }
+    @GetMapping("/AllWithStatus/{idIgrac}/{status}")
+    public List<Turnir> getAllTournamentsForPlayerWithStatus(@PathVariable Long idIgrac, @PathVariable String status, Principal principal){
         String mail = mailFromPrincipal(principal);
+        //System.out.println(igracService.fetch(prijavaTurnirDTO.getIDKorisnik()));
+        if (mail == null || !igracService.fetch(idIgrac).getEmail().equals(mail)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        return prijavaTurnirService.getAllWithStatusPrijava(idIgrac,status);
+    }
+    @GetMapping("/AllPlayed/{idIgrac}")
+    public List<Turnir> getAllPlayedTournaments(@PathVariable Long idIgrac, Principal principal){
+        String mail = mailFromPrincipal(principal);
+        //System.out.println(igracService.fetch(prijavaTurnirDTO.getIDKorisnik()));
+        if (mail == null || !igracService.fetch(idIgrac).getEmail().equals(mail)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        return prijavaTurnirService.getAllPlayed(idIgrac);
+    }
+    @PostMapping("/")
+    public PrijavaTurnir createPrijavaTurnir(@RequestBody PrijavaTurnirDTO prijavaTurnirDTO, Principal principal) {
+        String mail = mailFromPrincipal(principal);
+        System.out.println(prijavaTurnirDTO);
+        System.out.println(this.igracService);
+        //System.out.println(igracService.fetch(prijavaTurnirDTO.getIDKorisnik()));
         if (mail == null || !igracService.fetch(prijavaTurnirDTO.getIDKorisnik()).getEmail().equals(mail)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -53,26 +79,27 @@ public class PrijavaTurnirController {
         PrijavaTurnir prijavaTurnir = new PrijavaTurnir();
         prijavaTurnir.setIgrac(igracService.fetch(prijavaTurnirDTO.getIDKorisnik()));
         prijavaTurnir.setTurnir(turnirService.fetch(prijavaTurnirDTO.getIDTurnir()));
-        prijavaTurnir.setStatusPrijava(prijavaTurnirDTO.getStatusPrijava());
+        prijavaTurnir.setStatusPrijava("naCekanju");
         return prijavaTurnirRepository.save(prijavaTurnir);
     }
 
     @PostAuthorize("hasRole('ROLE_OWNER')")
-    @PutMapping("/{id}")
-    private PrijavaTurnir updatePrijavaTurnir(@PathVariable Long IDPrijava, @RequestBody PrijavaTurnirDTO prijavaTurnirDTO, Principal principal) {
+    @PutMapping("/update/{status}")
+    public PrijavaTurnir updatePrijavaTurnir(@PathVariable String status, @RequestBody PrijavaTurnirDTO prijavaTurnirDTO, Principal principal) {
         String mail = mailFromPrincipal(principal);
         if (mail == null
-                || turnirService.fetch(prijavaTurnirDTO.getIDTurnir()).getVlasnik().getEmail().equals(mail)) {
+                || !turnirService.fetch(prijavaTurnirDTO.getIDTurnir()).getVlasnik().getEmail().equals(mail)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         validate(prijavaTurnirDTO);
-        PrijavaTurnir prijavaTurnir = prijavaTurnirService.fetch(IDPrijava);
-        prijavaTurnir.setStatusPrijava(prijavaTurnirDTO.getStatusPrijava());
+        System.out.println(prijavaTurnirRepository.findAll());
+        PrijavaTurnir prijavaTurnir = prijavaTurnirService.getByIDgracandIdturnir(prijavaTurnirDTO.getIDKorisnik(),prijavaTurnirDTO.getIDTurnir());
+        prijavaTurnir.setStatusPrijava(status);
         return prijavaTurnirRepository.save(prijavaTurnir);
     }
 
     @DeleteMapping("/vlasnik/{id}")
-    private PrijavaTurnir deletePrijavaTurnirVlasnik (@PathVariable Long IDPrijava, Principal principal) {
+    public PrijavaTurnir deletePrijavaTurnirVlasnik (@PathVariable Long IDPrijava, Principal principal) {
         String mail = mailFromPrincipal(principal);
         String mailVlasnik = prijavaTurnirService.fetch(IDPrijava).getTurnir().getVlasnik().getEmail();
         if (mail == null
@@ -85,7 +112,7 @@ public class PrijavaTurnirController {
     }
 
     @DeleteMapping("/igrac/{id}")
-    private PrijavaTurnir deletePrijavaTurnirIgrac (@PathVariable Long IDPrijava, Principal principal) {
+    public PrijavaTurnir deletePrijavaTurnirIgrac (@PathVariable Long IDPrijava, Principal principal) {
         String mail = mailFromPrincipal(principal);
         String mailIgrac = prijavaTurnirService.fetch(IDPrijava).getIgrac().getEmail();
         if (mail == null
@@ -97,7 +124,7 @@ public class PrijavaTurnirController {
         return prijavaTurnir;
     }
 
-    private String mailFromPrincipal(Principal principal){
+    public String mailFromPrincipal(Principal principal){
         if( OAuth2AuthenticationToken.class.isInstance(principal) ){
             Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
             return (String) attributes.get("email");
@@ -106,10 +133,10 @@ public class PrijavaTurnirController {
             return null;
         }
     }
-    private void validate(PrijavaTurnirDTO prijavaTurnirDTO) {
+    public void validate(PrijavaTurnirDTO prijavaTurnirDTO) {
         Assert.notNull(prijavaTurnirDTO, "Prijava must be given");
         Assert.notNull(igracService.fetch(prijavaTurnirDTO.getIDKorisnik()), "Igrac must be given");
         Assert.notNull(turnirService.fetch(prijavaTurnirDTO.getIDTurnir()), "Turnir must be given");
-        Assert.hasText(prijavaTurnirDTO.getStatusPrijava(), "Status must be given");
+        //Assert.hasText(prijavaTurnirDTO.getStatusPrijava(), "Status must be given");
     }
 }

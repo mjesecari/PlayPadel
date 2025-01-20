@@ -12,7 +12,7 @@ public class PrijavaTurnir implements Serializable {
 
     @ManyToOne
     private Igrac igrac;
-    @OneToOne
+    @ManyToOne
     private Turnir turnir;
     private String StatusPrijava;
 

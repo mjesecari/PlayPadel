@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PrijavaTurnirDTO {
     private Long IDKorisnik;
     private Long IDTurnir;
-    private String StatusPrijava;
+    //private String StatusPrijava;
 
-    public PrijavaTurnirDTO(@JsonProperty("IDKorisnik") Long IDKorisnik,@JsonProperty("IDTurnir") Long IDTurnir,@JsonProperty("statusPrijava") String statusPrijava) {
+    public PrijavaTurnirDTO(@JsonProperty("IDKorisnik") Long IDKorisnik,@JsonProperty("IDTurnir") Long IDTurnir) {
         this.IDKorisnik = IDKorisnik;
         this.IDTurnir = IDTurnir;
-        this.StatusPrijava = statusPrijava;
+        //this.StatusPrijava = statusPrijava;
     }
 
     public Long getIDKorisnik() {
@@ -29,20 +29,18 @@ public class PrijavaTurnirDTO {
         this.IDTurnir = IDTurnir;
     }
 
-    public String getStatusPrijava() {
+    /**public String getStatusPrijava() {
         return StatusPrijava;
     }
 
     public void setStatusPrijava(String statusPrijava) {
         StatusPrijava = statusPrijava;
-    }
+    }**/
 
     @Override
     public String toString() {
         return "PrijavaTurnirDTO{" +
                 "IDKorisnik=" + IDKorisnik +
-                ", IDTurnir=" + IDTurnir +
-                ", StatusPrijava='" + StatusPrijava + '\'' +
-                '}';
+                ", IDTurnir=" + IDTurnir ;
     }
 }

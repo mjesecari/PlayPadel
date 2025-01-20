@@ -12,16 +12,19 @@ public class TurnirDTO {
     private String LokacijaTurnir;
     private String NazivTurnir;
     private Date DatumTurnir;
-    private List<String> Nagrade;
-    private String StatusTurnir;
+    private Float CijenaKotizacije;
+    private List<Float> Nagrade;
+    private String Opis;
 
-    public TurnirDTO(@JsonProperty("vlasnikId") Long vlasnikId, @JsonProperty("lokacijaTurnir") String lokacijaTurnir, @JsonProperty("nazivTurnir") String nazivTurnir, @JsonProperty("datumTurnir") Date datumTurnir, @JsonProperty("nagrade") List<String> nagrade, @JsonProperty("statusTurnir") String statusTurnir) {
+
+    public TurnirDTO(@JsonProperty("vlasnikId") Long vlasnikId, @JsonProperty("lokacijaTurnir") String lokacijaTurnir, @JsonProperty("nazivTurnir") String nazivTurnir, @JsonProperty("datumTurnir") Date datumTurnir,@JsonProperty("cijenaKotizacije") Float cijenaKotizacije, @JsonProperty("nagrade") List<Float> nagrade, @JsonProperty("opis") String opis) {
         this.VlasnikID = vlasnikId;
         this.LokacijaTurnir = lokacijaTurnir;
         this.NazivTurnir = nazivTurnir;
         this.DatumTurnir = datumTurnir;
+        this.CijenaKotizacije = cijenaKotizacije;
         this.Nagrade = nagrade;
-        this.StatusTurnir = statusTurnir;
+        this.Opis = opis;
     }
 
     public Long getVlasnik() {
@@ -56,19 +59,27 @@ public class TurnirDTO {
         DatumTurnir = datumTurnir;
     }
 
-    public List<String> getNagrade() {
+    public List<Float> getNagrade() {
         return Nagrade;
     }
 
-    public void setNagrade(List<String> nagrade) {
+    public void setNagrade(List<Float> nagrade) {
         Nagrade = nagrade;
     }
 
-    public String getStatusTurnir() {
-        return StatusTurnir;
+    public Float getCijenaKotizacije() {
+        return CijenaKotizacije;
     }
 
-    public void setStatusTurnir(String statusTurnir) {
-        StatusTurnir = statusTurnir;
+    public void setCijenaKotizacije(Float cijenaKotizacije) {
+        CijenaKotizacije = cijenaKotizacije;
+    }
+
+    public String getOpis() {
+        return Opis;
+    }
+
+    public void setOpis(String opis) {
+        Opis = opis;
     }
 }

@@ -21,16 +21,27 @@ public class Turnir implements Serializable {
     private String NazivTurnir;
     @NotNull
     private Date DatumTurnir;
-    private List<String> Nagrade;
-    private String StatusTurnir;
+    @NotNull
+    private Float CijenaKotizacije;
+    private List<Float> Nagrade;
+    @NotNull
+    private String Opis;
+    //private String StatusTurnir;
 
-    public Turnir(Vlasnik vlasnik, String lokacijaTurnir, String nazivTurnir, Date datumTurnir, List<String> nagrade, String statusTurnir) {
+    @OneToMany(mappedBy = "turnir", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrijavaTurnir> prijaveTurnira;
+    @OneToMany(mappedBy = "turnir", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SlikaTurnir> slikeTurnir;
+    @OneToMany(mappedBy = "turnir", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<KomentarTurnir> komentariTurnira;
+
+    public Turnir(Vlasnik vlasnik, String lokacijaTurnir, String nazivTurnir, Date datumTurnir, List<Float> nagrade) {
         this.vlasnik = vlasnik;
         LokacijaTurnir = lokacijaTurnir;
         NazivTurnir = nazivTurnir;
         DatumTurnir = datumTurnir;
         Nagrade = nagrade;
-        StatusTurnir = statusTurnir;
+        //StatusTurnir = statusTurnir;
     }
 
     public Turnir() {
@@ -76,20 +87,28 @@ public class Turnir implements Serializable {
         DatumTurnir = datumTurnir;
     }
 
-    public List<String> getNagrade() {
+    public List<Float> getNagrade() {
         return Nagrade;
     }
 
-    public void setNagrade(List<String> nagrade) {
+    public void setNagrade(List<Float> nagrade) {
         Nagrade = nagrade;
     }
 
-    public String getStatusTurnir() {
-        return StatusTurnir;
+    public @NotNull Float getCijenaKotizacije() {
+        return CijenaKotizacije;
     }
 
-    public void setStatusTurnir(String statusTurnir) {
-        StatusTurnir = statusTurnir;
+    public void setCijenaKotizacije(@NotNull Float cijenaKotizacije) {
+        CijenaKotizacije = cijenaKotizacije;
+    }
+
+    public @NotNull String getOpis() {
+        return Opis;
+    }
+
+    public void setOpis(@NotNull String opis) {
+        Opis = opis;
     }
 
     @Override
@@ -101,7 +120,6 @@ public class Turnir implements Serializable {
                 ", NazivTurnir='" + NazivTurnir + '\'' +
                 ", DatumTurnir=" + DatumTurnir +
                 ", Nagrade=" + Nagrade +
-                ", StatusTurnir='" + StatusTurnir + '\'' +
                 '}';
     }
 }

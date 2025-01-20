@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import Slider from "react-slick"; // Add react-slick for carousel functionality
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import moment from 'moment';
 
 export default function TournamentDetails({userInfo}) {
     const { idTurnir } = useParams(); 
@@ -36,7 +37,7 @@ export default function TournamentDetails({userInfo}) {
     function fetchTournamentDetails(){
 		console.log(idTurnir);
         axios
-            .get(`/api/turnir/${idTurnir}/detalji`) // Replace with your actual API endpoint
+            .get(`/api/turnir/detalji/${idTurnir}`) // Replace with your actual API endpoint
             .then((res) => {
                 setDetails(res.data);
             })
@@ -157,10 +158,16 @@ export default function TournamentDetails({userInfo}) {
 			{/* Tournament Details */}
 			<div className="mt-6">
 				<h2 className="text-2xl font-semibold">Detalji</h2>
-				<p className="mt-2">Nagrade: {details.nagrade}</p>
+				<p className="mt-2">Nagrade: {details.nagrade.map((nagrada, index) => (
+									<span key={index}>
+									za {index + 1}. mjesto: {nagrada} €
+									<br />
+									</span>
+								))}</p>
 				<p className="mt-2">Opis: {details.opis}</p>
                 <p className="mt-2">Lokacija: {details.lokacijaTurnir}</p>
-                <p className="mt-2">Datum: {details.datumTurnir}</p>
+                <p className="mt-2">Datum: {moment(details.datumTurnir).format('DD-MM-YYYY')}</p>
+				<p className="mt-2">Opis: {details.cijenaKotizacije}€</p>
 			</div>
 
 			{/* Comments Slideshow */}

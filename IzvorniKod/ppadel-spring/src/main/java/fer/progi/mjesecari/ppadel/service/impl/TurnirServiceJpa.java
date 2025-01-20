@@ -56,18 +56,27 @@ public class TurnirServiceJpa implements TurnirService {
     }
 
     @Override
-    public Turnir updateTurnirNagrade(Long IDTurnir, List<String> Nagrade) {
+    public Turnir updateTurnirNagrade(Long IDTurnir, List<Float> Nagrade) {
         Turnir turnir = fetch(IDTurnir);
         turnir.setNagrade(Nagrade);
         return turnirRepository.save(turnir);
     }
 
     @Override
-    public Turnir updateTurnirStatus(Long IDTurnir, String StatusTurnir) {
+    public Turnir updateTurnirCijenaKotizacije(Long IDTurnir, Float cijenaKotizacije) {
         Turnir turnir = fetch(IDTurnir);
-        turnir.setStatusTurnir(StatusTurnir);
+        turnir.setCijenaKotizacije(cijenaKotizacije);
         return turnirRepository.save(turnir);
     }
+
+    @Override
+    public Turnir updateOpis(Long IDTurnir, String opis) {
+        Turnir turnir = fetch(IDTurnir);
+        turnir.setOpis(opis);
+        return turnirRepository.save(turnir);
+    }
+
+
 
     @Override
     public Turnir deleteTurnir(Long IDTurnir) {

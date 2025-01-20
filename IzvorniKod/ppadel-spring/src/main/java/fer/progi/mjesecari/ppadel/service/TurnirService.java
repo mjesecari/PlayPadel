@@ -15,7 +15,8 @@ public interface TurnirService {
     Turnir updateTurnirLokacija (Long IDTurnir, String LokacijaTurnir);
     Turnir updateTurnirNaziv (Long IDTurnir, String NazivTurnir);
     Turnir updateTurnirDatum (Long IDTurnir, Date DatumTurnir);
-    Turnir updateTurnirNagrade (Long IDTurnir, List<String> Nagrade);
-    Turnir updateTurnirStatus (Long IDTurnir, String StatusTurnir);
+    Turnir updateTurnirNagrade (Long IDTurnir, List<Float> Nagrade);
+    Turnir updateTurnirCijenaKotizacije (Long IDTurnir, Float cijenaKotizacije);
+    Turnir updateOpis (Long IDTurnir, String opis);
     Turnir deleteTurnir (Long IDTurnir);
 }

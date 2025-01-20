@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
+import moment from 'moment';
 
 export default function TournamentsOwner({ userInfo }) {
 	const [tournaments, setTournaments] = useState([]);
@@ -32,7 +33,7 @@ export default function TournamentsOwner({ userInfo }) {
 	const [deleteId, setDeleteId] = useState();
     const [openPlayerDialog, setOpenPlayerDialog] = useState(false);
     const [players, setPlayers] = useState([]);
-
+	const [openTurnirId, setOpenTurnirId] = useState();
 	const [form, setForm] = useState({
 		id: undefined,
         idVlasnik: userInfo.id,
@@ -47,7 +48,7 @@ export default function TournamentsOwner({ userInfo }) {
 
 	function fetchTournaments() {
 		axios
-			.get("api/turnir/" + userInfo.id) //endpoint for turniri/my
+			.get("api/turnir/vlasnik/" + userInfo.id) //endpoint for turniri/my
 			.then((res) => {
 				console.log(res.data);
 				setTournaments(res.data);
@@ -56,7 +57,7 @@ export default function TournamentsOwner({ userInfo }) {
 	}
     function fetchPlayers(idTurnir) {
 		axios
-			.get("/api/turnir/cekanje/"+idTurnir) //endpoint for getting all players that aplied for tournament with id = idTurnir
+			.get(`api/turnir/statusIgraca/${idTurnir}/naCekanju`) //endpoint for getting all players that aplied for tournament with id = idTurnir
 			.then((res) => {
 				console.log(res);
 				setPlayers(res.data);
@@ -64,6 +65,13 @@ export default function TournamentsOwner({ userInfo }) {
 			.catch((error) => console.log(error));
 	}
 
+	function NagradeSend(n){
+		if(n.length > 1){
+			console.log(n.slice(0,-1));
+			return n.slice(0,-1);
+		}
+		else return n;
+	}
 	useEffect(() => {
 		fetchTournaments();
 	}, [openRes]);
@@ -85,7 +93,7 @@ export default function TournamentsOwner({ userInfo }) {
             updatedNagrade.push("");
           }
       
-          return { ...prevForm, nagrade: updatedNagrade };
+          return { ...prevForm, nagrade: updatedNagrade};
         });
       };
       
@@ -95,6 +103,7 @@ export default function TournamentsOwner({ userInfo }) {
           return { ...prevForm, nagrade: updatedNagrade };
         });
       };
+	
 	const onSubmit = () => {
 		console.log("submit", form);
 		if (form.naziv == "") {
@@ -128,8 +137,9 @@ export default function TournamentsOwner({ userInfo }) {
 			lokacijaTurnir:form.lokacija,
 			nazivTurnir: form.naziv,
 			datumTurnir: form.datum,
-			nagrade: form.nagrade,
-			statusTurnir: "otvoren"
+			cijenaKotizacije: form.cijenaKotizacije,
+			nagrade: NagradeSend(form.nagrade),
+			opis: form.opis
         };
 		console.log(formData);
 		console.log("Type of userInfo.id:", typeof userInfo.id);
@@ -166,13 +176,13 @@ export default function TournamentsOwner({ userInfo }) {
 
 		// update existing
 		axios({
-			url: "/api/#" + form.id, //endpoint for updating existing turnir
+			url: "/api/turnir/" + form.id, //endpoint for updating existing turnir
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				//"Content-Type": "multipart/form-data",
 			},
-			data: data,
+			data: formData,
 		})
 			.then((res) => {
 				console.log("put");
@@ -221,6 +231,7 @@ export default function TournamentsOwner({ userInfo }) {
 		console.log(today);
         if(e.target.dataset.datum > today){
             fetchPlayers(idTurnir);
+			setOpenTurnirId(idTurnir);
             setOpenPlayerDialog(true);
         }else {
                     // Navigate to the TournamentDetails component
@@ -230,9 +241,15 @@ export default function TournamentsOwner({ userInfo }) {
     }
     function handlePlayerAction(playerId, action) {
         // Example: Send an API request to accept or reject the player
-        axios
-            .put(`/api/#`) // Replace with your API endpoint
-            .then(() => {
+        axios({
+			url:`/api/prijavaTurnir/update/${action}`,
+			method: "PUT",
+			data: {
+				IDKorisnik:playerId,
+				IDTurnir: Number(openTurnirId)
+			}
+
+		}).then(() => {
                 // Remove the player from the list after the action
                 setPlayers((prevPlayers) =>
                     prevPlayers.filter((player) => player.id !== playerId)
@@ -252,11 +269,11 @@ export default function TournamentsOwner({ userInfo }) {
 		let editable = tournaments.filter((o) => o.idturnir == e.target.id)[0];
 
 		setForm({
-			id: editable.id,
+			id: editable.idturnir,
             idVlasnik: userInfo.id,
-            naziv: editable.naziv,
-            lokacija: editable.lokacija,
-            datum: "",//editable.datum,
+            naziv:editable.nazivTurnir,
+            lokacija: editable.lokacijaTurnir,
+            datum: editable.datumTurnir,
             cijenaKotizacije: editable.cijenaKotizacije,
             nagrade: editable.nagrade,
             opis: editable.opis
@@ -367,7 +384,7 @@ export default function TournamentsOwner({ userInfo }) {
                                     {form.nagrade.map((nagrada, index) => (
                                         <div key={index} className="grid grid-cols-4 items-center gap-4">
                                             <Input
-                                                type="text"
+                                                type="number"
                                                 id="nagrade"
                                                 name="nagrade"
                                                 value={nagrada}
@@ -439,9 +456,15 @@ export default function TournamentsOwner({ userInfo }) {
 							</CardHeader>
 							<CardContent >
 								<p>Lokacija Turnira: {tournament.lokacijaTurnir}</p>
-                                <p>Datum: {tournament.datumTurnir}</p>
-                                <p>Cijena kotizacije: {tournament.cijenaKotizacije}</p>
+                                <p>Datum: {moment(tournament.datumTurnir).format('DD-MM-YYYY')}</p>
+                                <p>Cijena kotizacije (€): {tournament.cijenaKotizacije}</p>
 								<p>Vlasnik: {tournament.vlasnik.email}</p>
+								<p>Nagrade (€): {tournament.nagrade.map((nagrada, index) => (
+									<span key={index}>
+									za {index + 1}. mjesto: {nagrada} €
+									<br />
+									</span>
+								))}</p>
                                 <p>Opis: {tournament.opis}</p>
 							</CardContent>
 							<CardFooter className="flex justify-between">
@@ -495,7 +518,7 @@ export default function TournamentsOwner({ userInfo }) {
                                             <Button
                                                 className="bg-green-500 text-white px-4 py-2 rounded"
                                                 onClick={() =>
-                                                    handlePlayerAction(player.id, "accept")
+                                                    handlePlayerAction(player.id, "prihvacen")
                                                 }
                                             >
                                                 Prihvati
@@ -503,7 +526,7 @@ export default function TournamentsOwner({ userInfo }) {
                                             <Button
                                                 className="bg-red-500 text-white px-4 py-2 rounded"
                                                 onClick={() =>
-                                                    handlePlayerAction(player.id, "reject")
+                                                    handlePlayerAction(player.id, "odbijen")
                                                 }
                                             >
                                                 Odbij

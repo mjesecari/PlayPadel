@@ -24,7 +24,7 @@ const nav = {
 		{ name: "Moje rezervacije", href: "/Reservations", current: false },
 
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
-		{ name: "Turniri ", href: "#", current: false },
+		{ name: "Turniri ", href: "/TournamentsPage", current: false },
 	],
 
 	owner: [

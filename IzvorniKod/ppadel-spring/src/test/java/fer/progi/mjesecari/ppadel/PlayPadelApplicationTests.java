@@ -2,8 +2,6 @@ package fer.progi.mjesecari.ppadel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-
 import fer.progi.mjesecari.ppadel.dao.IgracRepository;
 import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
 import fer.progi.mjesecari.ppadel.domain.Igrac;
@@ -11,38 +9,35 @@ import fer.progi.mjesecari.ppadel.domain.Vlasnik;
 import fer.progi.mjesecari.ppadel.service.IgracService;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
 import java.util.Optional;
-
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-
+@TestPropertySource(properties = {"FRONTEND_REGISTER=http://localhost:3000/register"})
 public class PlayPadelApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
+	@MockBean
 	private IgracRepository igracRepository;
 
-	@Autowired
+	@MockBean
 	private VlasnikRepository vlasnikRepository;
 
-	@Autowired
+	@MockBean
 	private IgracService igracService;
 
-	@Autowired
+	@MockBean
 	private VlasnikService vlasnikService;
 
 	@BeforeEach
@@ -61,6 +56,9 @@ public class PlayPadelApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.email").value(email));
 	}
+
+	// Other test methods...
+
 
 	@Test
 	void testGetIgracByEmailNotFound() throws Exception {

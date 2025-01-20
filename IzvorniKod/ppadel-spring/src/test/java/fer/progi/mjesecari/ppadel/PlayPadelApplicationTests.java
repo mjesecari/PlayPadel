@@ -60,7 +60,7 @@ public class PlayPadelApplicationTests {
 
 		logger.info("Testing getIgracByEmailSuccess with email: {}", email);
 
-		mockMvc.perform(get("/korisnik/igrac/{email}", email))
+		mockMvc.perform(get("/igrac/read/{email}", email))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.email").value(email));
 
@@ -183,7 +183,7 @@ public class PlayPadelApplicationTests {
 
 		logger.info("Testing testInvalidEmailFormatForIgrac with email: {}", invalidEmail);
 
-		mockMvc.perform(get("/korisnik/igrac/{email}", invalidEmail))
+		mockMvc.perform(get("/igrac/read/{email}", invalidEmail))
 				.andExpect(status().isBadRequest());
 
 		logger.info("testInvalidEmailFormatForIgrac passed");

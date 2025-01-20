@@ -10,5 +10,4 @@ public interface PrijavaTurnirService {
     List<PrijavaTurnir> listAll();
     PrijavaTurnir fetch (Long IDPrijava);
     PrijavaTurnir updateStatusPrijava (Long IDPrijava, String StatusPrijava);
-
 }

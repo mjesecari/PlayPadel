@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.yaml.snakeyaml.events.Event;
 
 import java.security.Principal;
 import java.util.List;
@@ -33,9 +34,10 @@ public class TurnirController {
     private VlasnikService vlasnikService;
 
     @GetMapping("/")
-    private String turnir(){
-        return "Turnir";
+    private List<Turnir> turnir(){
+        return turnirRepository.findAll();
     }
+
 
     @GetMapping("/detalji/{id}")
     public Turnir getTurnirDetails (@PathVariable Long id, Principal principal){
@@ -60,6 +62,17 @@ public class TurnirController {
         }
     }
 
+    @GetMapping ("/igrac/{id}")
+    private Turnir getAllTurnirIgracc (@PathVariable Long IDTurnir, Principal principal) {
+        if (mailFromPrincipal(principal) == null ) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        if (!turnirRepository.existsById(IDTurnir)){
+            throw new EntityMissingException(Turnir.class, "Entity not found");
+        }
+        return turnirService.fetch(IDTurnir);
+    }
+
     @GetMapping("/status/{id}")
     private String getStatus(Long IDTurnir) {
         Turnir turnir = turnirRepository.findById(IDTurnir).orElseThrow(
@@ -77,7 +90,7 @@ public class TurnirController {
     }
 
     @PutMapping("/{id}")
-    private Turnir updateTurnir (@RequestBody TurnirDTO turnirDTO, @PathVariable Long IDTurnir, Principal principal) {
+    private Turnir updateTurnir (@PathVariable Long IDTurnir, @RequestBody TurnirDTO turnirDTO, Principal principal) {
         if (mailFromPrincipal(principal) != null && mailFromPrincipal(principal).equals(turnirService.fetch(IDTurnir).getVlasnik().getEmail()))
             if (turnirRepository.existsById(IDTurnir)) {
                 turnirService.updateTurnirLokacija(IDTurnir, turnirDTO.getLokacijaTurnir());

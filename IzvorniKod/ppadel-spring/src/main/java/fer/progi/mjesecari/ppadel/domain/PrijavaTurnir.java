@@ -41,11 +41,11 @@ public class PrijavaTurnir implements Serializable {
         this.igrac = igrac;
     }
 
-    public Turnir getIDTurnir() {
+    public Turnir getTurnir() {
         return turnir;
     }
 
-    public void setIDTurnir(Turnir turnir) {
+    public void setTurnir(Turnir turnir) {
         this.turnir = turnir;
     }
 

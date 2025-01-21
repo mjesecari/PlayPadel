@@ -6,10 +6,13 @@ import fer.progi.mjesecari.ppadel.domain.PrijavaTurnir;
 import fer.progi.mjesecari.ppadel.domain.Turnir;
 import fer.progi.mjesecari.ppadel.service.PrijavaTurnirService;
 import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,8 +46,16 @@ public class PrijavaTurnirServiceJpa implements PrijavaTurnirService {
     }
 
     @Override
-    public List<Turnir> getAllForAplying(Long idIgrac) {
-        return turnirRepository.findAllTurnirForAplying(idIgrac, LocalDateTime.now());
+    public List<Turnir> getAllForAplying(Long idIgrac,Float cijenaKotizacijeMin, Float cijenaKotizacijeMax, Float nagradeMin, Float nagradeMax) {
+        List<Turnir> turniri =  turnirRepository.findAllTurnirForAplying(idIgrac, LocalDateTime.now());
+        List<Turnir> filterTurniri = new ArrayList<>();
+        for (Turnir t : turniri){
+            if (t.getCijenaKotizacije() <= cijenaKotizacijeMax && t.getCijenaKotizacije() >= cijenaKotizacijeMin
+            && Collections.min(t.getNagrade()) >= nagradeMin && Collections.max(t.getNagrade()) <= nagradeMax){
+                filterTurniri.add(t);
+            }
+        }
+        return filterTurniri;
     }
 
     @Override
@@ -55,5 +66,10 @@ public class PrijavaTurnirServiceJpa implements PrijavaTurnirService {
     @Override
     public List<Turnir> getAllPlayed(Long idIgrac) {
         return prijavaTurnirRepository.findAllPlayedTurnirs(idIgrac,LocalDateTime.now());
+    }
+
+    @Override
+    public List<String> getAllEmails(Long idTurnir) {
+        return prijavaTurnirRepository.findAllEmailsForNotifications(idTurnir);
     }
 }

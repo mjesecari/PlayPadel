@@ -5,9 +5,11 @@ import fer.progi.mjesecari.ppadel.dao.TurnirRepository;
 import fer.progi.mjesecari.ppadel.domain.Igrac;
 import fer.progi.mjesecari.ppadel.domain.Turnir;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
+import fer.progi.mjesecari.ppadel.service.PrijavaTurnirService;
 import fer.progi.mjesecari.ppadel.service.TurnirService;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.impl.EmailNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -38,11 +40,16 @@ public class TurnirController {
         return turnirRepository.findAll();
     }
 
+    @Autowired
+    private EmailNotificationService emailNotificationService;
+
+    @Autowired
+    private PrijavaTurnirService prijavaTurnirService;
 
     @GetMapping("/detalji/{id}")
     public Turnir getTurnirDetails (@PathVariable Long id, Principal principal){
         String mail = mailFromPrincipal(principal);
-        if (mail == null || !turnirService.fetch(id).getVlasnik().getEmail().equals(mail)) {
+        if (mail == null || !(turnirService.fetch(id).getVlasnik().getEmail().equals(mail) || prijavaTurnirService.getAllEmails(id).contains(mail))) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         else {
@@ -102,6 +109,16 @@ public class TurnirController {
                 Turnir turnir = turnirService.fetch(IDTurnir);
                 validate(turnir);
                 System.out.println(turnir);
+                List<String> Emails = prijavaTurnirService.getAllEmails(IDTurnir);
+                for ( String email : Emails){
+                    try {
+                        emailNotificationService.sendSimpleEmail(email, "Obavijest o turniru", turnir.toString());
+                        System.out.println("Email sent successfully!");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Error sending email!");
+                    }
+                }
                 return turnir;
             }
             else {

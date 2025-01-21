@@ -353,7 +353,7 @@ export default function TournamentsOwner({ userInfo }) {
                                 </div>
                                 <div className="grid grid-cols-4 items-center gap-4">
 									<Label htmlFor="cijenaKotizacije" className="text-right">
-										Cijena kotizacije
+										Cijena kotizacije (€)
 									</Label>
 									<Input
                                         type="number"
@@ -379,7 +379,7 @@ export default function TournamentsOwner({ userInfo }) {
 								</div>
                                 <div className="items-center">
                                     <Label htmlFor="nagrade" className="text-right">
-										Nagrade
+										Nagrade (€)
 									</Label>
                                     {form.nagrade.map((nagrada, index) => (
                                         <div key={index} className="grid grid-cols-4 items-center gap-4">

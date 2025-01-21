@@ -12,7 +12,8 @@ public interface PrijavaTurnirService {
     PrijavaTurnir fetch (Long IDPrijava);
     PrijavaTurnir updateStatusPrijava (Long IDPrijava, String StatusPrijava);
     PrijavaTurnir getByIDgracandIdturnir (Long idIgrac, Long idTurnir);
-    List<Turnir> getAllForAplying(Long idIgrac);
+    List<Turnir> getAllForAplying(Long idIgrac, Float cijenaKotizacijeMin, Float cijenaKotizacijeMax, Float nagradeMin, Float nagradeMax);
     List<Turnir> getAllWithStatusPrijava (Long idIgrac, String status);
     List<Turnir> getAllPlayed (Long idIgrac);
+    List<String> getAllEmails (Long idTurnir);
 }

@@ -23,7 +23,7 @@ import { Button } from "@headlessui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import Slider from "@mui/material/Slider";
-
+import moment from 'moment';
 export default function TournamentsPlayer({ userInfo }) {
     const [Playedtournaments, setPlayedTournaments] = useState([]);
     const [Registertournaments, setRegisterTournaments] = useState([]);
@@ -33,9 +33,11 @@ export default function TournamentsPlayer({ userInfo }) {
 		cijenaKotizacije: [0, 100], // Range for Kotizacije
 		iznosNagrade: [0, 1000], // Range for Nagrade
 	});
+    const [openRes, setOpenRes] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
-        //fetchPlayedTournaments();
-        //fetchRegisterTournaments();
+        fetchPlayedTournaments();
+        fetchRegisterTournaments();
         fetchNewTournaments();
     }, [userInfo.id]); //?[id]
     function fetchPlayedTournaments(){
@@ -59,15 +61,17 @@ export default function TournamentsPlayer({ userInfo }) {
         .catch((err) => console.error("Error fetching tournament details:", err));
     }
     function fetchNewTournaments(){
-        axios
-        .get(`/api/prijavaTurnir/AllForApplying/${userInfo.id}`/**,{
-            params: {
-                cijenaKotizacijeMin: filter.cijenaKotizacije[0],
-                cijenaKotizacijeMax: filter.cijenaKotizacije[1],
-                iznosNagradeMin: filter.iznosNagrade[0],
-                iznosNagradeMax: filter.iznosNagrade[1],
-            },
-    }**/) // endpoint /api/tournaments/filter
+        let filterDTO = {
+            cijenaKotizacijeMin: filter.cijenaKotizacije[0],
+            cijenaKotizacijeMax: filter.cijenaKotizacije[1],
+            nagradeMin: filter.iznosNagrade[0],
+            nagradeMax: filter.iznosNagrade[1],
+        }
+        axios({
+            url:`/api/prijavaTurnir/AllForApplying/${userInfo.id}`,
+            method: "GET",
+            params: filterDTO,
+    }) // endpoint /api/tournaments/filter
         .then((res) => {
             setNewTournaments(res.data);
             console.log(res.data);
@@ -76,17 +80,10 @@ export default function TournamentsPlayer({ userInfo }) {
     }
     function TournamentDetails(e){
         const idTurnir= e.target.id; // Get the tournament ID from the button
-        const navigate = useNavigate();
-        axios({
-			url: "/api/#" + idTurnir, //endpoint for getting status of tournament with idTurnir
-			method: "GET",
+       
+       
+        navigate(`/tournament/${idTurnir}/details`);
 			
-		})
-			.then((res) => {
-                    // Navigate to the TournamentDetails component
-                    navigate(`/tournament/${idTurnir}/details`);
-			})
-			.catch((err) => {});
     }
     const handleSliderChange = (name) => (event, newValue) => {
 		setFilter((prevFilter) => ({
@@ -104,7 +101,7 @@ export default function TournamentsPlayer({ userInfo }) {
 	}
 
     function HandlePrijava(e){
-        axios
+        setOpenRes(true);
         axios({
             url: "/api/prijavaTurnir/", //endpoint for adding new turnir
             method: "POST",
@@ -118,6 +115,7 @@ export default function TournamentsPlayer({ userInfo }) {
             })
             .then((res) => {
                 console.log(res);
+                fetchNewTournaments();
             })
             .catch((err) => {});
     }
@@ -175,6 +173,17 @@ export default function TournamentsPlayer({ userInfo }) {
                                     className="p-4 bg-white shadow-md rounded-md"
                                 >
                                     <h3 className="font-bold text-lg">{tournament.nazivTurnir}</h3>
+                                    <p>Lokacija Turnira: {tournament.lokacijaTurnir}</p>
+                                    <p>Datum: {moment(tournament.datumTurnir).format('DD-MM-YYYY')}</p>
+                                    <p>Cijena kotizacije (€): {tournament.cijenaKotizacije}</p>
+                                    <p>Vlasnik: {tournament.vlasnik.email}</p>
+                                    <p>Nagrade (€): {tournament.nagrade.map((nagrada, index) => (
+                                        <span key={index}>
+                                            za {index + 1}. mjesto: {nagrada} €
+                                            <br />
+                                        </span>
+                                    ))}</p>
+                                    <p>Opis: {tournament.opis}</p>
                                     <Button
                                         variant="outline"
                                         className="text-white"
@@ -226,9 +235,17 @@ export default function TournamentsPlayer({ userInfo }) {
                                     key={tournament.id}
                                     className="p-4 bg-white shadow-md rounded-md"
                                 >
-                                    <h3 className="font-bold text-lg">{tournament.naziv}</h3>
-                                    <p>Cijena Kotizacije: {tournament.cijenaKotizacije} €</p>
-                                    <p>Iznos Nagrade: {tournament.iznosNagrade} €</p>
+                                    <h3 className="font-bold text-lg">{tournament.nazivTurnir}</h3>
+                                    <p>Lokacija Turnira: {tournament.lokacijaTurnir}</p>
+                                    <p>Datum: {moment(tournament.datumTurnir).format('DD-MM-YYYY')}</p>
+                                    <p>Cijena kotizacije (€): {tournament.cijenaKotizacije}</p>
+                                    <p>Vlasnik: {tournament.vlasnik.email}</p>
+                                    <p>Nagrade (€): {tournament.nagrade.map((nagrada, index) => (
+                                        <span key={index}>
+                                            za {index + 1}. mjesto: {nagrada} €
+                                            <br />
+                                        </span>
+                                    ))}</p>
                                     <p>Opis: {tournament.opis}</p>
                                     <Button
                                         variant="outline"
@@ -242,6 +259,13 @@ export default function TournamentsPlayer({ userInfo }) {
                             ))}
                         </div>
                     </div>
+                    <Dialog open={openRes} onOpenChange={setOpenRes}>
+					<DialogContent className="sm:max-w-[425px]">
+						<DialogHeader>
+							<DialogTitle>Prijava Poslana!</DialogTitle>
+						</DialogHeader>
+					</DialogContent>
+				    </Dialog>
 				</div>
 
             </div>

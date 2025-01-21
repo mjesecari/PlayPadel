@@ -1,5 +1,6 @@
 package fer.progi.mjesecari.ppadel.api;
 
+import fer.progi.mjesecari.ppadel.api.dto.FilterDTO;
 import fer.progi.mjesecari.ppadel.api.dto.PrijavaTurnirDTO;
 import fer.progi.mjesecari.ppadel.dao.IgracRepository;
 import fer.progi.mjesecari.ppadel.dao.PrijavaTurnirRepository;
@@ -45,8 +46,12 @@ public class PrijavaTurnirController {
     private VlasnikService vlasnikService;
 
     @GetMapping("/AllForApplying/{idIgrac}")
-    public List<Turnir> getAllTournamentsForApplying (@PathVariable Long idIgrac){
-        return prijavaTurnirService.getAllForAplying(idIgrac);
+    public List<Turnir> getAllTournamentsForApplying (@PathVariable Long idIgrac,
+                                                      @RequestParam Float cijenaKotizacijeMin, @RequestParam Float cijenaKotizacijeMax,
+                                                      @RequestParam Float nagradeMin, @RequestParam Float nagradeMax){
+        return prijavaTurnirService.getAllForAplying(idIgrac,
+                cijenaKotizacijeMin, cijenaKotizacijeMax,
+                nagradeMin, nagradeMax);
     }
     @GetMapping("/AllWithStatus/{idIgrac}/{status}")
     public List<Turnir> getAllTournamentsForPlayerWithStatus(@PathVariable Long idIgrac, @PathVariable String status, Principal principal){

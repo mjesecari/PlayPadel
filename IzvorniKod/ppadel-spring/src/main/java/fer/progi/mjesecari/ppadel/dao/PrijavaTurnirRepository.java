@@ -26,4 +26,6 @@ public interface PrijavaTurnirRepository extends JpaRepository<PrijavaTurnir, Lo
     List<Turnir> findAllTurnirStatus (@Param("IdIgrac") Long idIgrac, @Param("status") String status, @Param("currentDate") LocalDateTime currentDate);
     @Query("SELECT p.turnir FROM PrijavaTurnir p WHERE p.igrac.id = :IdIgrac and p.StatusPrijava = 'prihvacen' AND p.turnir.DatumTurnir < :currentDate")
     List<Turnir> findAllPlayedTurnirs (@Param("IdIgrac") Long idIgrac, @Param("currentDate") LocalDateTime currentDate);
+    @Query("SELECT p.igrac.email FROM PrijavaTurnir p WHERE p.turnir.IDTurnir= :idTurnir AND p.StatusPrijava = 'prihvacen'")
+    List<String> findAllEmailsForNotifications (@Param("idTurnir") Long idTurnir);
 }

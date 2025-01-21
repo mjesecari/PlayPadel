@@ -2,10 +2,12 @@ package fer.progi.mjesecari.ppadel.api;
 
 import fer.progi.mjesecari.ppadel.domain.SlikaTeren;
 import fer.progi.mjesecari.ppadel.service.SlikaTerenService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import fer.progi.mjesecari.ppadel.api.dto.createTerenDTO;
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Teren;
 import fer.progi.mjesecari.ppadel.service.TerenService;
@@ -48,7 +50,7 @@ public class TerenController {
     }
     
     @PostAuthorize("hasRole('ROLE_OWNER')")
-    @PostMapping("/")
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Teren> createTeren(@RequestPart("teren") createTerenDTO terenDTO, @RequestPart("slika") MultipartFile file) throws IOException {
         
         Teren saved = terenService.createTeren(terenDTO.getNaziv(), terenDTO.getVlasnikTerenaId(), terenDTO.getTip(), terenDTO.getLokacija());

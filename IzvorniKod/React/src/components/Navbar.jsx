@@ -21,6 +21,7 @@ import EditUserData from "./EditUserData";
 const nav = {
 	player: [
 		{ name: "Početna stranica", href: "/", current: false },
+		{ name: "Moje rezervacije", href: "/Reservations", current: false },
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
 		{ name: "Turniri ", href: "#", current: false },
 	],
@@ -148,26 +149,19 @@ export default function NavBar() {
 								className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
 							>
 								<MenuItem>
-									<a
+									<p
 										href="#"
-										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+										className="block px-4 py-2 text-md text-gray-700"
 									>
 										{userInfo.email}
-									</a>
+									</p>
 								</MenuItem>
-								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-									>
-										Settings
-									</a>
-								</MenuItem>
+
 								<MenuItem>
 									<a
 										href="#"
 										onClick={handleSignOut}
-										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>
 										Sign out
 									</a>

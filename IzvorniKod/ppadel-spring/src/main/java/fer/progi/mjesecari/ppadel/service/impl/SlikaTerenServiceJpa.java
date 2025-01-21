@@ -3,7 +3,7 @@ package fer.progi.mjesecari.ppadel.service.impl;
 import fer.progi.mjesecari.ppadel.dao.SlikaTerenRepository;
 import fer.progi.mjesecari.ppadel.domain.SlikaTeren;
 import fer.progi.mjesecari.ppadel.domain.Teren;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.SlikaTerenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

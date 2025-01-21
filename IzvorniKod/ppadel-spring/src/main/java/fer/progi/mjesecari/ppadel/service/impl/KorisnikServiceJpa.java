@@ -14,9 +14,9 @@ import org.springframework.util.Assert;
 
 import fer.progi.mjesecari.ppadel.dao.UserRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
-import fer.progi.mjesecari.ppadel.service.RequestDeniedException;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 
 @Service

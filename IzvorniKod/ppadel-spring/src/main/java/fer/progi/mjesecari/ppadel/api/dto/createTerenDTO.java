@@ -1,4 +1,4 @@
-package fer.progi.mjesecari.ppadel.api;
+package fer.progi.mjesecari.ppadel.api.dto;
 
 import fer.progi.mjesecari.ppadel.domain.SlikaTeren;
 

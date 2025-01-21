@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import fer.progi.mjesecari.ppadel.dao.IgracRepository;
 import fer.progi.mjesecari.ppadel.dao.VlasnikRepository;
-import fer.progi.mjesecari.ppadel.domain.Igrac;
-import fer.progi.mjesecari.ppadel.domain.Vlasnik;
 import fer.progi.mjesecari.ppadel.service.IgracService;
 import fer.progi.mjesecari.ppadel.service.VlasnikService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import java.util.Optional;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.slf4j.Logger;
@@ -25,10 +22,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(properties = {"FRONTEND_REGISTER=http://localhost:3000/register"})
-public class PlayPadelApplicationTests {
-
-	private static final Logger logger = LoggerFactory.getLogger(PlayPadelApplicationTests.class);
+@TestPropertySource(properties = {
+		"FRONTEND_REGISTER=http://localhost:3000/register",
+		"DATASOURCE_URL=jdbc:h2:mem:testiranje;DB_CLOSE_DELAY=-1",
+		"FRONTEND=http://localhost:3000"
+})
+public class DeleteKorisnikTests {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -50,8 +49,6 @@ public class PlayPadelApplicationTests {
 		Mockito.reset(igracRepository, vlasnikRepository, igracService, vlasnikService);
 	}
 
-
-
 	@Test
 	@WithMockUser
 	void testDeleteIgracSuccess() {
@@ -67,18 +64,13 @@ public class PlayPadelApplicationTests {
 
 			verify(igracService, times(1)).deleteIgrac(id);
 
-			System.out.println("200 - Test passed: Successfully deleted igrac with ID: " + id);
+			System.out.println("Test passed: Successfully deleted igrac with ID: " + id);
 		} catch (Exception e) {
-			System.out.println("400 - Test failed: Error while testing deletion for ID: " + id);
+			System.out.println("Test failed: Error while testing deletion for ID: " + id);
 			e.printStackTrace();
 			throw new RuntimeException("Test failed", e); // Re-throw to ensure the test fails in reporting.
 		}
 	}
-
-
-
-
-
 
 	@Test
 	@WithMockUser
@@ -95,17 +87,11 @@ public class PlayPadelApplicationTests {
 
 			verify(vlasnikService, times(1)).deleteVlasnik(id);
 
-			System.out.println("200 - Test passed: Successfully deleted vlasnik with ID: " + id);
+			System.out.println("Test passed: Successfully deleted vlasnik with ID: " + id);
 		} catch (Exception e) {
-			System.out.println("400 - Test failed: Error while testing deletion for ID: " + id);
+			System.out.println("Test failed: Error while testing deletion for ID: " + id);
 			e.printStackTrace();
 			throw new RuntimeException("Test failed", e); // Re-throw to ensure the test fails in reporting.
 		}
 	}
-
-
-
 }
-
-
-

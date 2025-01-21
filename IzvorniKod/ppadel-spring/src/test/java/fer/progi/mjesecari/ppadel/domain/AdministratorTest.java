@@ -15,13 +15,19 @@ class AdministratorTest {
         });
     }
 
-//    @Test
-//    void testSetCijena0ClanarineNotThrows() {
-//        Administrator admin = new Administrator();
-//        assertThrows(IllegalArgumentException.class,
-//                () -> {
-//                    admin.setCijenaClanarine(0.F);
-//                });
-//    }
+    @Test
+    void testSetCijena0ClanarineNotThrows() {
+        Administrator admin = new Administrator();
+        admin.setCijenaClanarine(78.F);
+        assertEquals(78.F, admin.getCijenaClanarine());
+    }
 
+    @Test
+    void testSetCijena1ClanarineNotThrows() {
+        Administrator admin = new Administrator();
+        assertDoesNotThrow(() -> {
+            admin.setCijenaClanarine(0.F);
+        });
+        assertEquals(0.F, admin.getCijenaClanarine());
+    }
 }

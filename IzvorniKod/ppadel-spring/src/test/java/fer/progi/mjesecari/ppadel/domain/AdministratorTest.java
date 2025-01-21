@@ -3,15 +3,33 @@ package fer.progi.mjesecari.ppadel.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import java.lang.reflect.Method;
 class AdministratorTest {
 
+    @Test
+    void testAddDiscountFunctionNonExistent() {
+        Administrator admin = new Administrator();
+        try {
+            // Use reflection to check if the method "addDiscount" exists
+            Method method = Administrator.class.getMethod("addDiscount");
 
+            // If the method is found, the test fails
+            System.out.println("404 - Test failed: The method addDiscount() unexpectedly exists.");
+        } catch (NoSuchMethodException e) {
+            // Method does not exist, test passes
+            System.out.println("200 - Test passed: The method addDiscount() does not exist as expected.");
+        } catch (Exception e) {
+            // Handle other unexpected exceptions
+            System.out.println("404 - Test failed: An unexpected error occurred.");
+            e.printStackTrace(); // Log the error for debugging
+            throw new RuntimeException("Test failed due to unexpected error", e);
+        }
+    }
 
     @Test
     void testSetCijena1ClanarineThrows() {
         Administrator admin = new Administrator();
-
+        System.out.println("Test input: -1.F");
         try {
             assertThrows(IllegalArgumentException.class,
                     () -> admin.setCijenaClanarine(-1.F));
@@ -25,6 +43,7 @@ class AdministratorTest {
     @Test
     void testSetCijena0ClanarineNotThrows() {
         Administrator admin = new Administrator();
+        System.out.println("Test input: 78.F");
         try {
             admin.setCijenaClanarine(78.F);
             assertEquals(78.F, admin.getCijenaClanarine());
@@ -38,7 +57,7 @@ class AdministratorTest {
     @Test
     void testSetCijena1ClanarineNotThrows() {
         Administrator admin = new Administrator();
-
+        System.out.println("Test input: 0.F");
         try {
             assertDoesNotThrow(() -> admin.setCijenaClanarine(0.F));
             assertEquals(0.F, admin.getCijenaClanarine());

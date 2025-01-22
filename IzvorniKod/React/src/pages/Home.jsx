@@ -4,8 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import NavBar from "@/components/Navbar";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 export default function Home({ userInfo }) {
+	const navigate = useNavigate();
+
+	// Check membership status
+	
 	if (!userInfo)
 		return (
 			<>
@@ -25,6 +31,22 @@ export default function Home({ userInfo }) {
 			</>
 		)
 	else {
+		
+			if (userInfo.owner) {
+				axios
+					.get(`api/membership/isPayed/${userInfo.id}`)
+					.then((res) => {
+						console.log(res);
+						if (res.status === 200 && res.data === false) {
+							// Redirect if membership is not paid
+							navigate("/NoMembership", { replace: true });
+						}
+					})
+					.catch((e) => {
+						console.error("Error checking membership status:", e);
+					});
+			}
+		
 		return (
 			<>
 				<NavBar></NavBar>

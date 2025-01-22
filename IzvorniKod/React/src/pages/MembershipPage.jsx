@@ -36,6 +36,8 @@ export default function MembershipPage() {
 			.catch((e) => console.log(e));
 	}
 
+
+		
 	function redirectToPayPal() {
 		const data = {
 			userId: userInfo.id.toString(),
@@ -50,9 +52,16 @@ export default function MembershipPage() {
 					description: "membership",
 				},
 			})
-			.then(console.log("redirecting to paypal"))
+			.then((res)=>{
+				console.log("redirecting to paypal"),
+				window.location.href = res.data.approvalUrl;
+				console.log(decodeURIComponent("Q09NUExJQU5DRV9WSU9MQVRJT04%3D"));
+			})
 			.catch((e) => console.log(e));
+		
 	}
+
+	
 
 	useEffect(() => {
 		getPrice();

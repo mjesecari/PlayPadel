@@ -6,12 +6,14 @@ import MainPage from "./components/EditUserData";
 import CourtsPage from "./pages/CourtsPage";
 import Reservations from "./pages/Reservations";
 import AdminPage from "./pages/AdminPage";
-
+import PaymentSuccess from "./pages/PaymentSuccess";
 import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";
 import MembershipPage from "./pages/MembershipPage";
-
+import NoMembership from "./components/NoMembership";
+import PaymentCancel from "./pages/PaymenCancel";
+import PaymentError from "./pages/PaymentError";
 function App() {
 	const [userInfo, setUserInfo] = useState(() => {
 		const savedUserInfo = sessionStorage.getItem("userInfo");
@@ -75,6 +77,10 @@ function App() {
 						element={<Infouser userInfo={userInfo} />}
 					/>
 					<Route path="/Membership" element={<MembershipPage />} />
+					<Route path="/payment/success" element={<PaymentSuccess />} />
+					<Route path="/payment/cancel" element={<PaymentCancel />} />
+					<Route path="/payment/error" element={<PaymentError />} />
+					<Route path="/NoMembership" element={<NoMembership />} />
 				</Routes>
 			</BrowserRouter>
 		</>

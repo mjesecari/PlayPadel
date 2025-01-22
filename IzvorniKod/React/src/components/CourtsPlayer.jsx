@@ -92,11 +92,11 @@ export default function CourtsPlayer({ userInfo }) {
 			</Dialog>
 
 			<div className="top-0 m-auto mt-20 text-left">
-				<div>
-					{courts.length == 0 && (
-						<h2 className="mt-24 ">Nema dostupnih terena</h2>
-					)}
-				</div>
+				{courts.length == 0 && (
+					<div>
+						<h1 className="text-left m-10 ">Nema dostupnih terena</h1>
+					</div>
+				)}
 				{courts.length != 0 && (
 					<div>
 						<h1 className="text-left m-10 ">Dostupni tereni</h1>
@@ -111,11 +111,17 @@ export default function CourtsPlayer({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<p> <img
+								<p>
+									{" "}
+									<img
 										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
 										alt={court.naziv}
-										style={{ width: "300px", height: "200px", objectFit: "cover" }}
-										/>
+										style={{
+											width: "300px",
+											height: "200px",
+											objectFit: "cover",
+										}}
+									/>
 								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>

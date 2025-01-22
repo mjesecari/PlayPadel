@@ -18,6 +18,10 @@ public class IgracDTO {
         this.Email = email;
     }
 
+    public IgracDTO() {
+
+    }
+
     public String getRole() {
         return Role;
     }

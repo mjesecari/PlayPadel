@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import {BrowserRouter, Routes, Route ,Navigate} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,6 +11,12 @@ import AdminPage from "./pages/AdminPage";
 import Infouser from "./pages/Infouser";
 
 import { useEffect, useState } from "react";
+
+const AdminRoute = ({ element }) => {
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  if (!userInfo || userInfo.tip !== "admin")return <Navigate to="/" />;
+  return element;
+};
 
 function App() {
 	const [userInfo, setUserInfo] = useState(() => {
@@ -62,10 +68,8 @@ function App() {
 						path="Reservations"
 						element={<Reservations userInfo={userInfo} />}
 					/>
-					<Route
-						path="AdminPage"
-						element={<AdminPage userInfo={userInfo} />}
-					/>
+					
+					<Route path="/AdminPage" element={<AdminRoute element={<AdminPage userInfo={userInfo} />} />} />
 
 					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />

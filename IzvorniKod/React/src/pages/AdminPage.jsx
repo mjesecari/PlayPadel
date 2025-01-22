@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("svi");
   const [clanarine, setClanarine] = useState({});
   const [korizznik, setKorizznik] = useState({
     email: "",
@@ -17,25 +17,28 @@ export default function AdminPage() {
 
   const fetchData = () => {
     fetch("api/admin/users", options)
-    .then((response) => {return response.json()})
-    .then((data) => {setUsers(data); setFilteredUsers(data)})
-  }
+      .then((response) => response.json())
+      .then((data) => {setUsers(data); setFilteredUsers(data)})
+      .catch((error) => console.error("Greška pri dohvaćanju korisnika:", error));
+  };
 
   useEffect(() => {fetchData()}, []);
 
   const changeRole = (event) => {
     const novaUloga = event.target.value;
     setRole(novaUloga);
-    filterUsers(novaUloga);
-  }
-
-  const filterUsers = (role) => {
-    if(role === "svi") setFilteredUsers(users);
-    else {
-      const filtered = users.filter(user => user.tip === role);
-      setFilteredUsers(filtered);
+    if (novaUloga === "svi") {
+      setFilteredUsers(users);
+    } else {
+      const validRole = novaUloga === "igrac" ? "igrač" : novaUloga;
+      fetch(`api/admin/users/${validRole}`, options)
+        .then((response) => response.json())
+        .then((data) => {
+          setFilteredUsers(data);
+        })
+        .catch((error) => console.error(`Greška pri dohvaćanju korisnika tipa ${novaUloga}:`, error));
     }
-  }
+  };
 
   const handleClanarinaChange = (id, value) => {
     setClanarine((prev) => ({

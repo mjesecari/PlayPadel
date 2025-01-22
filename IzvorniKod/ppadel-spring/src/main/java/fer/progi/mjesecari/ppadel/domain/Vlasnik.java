@@ -1,14 +1,19 @@
 package fer.progi.mjesecari.ppadel.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Vlasnik extends Korisnik{
     private String NazivVlasnik;
     private String Lokacija;
     private String BrojTel;
+
+    @OneToMany(mappedBy = "vlasnik", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Turnir> turniri;
+    @OneToMany(mappedBy = "vlasnikTeren", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Teren> tereni;
 
     public Vlasnik() {}
 

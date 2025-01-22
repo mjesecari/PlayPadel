@@ -23,13 +23,13 @@ const nav = {
 		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Moje rezervacije", href: "/Reservations", current: false },
 		{ name: "Tereni i termini ", href: "/CourtsPage", current: false },
-		{ name: "Turniri ", href: "#", current: false },
+		{ name: "Turniri ", href: "/TournamentsPage", current: false },
 	],
 
 	owner: [
 		{ name: "Početna stranica", href: "/", current: false },
 		{ name: "Moji tereni ", href: "/CourtsPage", current: false },
-		{ name: "Moji turniri ", href: "#", current: false },
+		{ name: "Moji turniri ", href: "/TournamentsPage", current: false },
 	],
 
 	admin: [
@@ -66,9 +66,10 @@ export default function NavBar() {
 			event.preventDefault();
 			sessionStorage.clear();
 			document.cookie =
-				"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
-			navigate("/signup", { replace: true });
-			await axios.post("http://localhost:8080/signout");
+			"JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost;";
+			localStorage.clear;
+			navigate("/Login", { replace: true });
+			await axios.post("api/logout");
 		} catch (error) {
 			console.error("Error signing out:", error);
 		}
@@ -159,7 +160,7 @@ export default function NavBar() {
 
 								<MenuItem>
 									<a
-										href="#"
+										href="api/logout"
 										onClick={handleSignOut}
 										className="block px-4 py-2 text-md text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
 									>

@@ -9,6 +9,7 @@ import fer.progi.mjesecari.ppadel.domain.Igrac;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Vlasnik;
 import fer.progi.mjesecari.ppadel.service.*;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

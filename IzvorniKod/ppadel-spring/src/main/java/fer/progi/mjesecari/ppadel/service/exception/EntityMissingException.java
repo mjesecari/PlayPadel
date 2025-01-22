@@ -1,4 +1,4 @@
-package fer.progi.mjesecari.ppadel.service;
+package fer.progi.mjesecari.ppadel.service.exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 

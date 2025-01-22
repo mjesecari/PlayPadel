@@ -1,13 +1,16 @@
 package fer.progi.mjesecari.ppadel.domain;
 
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.Assert;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Teren {
+public class Teren implements Serializable{
     @Id
     @GeneratedValue
     private Long IDTeren;
@@ -15,11 +18,25 @@ public class Teren {
     @ManyToOne
     Korisnik vlasnikTeren;
 
+
+    @OneToOne(mappedBy = "teren", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private SlikaTeren slikaTeren;
+
     @NotNull
     private String TipTeren;
 
     @NotNull
     private String NazivTeren;
+
+    private String LokacijaTeren;
+
+    public String getLokacijaTeren() {
+        return LokacijaTeren;
+    }
+
+    public void setLokacijaTeren(String lokacijaTeren) {
+        LokacijaTeren = lokacijaTeren;
+    }
 
     public Teren(){
         
@@ -75,5 +92,11 @@ public class Teren {
     }
 
 
+    public SlikaTeren getSlikaTeren() {
+        return slikaTeren;
+    }
 
+    public void setSlikaTeren(SlikaTeren slikaTeren) {
+        this.slikaTeren = slikaTeren;
+    }
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import fer.progi.mjesecari.ppadel.dao.TerenRepository;
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
 import fer.progi.mjesecari.ppadel.domain.Teren;
-import fer.progi.mjesecari.ppadel.service.EntityMissingException;
 import fer.progi.mjesecari.ppadel.service.KorisnikService;
-import fer.progi.mjesecari.ppadel.service.RequestDeniedException;
 import fer.progi.mjesecari.ppadel.service.TerenService;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 @Service
 public class TerenServiceJpa implements TerenService{
@@ -53,17 +53,35 @@ public class TerenServiceJpa implements TerenService{
     }
 
     @Override
-    public Teren updateTerenName(long terenId, String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateTerenName'");
+    public Teren createTeren(String terenName, Long vlasnikID, String terenTip, String lokacija) {
+        Korisnik vlasnik = korisnikService.findById(vlasnikID).orElseThrow(
+            () -> new RequestDeniedException("No user with ID " + vlasnikID)
+        );
+        Teren t = new Teren(terenName, vlasnik, terenTip);
+        t.setLokacijaTeren(lokacija);
+        return terenRepo.save(t);
     }
 
+    @Override
+    public Teren updateTerenName(long terenId, String name) {
+        Teren teren = fetch(terenId);
+        teren.setNazivTeren(name);
+        return terenRepo.save(teren);
+    }
+    
+    @Override
+    public Teren updateTerenType(long terenId, String type) {
+        Teren teren = fetch(terenId);
+        teren.setTipTeren(type);
+        return terenRepo.save(teren);
+    }
 
     @Override
     public Teren deleteTeren(long terenId) {
-        // TODO Auto-generated method stub
         Teren teren = fetch(terenId);   // throws EntityMissingException
         terenRepo.delete(teren);
         return teren;
     }
+
+
 }

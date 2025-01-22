@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import NavBar from "@/components/Navbar";
 import {
 	Card,
 	CardHeader,
@@ -39,6 +38,7 @@ export default function CourtsOwner({ userInfo }) {
 	const [deleteId, setDeleteId] = useState();
 
 	const [form, setForm] = useState({
+		id: undefined,
 		naziv: "",
 		tip: "",
 		vlasnikTerenaId: userInfo.id,
@@ -48,6 +48,7 @@ export default function CourtsOwner({ userInfo }) {
 		axios
 			.get("/api/tereni/my")
 			.then((res) => {
+				console.log(res);
 				setCourts(res.data);
 			})
 			.catch((error) => console.log(error));
@@ -66,7 +67,12 @@ export default function CourtsOwner({ userInfo }) {
 		setForm((oldForm) => ({ ...oldForm, tip: value }));
 	};
 
+	const handleFileChange = (event) => {
+		setForm((oldForm) => ({ ...oldForm, slika: event.target.files[0] }));
+	};
+
 	const onSubmit = () => {
+		console.log("submit", form);
 		if (form.tip == "") {
 			alert("Odaberite vrstu terena.");
 			return;
@@ -75,23 +81,75 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite naziv terena.");
 			return;
 		}
-		const data = JSON.stringify(form);
+		if (form.lokacija == "") {
+			alert("Upišite lokaciju terena.");
+			return;
+		}
+		if (form.slika == null){
+			alert("Dodajte sliku terena.");
+			return;
+		}
+		const data = new FormData();
+		
+		const terenDTO = {
+			naziv: form.naziv,
+			tip: form.tip,
+			lokacija: form.lokacija,
+			vlasnikTerenaId: form.vlasnikTerenaId,
+		};
+		data.append("teren",new Blob([JSON.stringify(terenDTO)], { type: 'application/json' }));
+		if (form.slika) {
+		data.append("slika", form.slika); // Append file to FormData if it exists
+		}
+		// add new
+		if (!form.id) {
+			axios({
+				url: "/api/tereni/",
+				method: "POST",
+				headers: {
+					//"Content-Type": "application/json",
+					//"Content-Type": "multipart/form-data",
+				},
+				data: data,
+				
+			})
+				.then((res) => {
+					setOpenRes(true);
+					setOpenTerenInp(false);
+					setForm({
+						//id: undefined,
+						naziv: "",
+						tip: "",
+						vlasnikTerenaId: userInfo.id,
+						lokacija: "",
+						slika: null
+					});
+				})
+				.catch((err) => {});
+			return;
+		}
 
+		// update existing
 		axios({
-			url: "/api/tereni/",
-			method: "POST",
+			url: "/api/tereni/" + form.id,
+			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				//"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
 			data: data,
 		})
 			.then((res) => {
+				console.log("put");
 				setOpenRes(true);
 				setOpenTerenInp(false);
 				setForm({
+					id: undefined,
 					naziv: "",
 					tip: "",
 					vlasnikTerenaId: userInfo.id,
+					lokacija: "",
+					slika: null
 				});
 			})
 			.catch((err) => {});
@@ -103,6 +161,7 @@ export default function CourtsOwner({ userInfo }) {
 	}
 
 	function deleteConfirmed() {
+		console.log(deleteId);
 		axios({
 			url: "/api/tereni/" + deleteId,
 			method: "DELETE",
@@ -121,6 +180,23 @@ export default function CourtsOwner({ userInfo }) {
 		setDeleteId();
 		setOpenConfirmation(false);
 	}
+
+	function editCourt(e) {
+		setOpenTerenInp(true);
+
+		let editable = courts.filter((o) => o.idteren == e.target.id)[0];
+
+		setForm({
+			id: editable.idteren,
+			naziv: editable.nazivTeren,
+			tip: "", // editable.tipTeren,
+			vlasnikTerenaId: userInfo.id,
+			lokacija: editable.lokacijaTeren,
+			slika: editable.slikaTeren
+		});
+		console.log("now", form);
+	}
+
 	if (!userInfo) return <p>Loading...</p>;
 
 	// checked in local storage
@@ -131,9 +207,15 @@ export default function CourtsOwner({ userInfo }) {
 					<h1 className="text-left m-10">Moji tereni</h1>
 				</div>
 
-				<Dialog open={openTerenInp} onOpenChange={setOpenTerenInp}>
+				<Dialog
+					id="input"
+					open={openTerenInp}
+					onOpenChange={setOpenTerenInp}
+				>
 					<DialogTrigger asChild>
-						<Button className="h-fit text-white ml-10">
+						<Button
+							className="h-fit text-white ml-10"
+						>
 							Dodaj novi teren
 						</Button>
 					</DialogTrigger>
@@ -170,16 +252,43 @@ export default function CourtsOwner({ userInfo }) {
 										</SelectItem>
 									</SelectContent>
 								</Select>
+
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="lokacija" className="text-right">
+										Lokacija
+									</Label>
+									<Input
+										id="lokacija"
+										name="lokacija"
+										value={form.lokacija}
+										onChange={onChange}
+										className="col-span-3"
+									/>
+								</div>
+								{/* File input */}
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="slika" className="text-right">
+										Dodaj sliku
+									</Label>
+									<Input
+										type="file"
+										id="slika"
+										name="slika"
+										onChange={handleFileChange}
+										className="col-span-3"
+									/>
+								</div>
 							</div>
 						</form>
 						<DialogFooter>
-							<Button
-								type="submit"
-								onClick={() => onSubmit()}
-								className="h-fit text-white ml-10"
-							>
-								Dodaj
-							</Button>
+					
+								<Button
+									type="submit"
+									onClick={() => onSubmit()}
+									className="h-fit text-white ml-10"
+								>
+									Dodaj
+								</Button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
@@ -210,6 +319,7 @@ export default function CourtsOwner({ userInfo }) {
 					</DialogContent>
 				</Dialog>
 
+				{/* display courts */}
 				<div className="flex h-fit flex-wrap">
 					{courts.map((court) => (
 						<Card key={court.idteren} className="w-[350px] m-8">
@@ -218,10 +328,24 @@ export default function CourtsOwner({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
+								<p> <img
+										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
+										alt={court.naziv}
+										style={{ width: "300px", height: "200px", objectFit: "cover" }}
+										/>
+								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>
 							</CardContent>
 							<CardFooter className="flex justify-between">
+								<Button
+									variant="outline"
+									className="text-white"
+									id={court.idteren}
+									onClick={(e) => editCourt(e)}
+								>
+									Uredi
+								</Button>
 								<Button
 									variant="outline"
 									className="text-white"

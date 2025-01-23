@@ -2,6 +2,7 @@ package fer.progi.mjesecari.ppadel.domain;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.Assert;
@@ -29,6 +30,9 @@ public class Teren implements Serializable{
     private String NazivTeren;
 
     private String LokacijaTeren;
+
+    @OneToMany(mappedBy = "zaTeren", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rezervacija> rezervacije;
 
     public String getLokacijaTeren() {
         return LokacijaTeren;

@@ -59,6 +59,7 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 
 	// on selected timeframe, update all displayed events
 	function dateSelected(slotinfo) {
+		
 		let endTime = new Date(slotinfo.start);
 		endTime.setHours(endTime.getHours() + 1);
 		setTimeSelected({
@@ -76,14 +77,6 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 			},
 		]);
 
-		// setEventsList([
-		// 	...eventsList,
-		// 	{
-		// 		title: "ODABRANO",
-		// 		start: slotinfo.start,
-		// 		end: endTime,
-		// 	},
-		// ]);
 	}
 
 	// send reservation to database then refetch all reservations
@@ -142,17 +135,15 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 							timeSelected.start < e.end) ||
 						(timeSelected.end < e.end && timeSelected.end > e.start))
 
-					// 	+e.start != +timeSelected.start &&
-					// 	((timeSelected.end > e.start && timeSelected.end <= e.end) ||
-					// 		(timeSelected.start >= e.start &&
-					// 			timeSelected.start < e.end) ||
-					// 		(timeSelected.start < e.start && timeSelected.end > e.end))
-					// );
+	
 				);
 			})
 		)
 			setOverlap(true);
-		//if (timeSelected < Date.now()) setOverlap(true);
+		if (new Date(timeSelected.start) < Date.now()){
+			setOverlap(true)
+		}
+		setReservation(false)
 	}, [lastSelected]);
 
 	const MyCalendar = (props) => (
@@ -176,7 +167,7 @@ export default function CalendarApp({ eventsProp, id, userInfo }) {
 			/>
 			{overlap && (
 				<p className="p-2 bg-red-500 text-white text-center">
-					Zabranjeno preklapanje termina
+					Nemoguće rezerviranje odabranog termina
 				</p>
 			)}
 			{reservation && (

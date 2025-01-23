@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@headlessui/react";
 import axios from "axios";
+import NoMembership from "./NoMembership";
 
 export default function CourtsOwner({ userInfo }) {
 	const [courts, setCourts] = useState([]);
@@ -36,6 +37,7 @@ export default function CourtsOwner({ userInfo }) {
 	const [openTerenInp, setOpenTerenInp] = useState(false);
 	const [openConfirmation, setOpenConfirmation] = useState(false);
 	const [deleteId, setDeleteId] = useState();
+	const [hasMembership, setHasMembership] = useState();
 
 	const [form, setForm] = useState({
 		id: undefined,
@@ -54,9 +56,23 @@ export default function CourtsOwner({ userInfo }) {
 			.catch((error) => console.log(error));
 	}
 
+	function fetchMembership() {
+		axios
+			.get("/api/membership/isPayed/" + userInfo.id)
+			.then((res) => {
+				console.log(res);
+				setHasMembership(res.data);
+			})
+			.catch((error) => console.log(error));
+	}
+
 	useEffect(() => {
 		fetchCourts();
 	}, [openRes]);
+
+	useEffect(() => {
+		fetchMembership();
+	}, []);
 
 	const onChange = (event) => {
 		const { name, value } = event.target;
@@ -85,21 +101,24 @@ export default function CourtsOwner({ userInfo }) {
 			alert("Upišite lokaciju terena.");
 			return;
 		}
-		if (form.slika == null){
+		if (form.slika == null) {
 			alert("Dodajte sliku terena.");
 			return;
 		}
 		const data = new FormData();
-		
+
 		const terenDTO = {
 			naziv: form.naziv,
 			tip: form.tip,
 			lokacija: form.lokacija,
 			vlasnikTerenaId: form.vlasnikTerenaId,
 		};
-		data.append("teren",new Blob([JSON.stringify(terenDTO)], { type: 'application/json' }));
+		data.append(
+			"teren",
+			new Blob([JSON.stringify(terenDTO)], { type: "application/json" })
+		);
 		if (form.slika) {
-		data.append("slika", form.slika); // Append file to FormData if it exists
+			data.append("slika", form.slika); // Append file to FormData if it exists
 		}
 		// add new
 		if (!form.id) {
@@ -111,7 +130,6 @@ export default function CourtsOwner({ userInfo }) {
 					//"Content-Type": "multipart/form-data",
 				},
 				data: data,
-				
 			})
 				.then((res) => {
 					setOpenRes(true);
@@ -122,7 +140,7 @@ export default function CourtsOwner({ userInfo }) {
 						tip: "",
 						vlasnikTerenaId: userInfo.id,
 						lokacija: "",
-						slika: null
+						slika: null,
 					});
 				})
 				.catch((err) => {});
@@ -149,7 +167,7 @@ export default function CourtsOwner({ userInfo }) {
 					tip: "",
 					vlasnikTerenaId: userInfo.id,
 					lokacija: "",
-					slika: null
+					slika: null,
 				});
 			})
 			.catch((err) => {});
@@ -192,7 +210,7 @@ export default function CourtsOwner({ userInfo }) {
 			tip: "", // editable.tipTeren,
 			vlasnikTerenaId: userInfo.id,
 			lokacija: editable.lokacijaTeren,
-			slika: editable.slikaTeren
+			slika: editable.slikaTeren,
 		});
 		console.log("now", form);
 	}
@@ -207,17 +225,20 @@ export default function CourtsOwner({ userInfo }) {
 					<h1 className="text-left m-10">Moji tereni</h1>
 				</div>
 
+				{!hasMembership && <NoMembership></NoMembership>}
+
 				<Dialog
 					id="input"
 					open={openTerenInp}
 					onOpenChange={setOpenTerenInp}
 				>
 					<DialogTrigger asChild>
-						<Button
-							className="h-fit text-white ml-10"
-						>
-							Dodaj novi teren
-						</Button>
+						{/* prevent adding courts without membership */}
+						{hasMembership && (
+							<Button className="h-fit text-white ml-10">
+								Dodaj novi teren
+							</Button>
+						)}
 					</DialogTrigger>
 					<DialogContent className="sm:max-w-[425px]">
 						<DialogHeader>
@@ -281,14 +302,13 @@ export default function CourtsOwner({ userInfo }) {
 							</div>
 						</form>
 						<DialogFooter>
-					
-								<Button
-									type="submit"
-									onClick={() => onSubmit()}
-									className="h-fit text-white ml-10"
-								>
-									Dodaj
-								</Button>
+							<Button
+								type="submit"
+								onClick={() => onSubmit()}
+								className="h-fit text-white ml-10"
+							>
+								Dodaj
+							</Button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
@@ -328,11 +348,17 @@ export default function CourtsOwner({ userInfo }) {
 								<CardDescription>{court.tip}</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<p> <img
+								<p>
+									{" "}
+									<img
 										src={`data:image/jpeg;base64,${court.slikaTeren.photoData}`}
 										alt={court.naziv}
-										style={{ width: "300px", height: "200px", objectFit: "cover" }}
-										/>
+										style={{
+											width: "300px",
+											height: "200px",
+											objectFit: "cover",
+										}}
+									/>
 								</p>
 								<p>Tip terena: {court.tipTeren}</p>
 								<p>Vlasnik: {court.vlasnikTeren.email}</p>

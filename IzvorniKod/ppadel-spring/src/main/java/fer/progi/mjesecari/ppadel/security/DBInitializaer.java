@@ -19,7 +19,7 @@ public class DBInitializaer implements CommandLineRunner {
         Administrator admin = new Administrator();
         admin.setTip("admin");
         admin.setEmail("playpadel.mjesecari@gmail.com");
-        admin.setCijenaClanarine(0.0f);
+        admin.setCijenaClanarine(5.0f);
         userRepository.save(admin);
     }
 }

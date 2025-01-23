@@ -23,6 +23,7 @@ import { Button } from "@headlessui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import moment from 'moment';
+import NoMembership from "./NoMembership";
 
 export default function TournamentsOwner({ userInfo }) {
 	const [tournaments, setTournaments] = useState([]);
@@ -44,7 +45,23 @@ export default function TournamentsOwner({ userInfo }) {
         nagrade: [""],
         opis: ""
 	});
+	const [hasMembership, setHasMembership] = useState();
+
 	const navigate = useNavigate();
+
+	function fetchMembership() {
+		axios
+			.get("/api/membership/isPayed/" + userInfo.id)
+			.then((res) => {
+				console.log(res);
+				setHasMembership(res.data);
+			})
+			.catch((error) => console.log(error));
+	}
+
+	useEffect(() => {
+		fetchMembership();
+	}, []);
 
 	function fetchTournaments() {
 		axios
@@ -291,17 +308,21 @@ export default function TournamentsOwner({ userInfo }) {
 					<h1 className="text-left m-10">Moji turniri</h1>
 				</div>
 
+				{!hasMembership && <NoMembership></NoMembership>}
+
+
 				<Dialog
 					id="input"
 					open={openTurnirInp}
 					onOpenChange={setOpenTurnirInp}
 				>
 					<DialogTrigger asChild>
+					{hasMembership && (
 						<Button
 							className="h-fit text-white ml-10"
 						>
 							Dodaj novi turnir
-						</Button>
+						</Button>)}
 					</DialogTrigger>
 					<DialogContent className="sm:max-w-[425px]">
 						<DialogHeader>

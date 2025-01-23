@@ -12,7 +12,7 @@ export default function NoMembership() {
 	return (
 		<>
 			<div className="flex-col px-4">
-			<p className="text-xl p-2 "> Nemate aktivno članstvo u aplikaciji!</p>
+			<p className="text-xl p-2 "> Nemate aktivno PlayPadel članstvo!</p>
 			<p className=" p-2">
 				Kako biste mogli dodavati terene i turnire molimo Vas da obnovite
 				članarinu.

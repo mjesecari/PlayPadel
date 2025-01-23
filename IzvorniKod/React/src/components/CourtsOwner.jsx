@@ -58,7 +58,7 @@ export default function CourtsOwner({ userInfo }) {
 
 	function fetchMembership() {
 		axios
-			.get("/api/membership/isPayed?id=" + userInfo.id)
+			.get("/api/membership/isPayed/" + userInfo.id)
 			.then((res) => {
 				console.log(res);
 				setHasMembership(res.data);

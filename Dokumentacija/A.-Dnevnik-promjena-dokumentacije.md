@@ -17,8 +17,10 @@
 | 1.1   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 7.12.2024.  |
 | 1.2   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 26.12.2024. |
 | 1.3   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 28.12.2024. |
-| 1.4   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 16.1.2024. |
-| 1.5   | Ažuriran predložak dokumentaciju                                                                     | Lorena Ivanišević                     | 23.1.2024. |
+| 1.4   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 16.1.2025. |
+| 1.5   | Ažuriran predložak dokumentaciju                                                                     | Lorena Ivanišević                     | 23.1.2025. |
+| 1.6   | Ažurirane upute za puštanje u pogon                                                                  | Borna Zelić                           | 23.1.2025. |
+| 1.7   | Ažurirane tehnologije za implementaciju aplikacije                                                   | Borna Zelić                           | 23.1.2025. |
 
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 

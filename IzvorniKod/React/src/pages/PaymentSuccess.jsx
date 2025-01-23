@@ -22,10 +22,10 @@ export default function PaymentSuccess() {
     return (
         <div>
             <h1>Plaćanje godišnje članarine uspješno!</h1>
-            <p>Sada možete pristupiti svojoj stranici!</p>
+            <p className="p-4">Sada možete pristupiti svojoj stranici!</p>
             <button 
                 onClick={() => home()}
-				className="h-fit text-white ml-10">
+				className="h-fit text-white ">
                     Početna stranica
             </button>
         </div>

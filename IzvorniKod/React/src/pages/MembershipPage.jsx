@@ -78,7 +78,7 @@ export default function MembershipPage() {
 				<CardContent className={"text-md"}>
 					<p>Članstvo u PlayPadel aplikaciji za vlasnika terena iznosi:</p>
 					<p className="text-bold m-4">
-						<b>{price} eura</b> mjesečno
+						<b>{price} eura</b> godišnje
 					</p>
 				</CardContent>
 				<CardFooter>

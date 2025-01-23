@@ -11,15 +11,18 @@ export default function NoMembership() {
 
 	return (
 		<>
-			<h2>Nemate aktivno članstvo u aplikaciji.</h2>
-			<p>
+			<div className="flex-col px-4">
+			<p className="text-xl p-2 "> Nemate aktivno članstvo u aplikaciji!</p>
+			<p className=" p-2">
 				Kako biste mogli dodavati terene i turnire molimo Vas da obnovite
 				članarinu.
 			</p>
+			</div>
 
-			<Button className="h-fit text-white ml-10" onClick={redirect}>
+			<Button className="h-fit text-white m-6" onClick={redirect}>
 				Obnovi članarinu
 			</Button>
+			
 		</>
 	);
 }

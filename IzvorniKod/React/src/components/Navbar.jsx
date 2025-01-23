@@ -14,7 +14,7 @@ import {
 	XMarkIcon,
 	UserIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import EditUserData from "./EditUserData";
 
@@ -34,9 +34,8 @@ const nav = {
 
 	admin: [
 		{ name: "Početna stranica", href: "/", current: false },
-		{ name: "Popis korisnika", href: "#", current: false },
-	],
-	admin: [{ name: "Popis korisnika", href: "/AdminPage", current: false }],
+		{ name: "Popis korisnika", href: "/AdminPage", current: false },
+	]
 };
 
 let navigation;
@@ -52,10 +51,13 @@ export default function NavBar() {
 	});
 
 	const navigate = useNavigate();
+	const location = useLocation();
 
-	if (userInfo.admin) {
-		navigation = nav.admin;
-	} else if (userInfo.owner) {
+	if (userInfo?.admin) {
+		if (location.pathname === "/AdminPage") navigation = [{ name: "Početna stranica", href: "/" }];
+		else navigation = [{ name: "Popis korisnika", href: "/AdminPage" }];
+	} 
+	else if (userInfo.owner) {
 		navigation = nav.owner;
 	} else {
 		navigation = nav.player;

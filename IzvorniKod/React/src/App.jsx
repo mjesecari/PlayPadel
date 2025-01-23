@@ -6,8 +6,10 @@ import MainPage from "./components/EditUserData";
 import CourtsPage from "./pages/CourtsPage";
 import Reservations from "./pages/Reservations";
 import AdminPage from "./pages/AdminPage";
+import TournamentsPage from "./pages/TournamentsPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Infouser from "./pages/Infouser";
+import TournamentDetails from "./components/TournamentDetails"
 
 import { useEffect, useState } from "react";
 import MembershipPage from "./pages/MembershipPage";
@@ -81,6 +83,10 @@ function App() {
 					<Route path="/payment/cancel" element={<PaymentCancel />} />
 					<Route path="/payment/error" element={<PaymentError />} />
 					<Route path="/NoMembership" element={<NoMembership />} />
+					
+					<Route path="TournamentsPage" element={<TournamentsPage userInfo={userInfo} />} />
+					<Route path="/tournament/:idTurnir/details" element={<TournamentDetails userInfo={userInfo}/>} />
+					
 				</Routes>
 			</BrowserRouter>
 		</>

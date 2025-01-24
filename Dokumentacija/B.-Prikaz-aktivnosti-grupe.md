@@ -105,19 +105,17 @@ _**Kontinuirano osvježavanje**_
 | **Opis pojedinih obrazaca**          | 2                     |                 | 1               | 8                 | 2                 |                     |                 |
 | **Dijagram obrazaca**                | 5                     |                 |                 | 2                 | 8                 | 5                   |                 |
 | **Sekvencijski dijagrami**           |                       |                 | 1               | 6                 |                   |                     |                 |
-| **Opis ostalih zahtjeva**            |                       |                 |                 |                   |                   |                     |                 |
 | **Arhitektura i dizajn sustava**     |                       | 4               | 2               |                   | 2                 |                     | 2               |
 | **Baza podataka**                    |                       |                 |                 |                   | 4                 |                     |                 |
 | **Dijagram razreda**                 |                       |                 |                 |                   | 5                 |                     |                 |
 | **Dijagram stanja**                  |                       |                 |                 | 5                 |                   |                     |                 |
 | **Dijagram aktivnosti**              |                       |                 |                 | 5                 |                   |                     |                 |
 | **Dijagram komponenti**              |                       |                 |                 | 6                 |                   |                     |                 |
-| **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |                 |
+| **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |      1          |
 | **Dijagram razmještaja**             |                       |                 |                 |                   |         2         |                     |                 |
 | **Upute za puštanje u pogon**        |                       | 6               |          16     |                   |                   |                     | 12-14           |
 | **Sastanci s timom**                 | 6                     | 6               | 6               | 6                 | 6                 | 6                   | 6               |
 | **Zaključak i budući rad**           |      0.5              |                 |                 |                   |                   |                     |                 |
-| **Popis literature**                 |                       |                 |                 |                   |                   |                     |                 |
 | **Uređivanje dokumentacije**         |      1                |                 |                 |                   |                   | 2                   |                 |
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |

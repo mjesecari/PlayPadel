@@ -150,6 +150,10 @@ _**Kontinuirano osvježavanje**_
 -  izrada vizualne organizacije projekta u Figmi
 -  registracija i prijava korisnika (frontend)
 -  deployment aplikacije
+-  izrada dokumentacije -stranica 6
+-  izrada front-enda user info
+-  ispitivanje programskog rješenja
+  
 
 ### Dino Plečko
 

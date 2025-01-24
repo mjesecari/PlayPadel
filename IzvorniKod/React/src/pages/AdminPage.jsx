@@ -44,7 +44,6 @@ export default function AdminPage() {
       .then((response) => response.json())
       .then((data) => {
         setTrenutnaClanarina(data);
-        console.log("Primljeni podaci za članarinu:", data);
       })
       .catch((error) =>
         console.error("Greška pri dohvaćanju članarine:", error)
@@ -83,7 +82,6 @@ export default function AdminPage() {
       return;
     }
 
-    console.log(`Slanje zahtjeva za promjenu članarine: ${clanarina}`);
     fetch(`api/admin/${adminId}/membership?clanarina=${clanarina}`, {
       method: "PUT",
       headers: {
@@ -107,21 +105,67 @@ export default function AdminPage() {
       });
   };
 
-  const addKorizznik = () => {
-    if (!korizznik.email || !korizznik.tip) {
-      alert("Unesi sve podatke.");
+  const addIgrac = () => {
+    if (!korizznik.email) {
+      alert("Unesite email za igrača.");
       return;
     }
-    fetch("api/admin/users", {
+
+    const igracDTO = {
+      email: korizznik.email,
+      role: "igrač",
+      imeIgrac: "Ime",
+      prezimeIgrac: "Prezime",
+      brojTel: "Broj telefona",
+    };
+
+    fetch(`api/admin/users/igrac`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(korizznik),
+      body: JSON.stringify(igracDTO),
     })
       .then((response) => {
         if (response.ok) {
-          alert("Korisnik dodan");
+          alert("Igrač uspješno dodan!");
+          setKorizznik({ email: "", tip: "" });
+          fetchData();
+        } else {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        }
+      })
+      .catch((err) => {
+        alert(`Greška: ${err.message}`);
+      });
+  };
+
+  const addVlasnik = () => {
+    if (!korizznik.email) {
+      alert("Unesite email za vlasnika.");
+      return;
+    }
+
+    const vlasnikDTO = {
+      email: korizznik.email,
+      role: "vlasnik",
+      nazivVlasnik: "Naziv kluba",
+      lokacija: "Lokacija",
+      brojTel: "Broj Telefona",
+    };
+
+    fetch(`api/admin/users/vlasnik`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(vlasnikDTO),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Vlasnik uspješno dodan!");
           setKorizznik({ email: "", tip: "" });
           fetchData();
         } else {
@@ -136,12 +180,6 @@ export default function AdminPage() {
   };
 
   const deleteKorizznik = (id) => {
-    const currentUser = JSON.parse(sessionStorage.getItem("userInfo"));
-    if (currentUser && currentUser.id === id) {
-      alert("Ne možete izbrisati samog sebe!");
-      return;
-    }
-
     fetch(`api/admin/users/${id}`, {
       method: "DELETE",
       headers: {
@@ -215,10 +253,6 @@ export default function AdminPage() {
   };
 
   const editUser = (user) => {
-    if (user.tip === "admin") {
-      alert("Admini se ne mogu uređivati!");
-      return;
-    }
     setEditingUser({
       id: user.id,
       email: user.email || "",
@@ -322,25 +356,29 @@ export default function AdminPage() {
                   </div>
                   <div>
                     <b>Tip:</b> {user.tip}
-                    </div>
+                  </div>
                   <div>
                     <b>ID:</b> {user.id}
                   </div>
                   {renderUserDetails(user)}
                 </div>
                 <div className="flex gap-4">
-                  <button
-                    className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
-                    onClick={() => editUser(user)}
-                  >
-                    Uredi
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 transition"
-                    onClick={() => deleteKorizznik(user.id)}
-                  >
-                    Obriši
-                  </button>
+                  {user.tip !== "admin" && (
+                    <>
+                      <button
+                        className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
+                        onClick={() => editUser(user)}
+                      >
+                        Uredi
+                      </button>
+                      <button
+                        className="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 transition"
+                        onClick={() => deleteKorizznik(user.id)}
+                      >
+                        Obriši
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 {editingUser && editingUser.id === user.id && (
@@ -348,19 +386,6 @@ export default function AdminPage() {
                     <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
                       Uredi korisnika:
                     </h2>
-
-                    <label className="block mb-2 text-gray-700">Email:</label>
-                    <input
-                      type="email"
-                      value={editingUser.email}
-                      onChange={(e) =>
-                        setEditingUser({
-                          ...editingUser,
-                          email: e.target.value,
-                        })
-                      }
-                      className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
-                    />
 
                     <label className="block mb-2 text-gray-700">
                       Broj telefona:
@@ -477,23 +502,20 @@ export default function AdminPage() {
               }
               className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
             />
-            <select
-              value={korizznik.tip}
-              onChange={(val) =>
-                setKorizznik({ ...korizznik, tip: val.target.value })
-              }
-              className="border border-gray-300 rounded-md p-2 mb-6 w-full bg-gray-800 text-white"
-            >
-              <option value="">Odaberite tip</option>
-              <option value="vlasnik">Vlasnik</option>
-              <option value="igrač">Igrač</option>
-            </select>
-            <button
-              className="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600 transition w-full"
-              onClick={addKorizznik}
-            >
-              Dodaj korisnika
-            </button>
+            <div className="flex gap-4">
+              <button
+                className="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600 transition w-full"
+                onClick={addIgrac}
+              >
+                Dodaj igrača
+              </button>
+              <button
+                className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition w-full"
+                onClick={addVlasnik}
+              >
+                Dodaj vlasnika
+              </button>
+            </div>
           </div>
 
           <div className="mt-16 border-t pt-8">

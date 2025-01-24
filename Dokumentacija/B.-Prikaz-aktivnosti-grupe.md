@@ -122,7 +122,7 @@ _**Kontinuirano osvježavanje**_
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
 | **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              | 1               |
-| **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
+| **Ispitivanje programskog rješenja** |                       |      15         |                 |                   |                   |      20             |                 |
 | **Admin funkcionalnost**             |    1                  |                 |                 | 30-40             |              10   |                     |                 |
 | **Tereni i rezervacije**             |    16                 |                 |         16      |                   |                   |                     |                 |
 | **Turniri**                          |          1            |                 |                 |                   |         35        |                     |   30            |

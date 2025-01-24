@@ -34,6 +34,7 @@
 | 1.18   | Ažurirana tablica aktivnosti                                                                          | Lorena Ivanišević                     | 24.1.2025.  |
 | 1.19   | Popravak dijagrama razmještaja                                                                        | Klara Vrbanac                         | 24.1.2025.  |
 | 1.20   | Uređivanje dokumenatacije (Typos, gramatika, smislenost, izgled...)                                   | Šimun Vrsalović                       | 24.1.2025.  |
+| 2.0    | Druga revizija dokumentacije                                                                          | Šimun Vrsalović                       | 24.1.2025.  |
 
 > Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima. Štoviše, odbačene promjene također su uključene u povijest promjena.
 >

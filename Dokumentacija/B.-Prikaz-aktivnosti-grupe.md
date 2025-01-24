@@ -199,10 +199,7 @@ _**Kontinuirano osvježavanje**_
 
 # Dijagram pregleda promjena
 
-Prenijeti dijagram pregleda promjena nad datotekama projekta. Potrebno je na kraju
-projekta generirane grafove s GitHuba prenijeti u ovo poglavlje dokumentacije. Dijagrami
-za vlastiti projekt se mogu preuzeti s GitHub.com stranice, u izborniku Repository, pritiskom
-na stavku Contributors.
+![Commits over time (1)](https://github.com/user-attachments/assets/cf78b3bc-3d4a-4c5b-8288-a1407683ba14)
 
 # Ključni izazovi i rješenja
 

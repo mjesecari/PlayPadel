@@ -1,7 +1,9 @@
 package fer.progi.mjesecari.ppadel.security;
 
+import fer.progi.mjesecari.ppadel.domain.Administrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Component;
 
 import fer.progi.mjesecari.ppadel.dao.UserRepository;
@@ -14,9 +16,10 @@ public class DBInitializaer implements CommandLineRunner {
 
     @Override
     public void run(String...args) throws Exception {
-        Korisnik admin = new Korisnik();
+        Administrator admin = new Administrator();
         admin.setTip("admin");
-        admin.setEmail("dinoplecko@gmail.com");
+        admin.setEmail("playpadel.mjesecari@gmail.com");
+        admin.setCijenaClanarine(5.0f);
         userRepository.save(admin);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class KorisnikController {
 
     @GetMapping
     public Korisnik activeUser(Principal principal){
-        if( OAuth2AuthenticationToken.class.isInstance(principal) ){
+         if( OAuth2AuthenticationToken.class.isInstance(principal) ){
             Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
             return userRepo.findByEmail((String) attributes.get("email")).orElseThrow(() -> 
                 new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user email\n")

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import fer.progi.mjesecari.ppadel.domain.Korisnik;
+import fer.progi.mjesecari.ppadel.service.exception.EntityMissingException;
+import fer.progi.mjesecari.ppadel.service.exception.RequestDeniedException;
 
 /**
  * Manages korisnik database.
  * @see Korisnik
- * @author Hrvoje Šimić hsimic@croz.net
+ * @author Dino Plečko dino.plecko@fer.unizg.hr
  */
 public interface KorisnikService {
   /**

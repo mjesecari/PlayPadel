@@ -4,7 +4,10 @@ package fer.progi.mjesecari.ppadel.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Korisnik {
 
   @Id
@@ -16,7 +19,14 @@ public class Korisnik {
   private String email;
 
   private String tip;
-  
+
+  @OneToMany(mappedBy = "korisnik", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Rezervacija> rezervacije;
+  @OneToMany(mappedBy = "korisnik", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<SlikaTurnir> slikeTurniri;
+  @OneToMany(mappedBy = "korisnik", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<KomentarTurnir> komentarTurniri;
+
   public Long getId() {
     return id;
   }
@@ -42,7 +52,7 @@ public class Korisnik {
   }
   
   public boolean isOwner(){
-    return tip.equals("vlasnik");
+    return tip.equals("vlasnik") || isAdmin();
   }
   public boolean isAdmin(){
     return tip.equals("admin");

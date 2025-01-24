@@ -114,22 +114,22 @@ _**Kontinuirano osvježavanje**_
 | **Dijagram komponenti**              |                       |                 |                 | 6                 |                   |                     |                 |
 | **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |                 |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |                     |                 |
-| **Dijagram razmještaja**             |                       |                 |                 |                   |         2          |                   |                 |
-| **Upute za puštanje u pogon**        |                       | 6               |          16       |                   |                   |                     | 12-14           |
+| **Dijagram razmještaja**             |                       |                 |                 |                   |         2         |                     |                 |
+| **Upute za puštanje u pogon**        |                       | 6               |          16     |                   |                   |                     | 12-14           |
 | **Sastanci s timom**                 | 6                     | 6               | 6               | 6                 | 6                 | 6                   | 6               |
-| **Zaključak i budući rad**           |      0.5                 |                 |                 |                   |                   |                     |                 |
+| **Zaključak i budući rad**           |      0.5              |                 |                 |                   |                   |                     |                 |
 | **Popis literature**                 |                       |                 |                 |                   |                   |                     |                 |
-| **Uređivanje dokumentacije**         |      1                 |                 |                 |                   |                   | 1                   |                 |
+| **Uređivanje dokumentacije**         |      1                |                 |                 |                   |                   | 2                   |                 |
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
 | **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              | 1               |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
-| **Admin funkcionalnost**             |    1                    |                 |                 | 30-40             |              10     |      14 - 16        |                 |
-| **Tereni i rezervacije**             |    16                    |                 |         16        |          |                   |           |                 |
-| **Turniri**             |          1             |                 |                 |          |         35         |           |   30              |
-**Uređivanje osobnih podataka**             |            6         |                 |                 |          |                   |           |                 | 30-40
-**PayPal**             |            3        |                 |                 |          |   15                |           |                 |
-
+| **Admin funkcionalnost**             |    1                  |                 |                 | 30-40             |              10   |                     |                 |
+| **Tereni i rezervacije**             |    16                 |                 |         16      |                   |                   |                     |                 |
+| **Turniri**                          |          1            |                 |                 |                   |         35        |                     |   30            |
+|**Uređivanje osobnih podataka**       |            6          |                 |                 |                   |                   |                     |                 | 30-40
+|**PayPal**                            |            3          |                 |                 |                   |   15              |                     |                 |
+ 
 
 
 ## Pojedinačni doprinosi

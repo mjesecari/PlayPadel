@@ -18,17 +18,19 @@
 | 1.2   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 26.12.2024. |
 | 1.3   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 28.12.2024. |
 | 1.4   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 16.1.2025.  |
-| 1.5   | Ispravljeni obrasci uporabe u odnosnu na prvu reviziju                                                 | Klara Vrbanac                         | 17.1.2025.  |
-| 1.6   | Ažuriran predložak dokumentaciju                                                                       | Lorena Ivanišević                     | 23.1.2025.  |
-| 1.7   | Ažurirane upute za puštanje u pogon                                                                    | Borna Zelić                           | 23.1.2025.  |
-| 1.8   | Ažurirane tehnologije za implementaciju aplikacije                                                     | Borna Zelić                           | 23.1.2025.  |
-| 1.9   | Ažuriran Zaključak i budući rad - poglavlje 9.                                                         | Klara Vrbanac                         | 23.1.2025.  |
-| 1.10   | Dodan dijagram razmještaja - poglavlje 5.                                                             | Klara Vrbanac                         | 24.1.2025. |
-| 1.11   | Novi dijagram razreda i promjene u bazi podataka- poglavlje 4.                                        | Klara Vrbanac                         | 24.1.2025. |
-| 1.12   | Edit zaključka                                                                                        | Klara Vrbanac                         | 24.1.2025. |
-| 1.13   | Dodana prezentacija                                                                                   | Borna Zelić                           | 24.1.2025. |
-| 1.14   | Dodano ispitivanje programskog rješenja -poglavlje 6.                                                 | Paula Jagić                           | 24.1.2025. |
-| 1.15   | Ažurirano ispitivanje programskog rješenja - poglavlje 6.                                             | Šimun Vrsalović                       | 24.1.2025. |
+| 1.5   | dodani dijagrami aktivnosti i stanja na 4. str.                                                        | Boris Šeremet Lukšić                  | 16.1.2025.  |
+| 1.6   | Ispravljeni obrasci uporabe u odnosnu na prvu reviziju                                                 | Klara Vrbanac                         | 17.1.2025.  |
+| 1.7   | Ažuriran predložak dokumentaciju                                                                       | Lorena Ivanišević                     | 23.1.2025.  |
+| 1.8   | Ažurirane upute za puštanje u pogon                                                                    | Borna Zelić                           | 23.1.2025.  |
+| 1.9   | Ažurirane tehnologije za implementaciju aplikacije                                                     | Borna Zelić                           | 23.1.2025.  |
+| 1.10   | Ažuriran Zaključak i budući rad - poglavlje 9.                                                        | Klara Vrbanac                         | 23.1.2025.  |
+| 1.11   | Dodan dijagram razmještaja - poglavlje 5.                                                             | Klara Vrbanac                         | 24.1.2025. |
+| 1.12   | Novi dijagram razreda i promjene u bazi podataka- poglavlje 4.                                        | Klara Vrbanac                         | 24.1.2025. |
+| 1.13   | Edit zaključka                                                                                        | Klara Vrbanac                         | 24.1.2025. |
+| 1.14   | Dodana prezentacija                                                                                   | Borna Zelić                           | 24.1.2025. |
+| 1.15   | Dodano ispitivanje programskog rješenja -poglavlje 6.                                                 | Paula Jagić                           | 24.1.2025. |
+| 1.16   | Ažurirano ispitivanje programskog rješenja - poglavlje 6.                                             | Šimun Vrsalović                       | 24.1.2025. |
+| 1.17   | dodan dijagram komponenata na 5. str. i izmjenjeni dijagrami stanja i aktivnosti                      | Boris Šeremet Lukšić                  | 24.1.2025. |
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 
 > Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima. Štoviše, odbačene promjene također su uključene u povijest promjena.

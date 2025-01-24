@@ -36,7 +36,7 @@ Cilj predstaviti kratki opis ključnih sastanaka, **donesenih odluka** i zaduže
 -  Prisustvovali: Lorena Ivanišević, Paula Jagić, Dino Plečko, Boris Šeremet, Klara Vrbanac, Borna Zelić
 -  Teme sastanka:
    > -  razgovor o podjeli bodova
-   > -  raspodjela zadataka tokom sljedećeg tjedna
+   > -  raspodjela zadataka tijekom sljedećeg tjedna
    >    > -  Log out funkcionalnost - Šimun
    >    > -  Prikaz i uređivanje korisničkog profila - Borna i Paula
    >    > -  Admin sučelje - Boris i Klara
@@ -48,7 +48,7 @@ Cilj predstaviti kratki opis ključnih sastanaka, **donesenih odluka** i zaduže
 -  Datum: 19. prosinca 2024.
 -  Prisustvovali: Lorena Ivanišević, Dino Plečko, Boris Šeremet, Klara Vrbanac, Šimun Vrsalović, Borna Zelić
 -  Teme sastanka:
-   > -  raspodjela zadataka tokom sljedećeg tjedna
+   > -  raspodjela zadataka tijekom sljedećeg tjedna
    >    > -  Integracija PayPal-a - Borna i Klara
    >    > -  Rezervacija termina - Dino i Lorena
    > -  rok za nezavršene zadatke do kraja vikenda (22. prosinca) nakon čega treba preuzeti nove zadatke
@@ -182,7 +182,7 @@ _**Kontinuirano osvježavanje**_
 -  izrada dijagrama razmještaja
 -  integracija s PayPalom
 -  turniri (frontend i backend)
--  fukcionalnosti administratora (backend)
+-  funkcionalnosti administratora (backend)
 -  organizacija grupe
 
 ### Šimun Vrsalović
@@ -203,11 +203,11 @@ _**Kontinuirano osvježavanje**_
 # Dijagram pregleda promjena
 
 Prenijeti dijagram pregleda promjena nad datotekama projekta. Potrebno je na kraju
-projekta generirane grafove s githuba prenijeti u ovo poglavlje dokumentacije. Dijagrami
-za vlastiti projekt se mogu preuzeti s github.com stranice, u izborniku Repository, pritiskom
+projekta generirane grafove s GitHuba prenijeti u ovo poglavlje dokumentacije. Dijagrami
+za vlastiti projekt se mogu preuzeti s GitHub.com stranice, u izborniku Repository, pritiskom
 na stavku Contributors.
 
-# Kjučni izazovi i rješenja
+# Ključni izazovi i rješenja
 
 -  Zaključno
 -  Opis izazova: Glavni izazovi tijekom projekta (npr. kašnjenje u razvoju, tehnički problemi).

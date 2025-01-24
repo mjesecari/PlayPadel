@@ -12,7 +12,7 @@
 | 0.9   | Opis arhitekture sustava, podnaslov Baza Podataka, umetanje dijagrama razreda                          | Klara Vrbanac                         | 12.11.2024. |
 | 0.10  | Dovršena strana 2 dokumentacije                                                                        | Šimun Vrsalović                       | 12.11.2024. |
 | 0.11  | Ažurirana tablica aktivnosti grupe i dodan izvještaj o pojedinačnim doprinosima članova tima           | Lorena Ivanišević                     | 14.11.2024. |
-| 0.12  | Dodani dijagrami obrazaca uporabe i dodatno uređeni već postojeći dijagrami dkoumentacije na strani 4. | Šimun Vrsalović, Boris Šeremet Lukšić | 15.11.2024. |
+| 0.12  | Dodani dijagrami obrazaca uporabe i dodatno uređeni postojeći dijagrami dokumentacije na strani 4.     | Šimun Vrsalović, Boris Šeremet Lukšić | 15.11.2024. |
 | 1.0   | Prva revizija dokumentacije                                                                            | Klara Vrbanac                         | 15.11.2024. |
 | 1.1   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 7.12.2024.  |
 | 1.2   | Ažurirana tablica aktivnosti grupe                                                                     | Lorena Ivanišević                     | 26.12.2024. |
@@ -24,17 +24,13 @@
 | 1.8   | Ažurirane upute za puštanje u pogon                                                                    | Borna Zelić                           | 23.1.2025.  |
 | 1.9   | Ažurirane tehnologije za implementaciju aplikacije                                                     | Borna Zelić                           | 23.1.2025.  |
 | 1.10   | Ažuriran Zaključak i budući rad - poglavlje 9.                                                        | Klara Vrbanac                         | 23.1.2025.  |
-| 1.11   | Dodan dijagram razmještaja - poglavlje 5.                                                             | Klara Vrbanac                         | 24.1.2025. |
-| 1.12   | Novi dijagram razreda i promjene u bazi podataka- poglavlje 4.                                        | Klara Vrbanac                         | 24.1.2025. |
-| 1.13   | Edit zaključka                                                                                        | Klara Vrbanac                         | 24.1.2025. |
-| 1.14   | Dodana prezentacija                                                                                   | Borna Zelić                           | 24.1.2025. |
-| 1.15   | Dodano ispitivanje programskog rješenja -poglavlje 6.                                                 | Paula Jagić                           | 24.1.2025. |
-| 1.16   | Ažurirano ispitivanje programskog rješenja - poglavlje 6.                                             | Šimun Vrsalović                       | 24.1.2025. |
-| 1.17   | dodan dijagram komponenata na 5. str. i izmjenjeni dijagrami stanja i aktivnosti                      | Boris Šeremet Lukšić                  | 24.1.2025. |
-| 1.18   | Ažurirana tablica aktivnosti  | Lorena Ivanišević                  | 24.1.2025. |
-| 1.19   | Popravak dijagrama razještaja  | Klara Vrbanac                | 24.1.2025. |
--  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
-
-> Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima. Štoviše, odbačene promjene također su uključene u povijest promjena.
->
-> Zašto? Olakšano praćenje ključnim dionicima.
+| 1.11   | Dodan dijagram razmještaja - poglavlje 5.                                                             | Klara Vrbanac                         | 24.1.2025.  |
+| 1.12   | Novi dijagram razreda i promjene u bazi podataka- poglavlje 4.                                        | Klara Vrbanac                         | 24.1.2025.  |
+| 1.13   | Edit zaključka                                                                                        | Klara Vrbanac                         | 24.1.2025.  |
+| 1.14   | Dodana prezentacija                                                                                   | Borna Zelić                           | 24.1.2025.  |
+| 1.15   | Dodano ispitivanje programskog rješenja -poglavlje 6.                                                 | Paula Jagić                           | 24.1.2025.  |
+| 1.16   | Ažurirano ispitivanje programskog rješenja - poglavlje 6.                                             | Šimun Vrsalović                       | 24.1.2025.  |
+| 1.17   | dodan dijagram komponenata na 5. str. i izmijenjeni dijagrami stanja i aktivnosti                     | Boris Šeremet Lukšić                  | 24.1.2025.  |
+| 1.18   | Ažurirana tablica aktivnosti                                                                          | Lorena Ivanišević                     | 24.1.2025.  |
+| 1.19   | Popravak dijagrama razmještaja                                                                        | Klara Vrbanac                         | 24.1.2025.  |
+| 1.20   | Uređivanje dokumenatacije (Typos, gramatika, smislenost, izgled...)                                   | Šimun Vrsalović                       | 24.1.2025.  |

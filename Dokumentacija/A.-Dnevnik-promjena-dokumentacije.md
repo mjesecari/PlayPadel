@@ -25,6 +25,7 @@
 | 1.9   | Ažuriran Zaključak i budući rad - poglavlje 9.                                                                    | Klara Vrbanac                   | 23.1.2025. |
 | 1.10   | Dodan dijagram razmještaja - poglavlje 5.                                                                     | Klara Vrbanac                     | 24.1.2025. |
 | 1.11   | Novi dijagram razreda i promjene u bazi podataka- poglavlje 4.                                                                  | Klara Vrbanac                     | 24.1.2025. |
+| 1.12   | Edit zaključka                                                                  | Klara Vrbanac                     | 24.1.2025. |
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 
 > Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima. Štoviše, odbačene promjene također su uključene u povijest promjena.

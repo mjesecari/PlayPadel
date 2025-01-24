@@ -43,7 +43,8 @@ export default function AdminPage() {
     fetch("api/membership/price", options)
       .then((response) => response.json())
       .then((data) => {
-        setTrenutnaClanarina(data.cijena);
+        setTrenutnaClanarina(data);
+        console.log("Primljeni podaci za članarinu:", data);
       })
       .catch((error) =>
         console.error("Greška pri dohvaćanju članarine:", error)
@@ -60,8 +61,7 @@ export default function AdminPage() {
     if (novaUloga === "svi") {
       setFilteredUsers(users);
     } else {
-      const validRole = novaUloga === "igrac" ? "igrač" : novaUloga;
-      fetch(`api/admin/users/${validRole}`, options)
+      fetch(`api/admin/users/${novaUloga}`, options)
         .then((response) => response.json())
         .then((data) => {
           setFilteredUsers(data);
@@ -138,7 +138,7 @@ export default function AdminPage() {
   const deleteKorizznik = (id) => {
     const currentUser = JSON.parse(sessionStorage.getItem("userInfo"));
     if (currentUser && currentUser.id === id) {
-      alert("Ne možete izbrisati sami sebe!");
+      alert("Ne možete izbrisati samog sebe!");
       return;
     }
 
@@ -165,7 +165,7 @@ export default function AdminPage() {
 
   const renderUserDetails = (user) => {
     switch (user.tip) {
-      case "igrac":
+      case "igrač":
         return (
           <>
             <div>
@@ -215,12 +215,16 @@ export default function AdminPage() {
   };
 
   const editUser = (user) => {
+    if (user.tip === "admin") {
+      alert("Admini se ne mogu uređivati!");
+      return;
+    }
     setEditingUser({
       id: user.id,
       email: user.email || "",
       brojTel: user.brojTel || "",
       role: user.tip,
-      ...(user.tip === "igrac"
+      ...(user.tip === "igrač"
         ? {
             imeIgrac: user.imeIgrac || "",
             prezimeIgrac: user.prezimeIgrac || "",
@@ -241,8 +245,10 @@ export default function AdminPage() {
       return;
     }
 
+    const userRole = editingUser.role === "igrač" ? "igrac" : "vlasnik";
+
     const dataToSend =
-      editingUser.role === "igrac"
+      userRole === "igrac"
         ? {
             imeIgrac: editingUser.imeIgrac,
             prezimeIgrac: editingUser.prezimeIgrac,
@@ -258,7 +264,7 @@ export default function AdminPage() {
             email: editingUser.email,
           };
 
-    fetch(`/api/admin/${editingUser.role}/${editingUser.id}`, {
+    fetch(`/api/admin/${userRole}/${editingUser.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dataToSend),
@@ -301,7 +307,7 @@ export default function AdminPage() {
             <option value="svi">Svi</option>
             <option value="admin">Admin</option>
             <option value="vlasnik">Vlasnik</option>
-            <option value="igrac">Igrač</option>
+            <option value="igrač">Igrač</option>
           </select>
 
           <ul className="space-y-6">
@@ -316,7 +322,7 @@ export default function AdminPage() {
                   </div>
                   <div>
                     <b>Tip:</b> {user.tip}
-                  </div>
+                    </div>
                   <div>
                     <b>ID:</b> {user.id}
                   </div>
@@ -336,6 +342,124 @@ export default function AdminPage() {
                     Obriši
                   </button>
                 </div>
+
+                {editingUser && editingUser.id === user.id && (
+                  <div className="mt-16 border-t pt-8">
+                    <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
+                      Uredi korisnika:
+                    </h2>
+
+                    <label className="block mb-2 text-gray-700">Email:</label>
+                    <input
+                      type="email"
+                      value={editingUser.email}
+                      onChange={(e) =>
+                        setEditingUser({
+                          ...editingUser,
+                          email: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                    />
+
+                    <label className="block mb-2 text-gray-700">
+                      Broj telefona:
+                    </label>
+                    <input
+                      type="text"
+                      value={editingUser.brojTel}
+                      onChange={(e) =>
+                        setEditingUser({
+                          ...editingUser,
+                          brojTel: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                    />
+
+                    {editingUser.role === "igrač" && (
+                      <>
+                        <label className="block mb-2 text-gray-700">
+                          Ime igrača:
+                        </label>
+                        <input
+                          type="text"
+                          value={editingUser.imeIgrac}
+                          onChange={(e) =>
+                            setEditingUser({
+                              ...editingUser,
+                              imeIgrac: e.target.value,
+                            })
+                          }
+                          className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                        />
+
+                        <label className="block mb-2 text-gray-700">
+                          Prezime igrača:
+                        </label>
+                        <input
+                          type="text"
+                          value={editingUser.prezimeIgrac}
+                          onChange={(e) =>
+                            setEditingUser({
+                              ...editingUser,
+                              prezimeIgrac: e.target.value,
+                            })
+                          }
+                          className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                        />
+                      </>
+                    )}
+
+                    {editingUser.role === "vlasnik" && (
+                      <>
+                        <label className="block mb-2 text-gray-700">
+                          Naziv kluba:
+                        </label>
+                        <input
+                          type="text"
+                          value={editingUser.nazivVlasnik}
+                          onChange={(e) =>
+                            setEditingUser({
+                              ...editingUser,
+                              nazivVlasnik: e.target.value,
+                            })
+                          }
+                          className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                        />
+
+                        <label className="block mb-2 text-gray-700">
+                          Lokacija:
+                        </label>
+                        <input
+                          type="text"
+                          value={editingUser.lokacija}
+                          onChange={(e) =>
+                            setEditingUser({
+                              ...editingUser,
+                              lokacija: e.target.value,
+                            })
+                          }
+                          className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
+                        />
+                      </>
+                    )}
+
+                    <button
+                      className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      onClick={saveUserChanges}
+                    >
+                      Spremi promjene
+                    </button>
+
+                    <button
+                      className="bg-gray-500 text-white px-6 py-2 rounded ml-4 hover:bg-gray-600 transition"
+                      onClick={cancelEditing}
+                    >
+                      Odustani
+                    </button>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -351,7 +475,7 @@ export default function AdminPage() {
               onChange={(val) =>
                 setKorizznik({ ...korizznik, email: val.target.value })
               }
-              className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
+              className="border border-gray-300 rounded-md p-2 mb-4 w-full text-white"
             />
             <select
               value={korizznik.tip}
@@ -362,7 +486,7 @@ export default function AdminPage() {
             >
               <option value="">Odaberite tip</option>
               <option value="vlasnik">Vlasnik</option>
-              <option value="igrac">Igrač</option>
+              <option value="igrač">Igrač</option>
             </select>
             <button
               className="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600 transition w-full"
@@ -372,128 +496,21 @@ export default function AdminPage() {
             </button>
           </div>
 
-          {editingUser && (
-            <div className="mt-16 border-t pt-8">
-              <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
-                Uredi korisnika:
-              </h2>
-
-              <label className="block mb-2 text-gray-700">Email:</label>
-              <input
-                type="email"
-                value={editingUser.email}
-                onChange={(e) =>
-                  setEditingUser({ ...editingUser, email: e.target.value })
-                }
-                className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-              />
-
-              <label className="block mb-2 text-gray-700">Broj telefona:</label>
-              <input
-                type="text"
-                value={editingUser.brojTel}
-                onChange={(e) =>
-                  setEditingUser({ ...editingUser, brojTel: e.target.value })
-                }
-                className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-              />
-
-              {editingUser.role === "igrac" && (
-                <>
-                  <label className="block mb-2 text-gray-700">
-                    Ime igrača:
-                  </label>
-                  <input
-                    type="text"
-                    value={editingUser.imeIgrac}
-                    onChange={(e) =>
-                      setEditingUser({
-                        ...editingUser,
-                        imeIgrac: e.target.value,
-                      })
-                    }
-                    className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-                  />
-
-                  <label className="block mb-2 text-gray-700">
-                    Prezime igrača:
-                  </label>
-                  <input
-                    type="text"
-                    value={editingUser.prezimeIgrac}
-                    onChange={(e) =>
-                      setEditingUser({
-                        ...editingUser,
-                        prezimeIgrac: e.target.value,
-                      })
-                    }
-                    className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-                  />
-                </>
-              )}
-
-              {editingUser.role === "vlasnik" && (
-                <>
-                  <label className="block mb-2 text-gray-700">
-                    Naziv kluba:
-                  </label>
-                  <input
-                    type="text"
-                    value={editingUser.nazivVlasnik}
-                    onChange={(e) =>
-                      setEditingUser({
-                        ...editingUser,
-                        nazivVlasnik: e.target.value,
-                      })
-                    }
-                    className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-                  />
-
-                  <label className="block mb-2 text-gray-700">Lokacija:</label>
-                  <input
-                    type="text"
-                    value={editingUser.lokacija}
-                    onChange={(e) =>
-                      setEditingUser({
-                        ...editingUser,
-                        lokacija: e.target.value,
-                      })
-                    }
-                    className="border border-gray-300 rounded-md p-2 mb-4 w-full text-black"
-                  />
-                </>
-              )}
-
-              <button
-                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
-                onClick={saveUserChanges}
-              >
-                Spremi promjene
-              </button>
-
-              <button
-                className="bg-gray-500 text-white px-6 py-2 rounded ml-4 hover:bg-gray-600 transition"
-                onClick={cancelEditing}
-              >
-                Odustani
-              </button>
-            </div>
-          )}
-
           <div className="mt-16 border-t pt-8">
             <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
-              Postavi globalnu članarinu:
+              Postavi članarinu:
             </h2>
             <div className="flex justify-center items-center gap-6">
               <span className="text-lg font-medium text-gray-700">
-                Trenutna članarina: <b>{trenutnaClanarina ? `${trenutnaClanarina} €` : "N/A"}</b>
+                Trenutna članarina:{" "}
+                <b>{trenutnaClanarina ? `${trenutnaClanarina} €` : "N/A"}</b>
               </span>
               <input
                 type="number"
                 placeholder="Unesite članarinu"
                 value={clanarina}
                 onChange={(e) => setClanarina(e.target.value)}
-                className="border border-gray-300 rounded-md p-2 w-48 text-center text-black"
+                className="border border-gray-300 rounded-md p-2 w-48 text-center text-white"
               />
               <button
                 className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"

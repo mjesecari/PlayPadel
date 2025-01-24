@@ -122,6 +122,8 @@ _**Kontinuirano osvježavanje**_
 | **Uređivanje dokumentacije**         |                       |                 |                 |                   |                   | 1                   |                 |
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
+| **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              |                 |
+| **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
 
 ## Pojedinačni doprinosi
 

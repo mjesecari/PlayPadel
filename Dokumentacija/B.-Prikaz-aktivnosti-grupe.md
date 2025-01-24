@@ -109,9 +109,9 @@ _**Kontinuirano osvježavanje**_
 | **Arhitektura i dizajn sustava**     |                       | 4               | 2               |                   | 2                 |                     | 2               |
 | **Baza podataka**                    |                       |                 |                 |                   | 4                 |                     |                 |
 | **Dijagram razreda**                 |                       |                 |                 |                   | 4                 |                     |                 |
-| **Dijagram stanja**                  |                       |                 |                 |                   |                   |                     |                 |
-| **Dijagram aktivnosti**              |                       |                 |                 |                   |                   |                     |                 |
-| **Dijagram komponenti**              |                       |                 |                 |                   |                   |                     |                 |
+| **Dijagram stanja**                  |                       |                 |                 | 5                 |                   |                     |                 |
+| **Dijagram aktivnosti**              |                       |                 |                 | 5                 |                   |                     |                 |
+| **Dijagram komponenti**              |                       |                 |                 | 6                 |                   |                     |                 |
 | **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |                 |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |                     |                 |
 | **Dijagram razmještaja**             |                       |                 |                 |                   |                   |                     |                 |
@@ -124,6 +124,7 @@ _**Kontinuirano osvježavanje**_
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
 | **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              |                 |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
+| **Admin funkcionalnost**             |                       |                 |                 | 30-40             |                   |      14 - 16        |                 |
 
 ## Pojedinačni doprinosi
 

@@ -39,7 +39,7 @@ public class KorisnkiDetailController {
     }
 
     @DeleteMapping ("/igrac/{id}")
-    private void deleteIgrac(@PathVariable Long id) {
+    public void deleteIgrac(@PathVariable Long id) {
         if (!igracRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user by id\n");
         }

@@ -52,7 +52,7 @@ public class IgracController {
     }
 
     @PutMapping ("/{id}")
-    private Igrac updateIgrac(@PathVariable Long id, @RequestBody IgracDTO igracDTO) {
+    public Igrac updateIgrac(@PathVariable Long id, @RequestBody IgracDTO igracDTO) {
         if (!igracRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found\n");
         }
@@ -64,7 +64,7 @@ public class IgracController {
     }
 
     @DeleteMapping ("/{id}")
-    private void deleteIgrac(@PathVariable Long id) {
+    public void deleteIgrac(@PathVariable Long id) {
         if (!igracRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found\n");
         }

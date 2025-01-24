@@ -29,7 +29,7 @@ public class VlasnikController {
     private VlasnikService vlasnikService;
 
     @PostMapping
-    private Vlasnik createVlasnik (@RequestBody VlasnikDTO vlasnikDTO){
+    public Vlasnik createVlasnik (@RequestBody VlasnikDTO vlasnikDTO){
         if (vlasnikDTO.getRole().equals("vlasnik")) {
             Vlasnik vlasnik = new Vlasnik();
             vlasnik.setEmail(vlasnikDTO.getEmail());
@@ -52,13 +52,13 @@ public class VlasnikController {
     }
 
     @GetMapping ("/{id}")
-    private Vlasnik readVlasnikID (@PathVariable Long id) {
+    public Vlasnik readVlasnikID (@PathVariable Long id) {
         return vlasnikRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user by id\n"));
     }
 
     @PutMapping ("/{id}")
-    private Vlasnik updateVlasnik(@PathVariable Long id, @RequestBody VlasnikDTO vlasnikDTO) {
+    public Vlasnik updateVlasnik(@PathVariable Long id, @RequestBody VlasnikDTO vlasnikDTO) {
         if (!vlasnikRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user by id\n");
         }
@@ -70,7 +70,7 @@ public class VlasnikController {
     }
 
     @DeleteMapping ("/{id}")
-    private void deleteVlasnik(@PathVariable Long id) {
+    public void deleteVlasnik(@PathVariable Long id) {
         if (!vlasnikRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user by id\n");
         }

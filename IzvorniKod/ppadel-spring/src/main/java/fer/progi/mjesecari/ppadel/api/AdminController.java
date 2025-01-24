@@ -28,16 +28,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+
     @Autowired
     private AdminService adminsrv;
+
     @Autowired
     private AdminRepository adminRepo;
+
     @Autowired
     private IgracService igracService;
+
     @Autowired
     private VlasnikService vlasnikService;
+
     @Autowired
     private IgracRepository igracRepository;
+
     @Autowired
     private VlasnikRepository vlasnikRepository;
 
@@ -88,7 +94,7 @@ public class AdminController {
 
     @PutMapping ("igrac/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    private Igrac updateIgrac(@PathVariable Long id, @RequestBody IgracDTO igracDTO) {
+    public Igrac updateIgrac(@PathVariable Long id, @RequestBody IgracDTO igracDTO) {
         if (!igracRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found\n");
         }
@@ -100,7 +106,8 @@ public class AdminController {
     }
 
     @PutMapping ("vlasnik/{id}")
-    private Vlasnik updateVlasnik(@PathVariable Long id, @RequestBody VlasnikDTO vlasnikDTO) {
+    public Vlasnik updateVlasnik(@PathVariable Long id, @RequestBody VlasnikDTO vlasnikDTO) {
+        System.out.println(vlasnikService.fetch(id));
         if (!vlasnikRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find user by id\n");
         }

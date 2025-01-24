@@ -113,7 +113,6 @@ _**Kontinuirano osvježavanje**_
 | **Dijagram aktivnosti**              |                       |                 |                 | 5                 |                   |                     |                 |
 | **Dijagram komponenti**              |                       |                 |                 | 6                 |                   |                     |                 |
 | **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |                 |
-| **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |                     |                 |
 | **Dijagram razmještaja**             |                       |                 |                 |                   |         2         |                     |                 |
 | **Upute za puštanje u pogon**        |                       | 6               |          16     |                   |                   |                     | 12-14           |
 | **Sastanci s timom**                 | 6                     | 6               | 6               | 6                 | 6                 | 6                   | 6               |
@@ -127,7 +126,7 @@ _**Kontinuirano osvježavanje**_
 | **Admin funkcionalnost**             |    1                  |                 |                 | 30-40             |              10   |                     |                 |
 | **Tereni i rezervacije**             |    16                 |                 |         16      |                   |                   |                     |                 |
 | **Turniri**                          |          1            |                 |                 |                   |         35        |                     |   30            |
-|**Uređivanje osobnih podataka**       |            6          |                 |                 |                   |                   |                     |                 | 30-40
+|**Uređivanje osobnih podataka**       |            6          |                 |                 |                   |                   |                     |       30-40     |
 |**PayPal**                            |            3          |                 |                 |                   |   15              |                     |                 |
  
 

@@ -31,6 +31,7 @@
 | 1.15   | Dodano ispitivanje programskog rješenja -poglavlje 6.                                                 | Paula Jagić                           | 24.1.2025. |
 | 1.16   | Ažurirano ispitivanje programskog rješenja - poglavlje 6.                                             | Šimun Vrsalović                       | 24.1.2025. |
 | 1.17   | dodan dijagram komponenata na 5. str. i izmjenjeni dijagrami stanja i aktivnosti                      | Boris Šeremet Lukšić                  | 24.1.2025. |
+| 1.18   | Ažurirana tablica aktivnosti  | Lorena Ivanišević                  | 24.1.2025. |
 -  ovo treba biti vidljivo u samoj dinamici promjena repozitorija
 
 > Evidencija promjena sadrži popis promjena izvršenih tijekom cijelo životnog trajanja predmeta evidencije (dokumentacije, projekta i sl.). Osnova svrha je praćenja napretka svake promjene na temelju njezina preispitivanja, odobrenja (ili odbijanja), provedbe, kao i zaključenja. Štoviše, dobar dnevnik promjena sadrži i datum promjene i njegov utjecaj na projekt u smislu rizika, vremena i troškova. Sve te promjene prenose se dionicima. Štoviše, odbačene promjene također su uključene u povijest promjena.

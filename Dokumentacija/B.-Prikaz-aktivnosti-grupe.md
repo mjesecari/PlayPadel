@@ -99,7 +99,7 @@ _**Kontinuirano osvježavanje**_
 
 | **Komponenta**                       | **Lorena Ivanišević** | **Paula Jagić** | **Dino Plečko** | **Boris Šeremet** | **Klara Vrbanac** | **Šimun Vrsalović** | **Borna Zelić** |
 | ------------------------------------ | --------------------- | --------------- | --------------- | ----------------- | ----------------- | ------------------- | --------------- |
-| **Upravljanje projektom**            | 12                    |                 | 1               |                   | 1                 |                     |                 |
+| **Upravljanje projektom**            | 16                    |                 | 1               |                   | 5                 |                     |                 |
 | **Opis projektnog zadatka**          |                       |                 |                 |                   | 3                 |                     |                 |
 | **Funkcionalni zahtjevi**            |                       |                 |                 | 1                 |                   | 5                   | 4               |
 | **Opis pojedinih obrazaca**          | 2                     |                 | 1               | 8                 | 2                 |                     |                 |
@@ -108,23 +108,29 @@ _**Kontinuirano osvježavanje**_
 | **Opis ostalih zahtjeva**            |                       |                 |                 |                   |                   |                     |                 |
 | **Arhitektura i dizajn sustava**     |                       | 4               | 2               |                   | 2                 |                     | 2               |
 | **Baza podataka**                    |                       |                 |                 |                   | 4                 |                     |                 |
-| **Dijagram razreda**                 |                       |                 |                 |                   | 4                 |                     |                 |
+| **Dijagram razreda**                 |                       |                 |                 |                   | 5                 |                     |                 |
 | **Dijagram stanja**                  |                       |                 |                 | 5                 |                   |                     |                 |
 | **Dijagram aktivnosti**              |                       |                 |                 | 5                 |                   |                     |                 |
 | **Dijagram komponenti**              |                       |                 |                 | 6                 |                   |                     |                 |
 | **Korištene tehnologije i alati**    |                       |                 |                 |                   |                   |                     |                 |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |                     |                 |
-| **Dijagram razmještaja**             |                       |                 |                 |                   |                   |                     |                 |
-| **Upute za puštanje u pogon**        |                       | 6               |                 |                   |                   |                     | 12-14           |
-| **Sastanci s timom**                 | 2                     | 2               | 2               | 2                 | 2                 | 2                   | 2               |
-| **Zaključak i budući rad**           |                       |                 |                 |                   |                   |                     |                 |
+| **Dijagram razmještaja**             |                       |                 |                 |                   |         2          |                   |                 |
+| **Upute za puštanje u pogon**        |                       | 6               |          16       |                   |                   |                     | 12-14           |
+| **Sastanci s timom**                 | 6                     | 6               | 6               | 6                 | 6                 | 6                   | 6               |
+| **Zaključak i budući rad**           |      0.5                 |                 |                 |                   |                   |                     |                 |
 | **Popis literature**                 |                       |                 |                 |                   |                   |                     |                 |
-| **Uređivanje dokumentacije**         |                       |                 |                 |                   |                   | 1                   |                 |
+| **Uređivanje dokumentacije**         |      1                 |                 |                 |                   |                   | 1                   |                 |
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
 | **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              |                 |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
-| **Admin funkcionalnost**             |                       |                 |                 | 30-40             |                   |      14 - 16        |                 |
+| **Admin funkcionalnost**             |    1                    |                 |                 | 30-40             |              10     |      14 - 16        |                 |
+| **Tereni i rezervacije**             |    16                    |                 |         16        |          |                   |           |                 |
+| **Turniri**             |          1             |                 |                 |          |         35         |           |                 |
+**Uređivanje osobnih podataka**             |            6         |                 |                 |          |                   |           |                 |
+**PayPal**             |            3        |                 |                 |          |   15                |           |                 |
+
+
 
 ## Pojedinačni doprinosi
 
@@ -135,6 +141,9 @@ _**Kontinuirano osvježavanje**_
 -  konfiguracija GitHuba
 -  inicijalizacija Reacta
 -  registracija i prijava korisnika (frontend)
+-  rezervacije terena (frontend)
+-  uređivanje osobnih podataka (frontend)
+-  plaćanje članarine putem PayPal-a (frontend)
 
 ### Paula Jagić
 
@@ -149,6 +158,9 @@ _**Kontinuirano osvježavanje**_
 -  inicijalizacija Springa
 -  registracija i prijava korisnika (backend)
 -  povezivanje s OAuth2
+-  rezervacije terena (backend)
+-  plaćanje članarine putem PayPal-a (frontend)
+-  deployment aplikacije
 
 ### Boris Šeremet
 
@@ -163,6 +175,10 @@ _**Kontinuirano osvježavanje**_
 -  izrada baze
 -  izrada obrazaca uporabe
 -  izrada dijagrama razreda
+-  izrada dijagrama razmještaja
+-  integracija s PayPalom
+-  turniri (frontend i backend)
+-  fukcionalnosti administratora (backend)
 -  organizacija grupe
 
 ### Šimun Vrsalović

@@ -122,12 +122,12 @@ _**Kontinuirano osvježavanje**_
 | **Uređivanje dokumentacije**         |      1                 |                 |                 |                   |                   | 1                   |                 |
 | **Povezivanje s Google OAuth**       |                       |                 | 8               |                   |                   |                     | 8-10            |
 | **Izrada početne stranice**          | 10                    | 15              | 3               |                   |                   |                     |                 |
-| **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              |                 |
+| **Logout funkcionalnost**            |                       |                 |                 |                   |                   |      4              | 1               |
 | **Ispitivanje programskog rješenja** |                       |                 |                 |                   |                   |      14 - 16        |                 |
 | **Admin funkcionalnost**             |    1                    |                 |                 | 30-40             |              10     |      14 - 16        |                 |
 | **Tereni i rezervacije**             |    16                    |                 |         16        |          |                   |           |                 |
-| **Turniri**             |          1             |                 |                 |          |         35         |           |                 |
-**Uređivanje osobnih podataka**             |            6         |                 |                 |          |                   |           |                 |
+| **Turniri**             |          1             |                 |                 |          |         35         |           |   30              |
+**Uređivanje osobnih podataka**             |            6         |                 |                 |          |                   |           |                 | 30-40
 **PayPal**             |            3        |                 |                 |          |   15                |           |                 |
 
 
@@ -197,6 +197,8 @@ _**Kontinuirano osvježavanje**_
 -  registracija i prijava korisnika (backend)
 -  povezivanje s OAuth2
 -  deployment aplikacije
+-  stvaranje, uređivanje i brisanje korisnika
+-  turniri
 
 # Dijagram pregleda promjena
 

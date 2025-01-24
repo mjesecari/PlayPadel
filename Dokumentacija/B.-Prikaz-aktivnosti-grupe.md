@@ -168,6 +168,8 @@ _**Kontinuirano osvježavanje**_
 
 -  postavljanje Google Cloud organizacije s članovima tima
 -  izrada dokumentacije - stranica 2
+-  izrada dokumentacije - stranica 6
+-  testiranje programskog rješenja
 
 ### Borna Zelić
 
